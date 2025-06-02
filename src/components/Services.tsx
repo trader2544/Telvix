@@ -1,46 +1,47 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Globe, Bot, Zap, ShoppingCart, TrendingUp, Smartphone, Code, Palette } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
-      icon: "🌐",
+      icon: Globe,
       title: "Web Design & Development",
       description: "Craft responsive, high-performance websites using modern frameworks (e.g., React, WordPress) for seamless user experiences."
     },
     {
-      icon: "🤖",
-      title: "Automation Solutions",
+      icon: Bot,
+      title: "Automation Solutions", 
       description: "Boost efficiency with custom API integrations, AI-driven tools, and platforms like Zapier or Make for streamlined workflows."
     },
     {
-      icon: "⚡",
+      icon: Zap,
       title: "Premade SaaS Solutions",
       description: "Launch quickly with scalable SaaS products, like rental systems for real estate, cars, or equipment, tailored to your needs."
     },
     {
-      icon: "🛒",
+      icon: ShoppingCart,
       title: "E-commerce Development",
       description: "Build powerful online stores with Shopify, WooCommerce, or custom platforms to maximize sales and engagement."
     },
     {
-      icon: "📈",
+      icon: TrendingUp,
       title: "Digital Marketing & SEO",
       description: "Drive traffic and conversions with SEO, PPC, social media marketing, and content strategies."
     },
     {
-      icon: "📱",
+      icon: Smartphone,
       title: "Mobile App Development",
       description: "Create user-friendly iOS and Android apps with cross-platform frameworks like Flutter or React Native."
     },
     {
-      icon: "💻",
+      icon: Code,
       title: "Custom Software Development",
       description: "Develop bespoke software solutions to address unique business challenges and goals."
     },
     {
-      icon: "🎨",
+      icon: Palette,
       title: "UI/UX Design",
       description: "Design intuitive, visually stunning interfaces to enhance user satisfaction and retention."
     }
@@ -62,26 +63,56 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg animate-slide-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardContent className="p-8">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-primary transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+        {/* Desktop/Tablet Grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {services.map((service, index) => {
+            const IconComponent = service.icon;
+            return (
+              <Card 
+                key={index} 
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg animate-slide-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-8">
+                  <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <IconComponent className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Mobile Grid - Smaller Cards */}
+        <div className="md:hidden grid grid-cols-2 gap-3 mb-12">
+          {services.map((service, index) => {
+            const IconComponent = service.icon;
+            return (
+              <Card 
+                key={index} 
+                className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md animate-slide-up bg-white/90 backdrop-blur-sm"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-4">
+                  <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                    <IconComponent className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors text-center leading-tight">
+                    {service.title}
+                  </h3>
+                  <p className="text-xs text-gray-600 leading-relaxed text-center line-clamp-3">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="text-center">

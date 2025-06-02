@@ -55,8 +55,8 @@ const Testimonials = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-teal-500 mx-auto rounded-full"></div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Desktop Testimonials Grid */}
+        <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
             <Card 
               key={index} 
@@ -109,6 +109,40 @@ const Testimonials = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Mobile Logo Carousel */}
+        <div className="md:hidden relative">
+          <div className="overflow-hidden">
+            <div className="flex animate-scroll-left">
+              {/* First set */}
+              {testimonials.map((testimonial, index) => (
+                <div key={`first-${index}`} className="flex-shrink-0 mx-4">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <img 
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      className="relative w-16 h-16 rounded-2xl object-cover shadow-lg transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {testimonials.map((testimonial, index) => (
+                <div key={`second-${index}`} className="flex-shrink-0 mx-4">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <img 
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      className="relative w-16 h-16 rounded-2xl object-cover shadow-lg transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Trust Indicators */}
