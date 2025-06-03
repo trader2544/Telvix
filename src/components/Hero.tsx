@@ -14,6 +14,10 @@ const Hero = () => {
     navigate('/portfolio');
   };
 
+  const navigateToCareers = () => {
+    navigate('/careers');
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
       <div className="absolute inset-0 bg-black/5"></div>
@@ -55,7 +59,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white/30 text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg backdrop-blur-sm"
+                className="border-2 border-white/50 text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg backdrop-blur-sm bg-white/10"
                 onClick={navigateToPortfolio}
               >
                 <Play className="mr-2 w-5 h-5" />
@@ -63,10 +67,28 @@ const Hero = () => {
               </Button>
             </div>
 
+            {/* New Careers Section */}
+            <div className="mb-8 p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+              <div className="flex items-center mb-2">
+                <span className="text-accent font-semibold">🚀 Join Our Team</span>
+              </div>
+              <p className="text-sm text-white/80 mb-3">
+                We're hiring talented developers from Kenya and Nigeria for exciting freelance projects!
+              </p>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-4 py-2"
+                onClick={navigateToCareers}
+              >
+                View Opportunities
+              </Button>
+            </div>
+
             {/* Trust Indicators */}
             <div className="grid grid-cols-3 gap-6 text-center lg:text-left">
               <div>
-                <div className="text-2xl font-bold text-accent">200+</div>
+                <div className="text-2xl font-bold text-accent">50+</div>
                 <div className="text-sm text-white/80">Projects</div>
               </div>
               <div>
@@ -94,7 +116,7 @@ const Hero = () => {
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
                   <div>
-                    <div className="text-gray-800 font-bold text-lg">200+</div>
+                    <div className="text-gray-800 font-bold text-lg">50+</div>
                     <div className="text-gray-600 text-sm">Projects Delivered</div>
                   </div>
                 </div>

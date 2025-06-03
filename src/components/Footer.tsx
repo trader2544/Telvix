@@ -1,6 +1,6 @@
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Phone, Globe, Heart } from 'lucide-react';
+import { Mail, Phone, Globe, Heart, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -19,6 +19,10 @@ const Footer = () => {
 
   const navigateToPortfolio = () => {
     navigate('/portfolio');
+  };
+
+  const navigateToCareers = () => {
+    navigate('/careers');
   };
 
   const navigateToHome = () => {
@@ -45,16 +49,16 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                <span className="text-white text-lg">📘</span>
+                <Facebook className="w-5 h-5 text-white" />
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                <span className="text-white text-lg">🐦</span>
+                <Twitter className="w-5 h-5 text-white" />
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                <span className="text-white text-lg">💼</span>
+                <Linkedin className="w-5 h-5 text-white" />
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                <span className="text-white text-lg">📷</span>
+                <Instagram className="w-5 h-5 text-white" />
               </div>
             </div>
           </div>
@@ -73,6 +77,9 @@ const Footer = () => {
               </button>
               <button onClick={navigateToPortfolio} className="block text-gray-300 hover:text-accent transition-colors duration-300 text-left">
                 Portfolio
+              </button>
+              <button onClick={navigateToCareers} className="block text-gray-300 hover:text-accent transition-colors duration-300 text-left">
+                Careers
               </button>
               <button onClick={() => scrollToSection('contact')} className="block text-gray-300 hover:text-accent transition-colors duration-300 text-left">
                 Contact

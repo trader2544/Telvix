@@ -25,6 +25,11 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const navigateToCareers = () => {
+    navigate('/careers');
+    setIsMenuOpen(false);
+  };
+
   const navigateToHome = () => {
     navigate('/');
     setIsMenuOpen(false);
@@ -53,8 +58,8 @@ const Header = () => {
             <button onClick={navigateToPortfolio} className="text-gray-700 hover:text-primary transition-colors">
               Portfolio
             </button>
-            <button onClick={() => scrollToSection('testimonials')} className="text-gray-700 hover:text-primary transition-colors">
-              Testimonials
+            <button onClick={navigateToCareers} className="text-gray-700 hover:text-primary transition-colors">
+              Careers
             </button>
             <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-primary transition-colors">
               Contact
@@ -92,8 +97,8 @@ const Header = () => {
               <button onClick={navigateToPortfolio} className="text-left text-gray-700 hover:text-primary transition-colors">
                 Portfolio
               </button>
-              <button onClick={() => scrollToSection('testimonials')} className="text-left text-gray-700 hover:text-primary transition-colors">
-                Testimonials
+              <button onClick={navigateToCareers} className="text-left text-gray-700 hover:text-primary transition-colors">
+                Careers
               </button>
               <button onClick={() => scrollToSection('contact')} className="text-left text-gray-700 hover:text-primary transition-colors">
                 Contact
