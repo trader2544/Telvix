@@ -1,12 +1,32 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const navigateToPortfolio = () => {
+    navigate('/portfolio');
+    setIsMenuOpen(false);
+  };
+
+  const navigateToHome = () => {
+    navigate('/');
     setIsMenuOpen(false);
   };
 
@@ -15,11 +35,13 @@ const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <span className="text-2xl font-bold text-primary">Digitel</span>
+            <button onClick={navigateToHome} className="text-2xl font-bold text-primary">
+              Digitel
+            </button>
           </div>
           
           <nav className="hidden md:flex space-x-8">
-            <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-primary transition-colors">
+            <button onClick={navigateToHome} className="text-gray-700 hover:text-primary transition-colors">
               Home
             </button>
             <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-primary transition-colors">
@@ -27,6 +49,9 @@ const Header = () => {
             </button>
             <button onClick={() => scrollToSection('why-choose')} className="text-gray-700 hover:text-primary transition-colors">
               Why Us
+            </button>
+            <button onClick={navigateToPortfolio} className="text-gray-700 hover:text-primary transition-colors">
+              Portfolio
             </button>
             <button onClick={() => scrollToSection('testimonials')} className="text-gray-700 hover:text-primary transition-colors">
               Testimonials
@@ -55,7 +80,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              <button onClick={() => scrollToSection('home')} className="text-left text-gray-700 hover:text-primary transition-colors">
+              <button onClick={navigateToHome} className="text-left text-gray-700 hover:text-primary transition-colors">
                 Home
               </button>
               <button onClick={() => scrollToSection('services')} className="text-left text-gray-700 hover:text-primary transition-colors">
@@ -63,6 +88,9 @@ const Header = () => {
               </button>
               <button onClick={() => scrollToSection('why-choose')} className="text-left text-gray-700 hover:text-primary transition-colors">
                 Why Us
+              </button>
+              <button onClick={navigateToPortfolio} className="text-left text-gray-700 hover:text-primary transition-colors">
+                Portfolio
               </button>
               <button onClick={() => scrollToSection('testimonials')} className="text-left text-gray-700 hover:text-primary transition-colors">
                 Testimonials

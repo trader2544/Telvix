@@ -1,7 +1,27 @@
 
+import { useNavigate, useLocation } from 'react-router-dom';
+
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const navigateToPortfolio = () => {
+    navigate('/portfolio');
+  };
+
+  const navigateToHome = () => {
+    navigate('/');
   };
 
   return (
@@ -35,7 +55,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <div className="space-y-3">
-              <button onClick={() => scrollToSection('home')} className="block text-gray-300 hover:text-accent transition-colors">
+              <button onClick={navigateToHome} className="block text-gray-300 hover:text-accent transition-colors">
                 Home
               </button>
               <button onClick={() => scrollToSection('services')} className="block text-gray-300 hover:text-accent transition-colors">
@@ -44,7 +64,7 @@ const Footer = () => {
               <button onClick={() => scrollToSection('why-choose')} className="block text-gray-300 hover:text-accent transition-colors">
                 About Us
               </button>
-              <button onClick={() => scrollToSection('testimonials')} className="block text-gray-300 hover:text-accent transition-colors">
+              <button onClick={navigateToPortfolio} className="block text-gray-300 hover:text-accent transition-colors">
                 Portfolio
               </button>
               <button onClick={() => scrollToSection('contact')} className="block text-gray-300 hover:text-accent transition-colors">
