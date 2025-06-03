@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
@@ -45,7 +44,7 @@ const Portfolio = () => {
       name: "E-Commerce Platform",
       description: "Full-stack e-commerce solution with React, Node.js, and Stripe integration. Features include product management, user authentication, shopping cart, and payment processing.",
       html_url: "https://github.com/demo/ecommerce-platform",
-      homepage: "https://demo-ecommerce.com",
+      homepage: "https://ecommerce-demo.digitel.co.ke",
       stargazers_count: 245,
       forks_count: 78,
       language: "TypeScript",
@@ -58,7 +57,7 @@ const Portfolio = () => {
       name: "AI Chat Application",
       description: "Real-time chat application powered by AI with natural language processing capabilities. Built with React, Socket.io, and OpenAI API integration.",
       html_url: "https://github.com/demo/ai-chat-app",
-      homepage: "https://demo-chat.com",
+      homepage: "https://ai-chat.digitel.co.ke",
       stargazers_count: 189,
       forks_count: 52,
       language: "JavaScript",
@@ -71,7 +70,7 @@ const Portfolio = () => {
       name: "SaaS Dashboard",
       description: "Modern SaaS dashboard with analytics, user management, and subscription handling. Features dark/light mode, responsive design, and real-time data visualization.",
       html_url: "https://github.com/demo/saas-dashboard",
-      homepage: "https://demo-saas.com",
+      homepage: "https://saas-dashboard.digitel.co.ke",
       stargazers_count: 156,
       forks_count: 34,
       language: "TypeScript",
@@ -84,7 +83,7 @@ const Portfolio = () => {
       name: "Mobile App UI Kit",
       description: "Comprehensive mobile app UI kit with 50+ screens, animations, and components. Built with React Native and Expo for cross-platform compatibility.",
       html_url: "https://github.com/demo/mobile-ui-kit",
-      homepage: "https://demo-mobile.com",
+      homepage: "https://mobile-ui.digitel.co.ke",
       stargazers_count: 298,
       forks_count: 89,
       language: "JavaScript",
@@ -97,7 +96,7 @@ const Portfolio = () => {
       name: "Portfolio Website",
       description: "Responsive portfolio website with modern design, smooth animations, and optimized performance. Built with React, Tailwind CSS, and Framer Motion.",
       html_url: "https://github.com/demo/portfolio-website",
-      homepage: "https://demo-portfolio.com",
+      homepage: "https://portfolio.digitel.co.ke",
       stargazers_count: 124,
       forks_count: 45,
       language: "TypeScript",
@@ -110,7 +109,7 @@ const Portfolio = () => {
       name: "Automation Tools",
       description: "Collection of automation tools and scripts for web scraping, API integrations, and workflow automation. Includes Zapier integrations and custom APIs.",
       html_url: "https://github.com/demo/automation-tools",
-      homepage: "https://demo-automation.com",
+      homepage: "https://automation.digitel.co.ke",
       stargazers_count: 167,
       forks_count: 56,
       language: "Python",
@@ -181,6 +180,8 @@ const Portfolio = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projectsToShow.map((project, index) => {
                 const IconComponent = 'icon' in project ? project.icon : Code2;
+                const liveUrl = project.homepage || `https://demo-${project.name.toLowerCase().replace(/\s+/g, '-')}.digitel.co.ke`;
+                
                 return (
                   <Card 
                     key={project.id} 
@@ -242,7 +243,7 @@ const Portfolio = () => {
                         </div>
                       )}
                       
-                      <div className="flex space-x-3">
+                      <div className="flex space-x-2">
                         <Button 
                           size="sm" 
                           className="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
@@ -251,17 +252,15 @@ const Portfolio = () => {
                           <Github className="w-4 h-4 mr-2" />
                           Code
                         </Button>
-                        {project.homepage && (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
-                            onClick={() => window.open(project.homepage, '_blank')}
-                          >
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            Live
-                          </Button>
-                        )}
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
+                          onClick={() => window.open(liveUrl, '_blank')}
+                        >
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          Live
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>

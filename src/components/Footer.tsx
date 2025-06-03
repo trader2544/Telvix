@@ -29,6 +29,18 @@ const Footer = () => {
     navigate('/');
   };
 
+  const navigateToPrivacyPolicy = () => {
+    navigate('/privacy-policy');
+  };
+
+  const navigateToTermsOfService = () => {
+    navigate('/terms-of-service');
+  };
+
+  const navigateToCookiePolicy = () => {
+    navigate('/cookie-policy');
+  };
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20 relative overflow-hidden">
       {/* Background Elements */}
@@ -114,9 +126,15 @@ const Footer = () => {
               <span>for digital innovation.</span>
             </div>
             <div className="flex space-x-6 text-gray-400">
-              <button className="hover:text-accent transition-colors duration-300">Privacy Policy</button>
-              <button className="hover:text-accent transition-colors duration-300">Terms of Service</button>
-              <button className="hover:text-accent transition-colors duration-300">Cookie Policy</button>
+              <button onClick={navigateToPrivacyPolicy} className="hover:text-accent transition-colors duration-300">
+                Privacy Policy
+              </button>
+              <button onClick={navigateToTermsOfService} className="hover:text-accent transition-colors duration-300">
+                Terms of Service
+              </button>
+              <button onClick={navigateToCookiePolicy} className="hover:text-accent transition-colors duration-300">
+                Cookie Policy
+              </button>
             </div>
           </div>
         </div>

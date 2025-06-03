@@ -94,24 +94,6 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-
-            <div className="mt-12">
-              <h4 className="font-semibold text-gray-900 mb-6">Follow Our Journey</h4>
-              <div className="flex space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                  <span className="text-white text-lg">📘</span>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                  <span className="text-white text-lg">🐦</span>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                  <span className="text-white text-lg">💼</span>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg">
-                  <span className="text-white text-lg">📷</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="animate-slide-up">
