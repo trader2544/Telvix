@@ -1,68 +1,109 @@
 
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Play } from 'lucide-react';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const navigateToPortfolio = () => {
+    navigate('/portfolio');
+  };
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 text-white overflow-hidden">
-      <div className="absolute inset-0 bg-black/10"></div>
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
+      <div className="absolute inset-0 bg-black/5"></div>
       
-      <div className="absolute top-20 right-20 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+      {/* Animated Background Elements */}
+      <div className="absolute top-20 right-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-accent">Digitel:</span> Your All-in-One 
-              <span className="block">Digital Agency for</span>
-              <span className="text-accent">Limitless Possibilities</span>
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+              <span className="text-sm font-medium">Available for New Projects</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+              <span className="text-accent">Digitel:</span> Your Gateway to
+              <span className="block bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
+                Digital Excellence
+              </span>
             </h1>
             
-            <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-              From stunning websites to automation, SaaS solutions, digital marketing, and mobile apps, 
-              our expert team delivers innovative solutions to grow your business.
+            <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-2xl">
+              From stunning websites to AI-powered automation, SaaS solutions, and mobile apps. 
+              We transform your ideas into powerful digital experiences.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <Button 
                 size="lg" 
-                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-4 text-lg"
+                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-4 text-lg group"
                 onClick={() => scrollToSection('contact')}
               >
-                Get a Free Quote
+                Get Free Quote
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg"
-                onClick={() => scrollToSection('services')}
+                className="border-2 border-white/30 text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg backdrop-blur-sm"
+                onClick={navigateToPortfolio}
               >
-                Discover Our Services
+                <Play className="mr-2 w-5 h-5" />
+                View Portfolio
               </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="grid grid-cols-3 gap-6 text-center lg:text-left">
+              <div>
+                <div className="text-2xl font-bold text-accent">200+</div>
+                <div className="text-sm text-white/80">Projects</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-accent">95%</div>
+                <div className="text-sm text-white/80">Satisfaction</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-accent">24/7</div>
+                <div className="text-sm text-white/80">Support</div>
+              </div>
             </div>
           </div>
           
           <div className="relative animate-slide-up">
-            <div className="relative">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               <img 
                 src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80" 
-                alt="Digital Services" 
-                className="rounded-2xl shadow-2xl w-full"
+                alt="Digital Innovation" 
+                className="relative rounded-3xl shadow-2xl w-full transform group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+              
+              {/* Floating Cards */}
+              <div className="absolute -bottom-8 -left-8 bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-xl animate-bounce-gentle">
                 <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-800 font-medium">200+ Projects Delivered</span>
+                  <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+                  <div>
+                    <div className="text-gray-800 font-bold text-lg">200+</div>
+                    <div className="text-gray-600 text-sm">Projects Delivered</div>
+                  </div>
                 </div>
               </div>
-              <div className="absolute -top-6 -right-6 bg-accent text-white p-4 rounded-xl shadow-lg">
+              
+              <div className="absolute -top-8 -right-8 bg-gradient-to-r from-accent to-primary text-white p-6 rounded-2xl shadow-xl animate-float">
                 <div className="text-center">
                   <div className="text-2xl font-bold">95%</div>
-                  <div className="text-sm">Client Retention</div>
+                  <div className="text-sm opacity-90">Client Satisfaction</div>
                 </div>
               </div>
             </div>

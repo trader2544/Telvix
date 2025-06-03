@@ -1,49 +1,57 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Bot, Zap, ShoppingCart, TrendingUp, Smartphone, Code, Palette } from 'lucide-react';
+import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       icon: Globe,
       title: "Web Design & Development",
-      description: "Craft responsive, high-performance websites using modern frameworks (e.g., React, WordPress) for seamless user experiences."
+      description: "Craft responsive, high-performance websites using modern frameworks like React and WordPress for exceptional user experiences.",
+      gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: Bot,
-      title: "Automation Solutions", 
-      description: "Boost efficiency with custom API integrations, AI-driven tools, and platforms like Zapier or Make for streamlined workflows."
+      title: "AI & Automation Solutions", 
+      description: "Boost efficiency with custom AI integrations, workflow automation, and intelligent tools that streamline your business processes.",
+      gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: Zap,
-      title: "Premade SaaS Solutions",
-      description: "Launch quickly with scalable SaaS products, like rental systems for real estate, cars, or equipment, tailored to your needs."
+      title: "SaaS Development",
+      description: "Launch scalable Software-as-a-Service solutions with modern architecture, from rental systems to enterprise platforms.",
+      gradient: "from-orange-500 to-red-500"
     },
     {
-      icon: ShoppingCart,
-      title: "E-commerce Development",
-      description: "Build powerful online stores with Shopify, WooCommerce, or custom platforms to maximize sales and engagement."
+      icon: ShoppingBag,
+      title: "E-commerce Solutions",
+      description: "Build powerful online stores with Shopify, WooCommerce, or custom platforms designed to maximize sales and engagement.",
+      gradient: "from-green-500 to-emerald-500"
     },
     {
       icon: TrendingUp,
       title: "Digital Marketing & SEO",
-      description: "Drive traffic and conversions with SEO, PPC, social media marketing, and content strategies."
+      description: "Drive traffic and conversions with data-driven SEO strategies, PPC campaigns, and comprehensive digital marketing.",
+      gradient: "from-teal-500 to-blue-500"
     },
     {
       icon: Smartphone,
       title: "Mobile App Development",
-      description: "Create user-friendly iOS and Android apps with cross-platform frameworks like Flutter or React Native."
+      description: "Create stunning iOS and Android apps with cross-platform frameworks like Flutter and React Native for maximum reach.",
+      gradient: "from-indigo-500 to-purple-500"
     },
     {
-      icon: Code,
+      icon: Code2,
       title: "Custom Software Development",
-      description: "Develop bespoke software solutions to address unique business challenges and goals."
+      description: "Develop bespoke software solutions tailored to your unique business requirements and operational workflows.",
+      gradient: "from-pink-500 to-rose-500"
     },
     {
       icon: Palette,
       title: "UI/UX Design",
-      description: "Design intuitive, visually stunning interfaces to enhance user satisfaction and retention."
+      description: "Design intuitive, visually stunning interfaces that enhance user satisfaction, engagement, and brand recognition.",
+      gradient: "from-amber-500 to-orange-500"
     }
   ];
 
@@ -52,11 +60,18 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/20 to-teal-50/30 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-blue-200/20 to-teal-200/20 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-6 shadow-lg">
+            <Code2 className="w-8 h-8 text-white" />
+          </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            All Digital Services Under One Roof
+            All Digital Services <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Under One Roof</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             From concept to launch, we provide comprehensive digital solutions that drive growth and innovation for your business.
@@ -70,14 +85,19 @@ const Services = () => {
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg animate-slide-up"
+                className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 rounded-3xl overflow-hidden animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <CardContent className="p-8">
-                  <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="w-12 h-12 text-primary" />
+                {/* Gradient Border Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
+                
+                <CardContent className="relative p-8">
+                  <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center shadow-lg`}>
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">
@@ -90,20 +110,22 @@ const Services = () => {
         </div>
 
         {/* Mobile Grid - Smaller Cards */}
-        <div className="md:hidden grid grid-cols-2 gap-3 mb-12">
+        <div className="md:hidden grid grid-cols-2 gap-4 mb-12">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md animate-slide-up bg-white/90 backdrop-blur-sm"
+                className="group relative bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-2xl overflow-hidden animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CardContent className="p-4">
                   <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                    <IconComponent className="w-8 h-8 text-primary" />
+                    <div className={`w-10 h-10 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center shadow-md`}>
+                      <IconComponent className="w-5 h-5 text-white" />
+                    </div>
                   </div>
-                  <h3 className="text-sm font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors text-center leading-tight">
+                  <h3 className="text-sm font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors text-center leading-tight">
                     {service.title}
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed text-center line-clamp-3">
@@ -118,7 +140,7 @@ const Services = () => {
         <div className="text-center">
           <Button 
             size="lg" 
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg mr-4"
+            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg mr-4 shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={() => scrollToSection('contact')}
           >
             Explore All Services
@@ -126,10 +148,10 @@ const Services = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={() => scrollToSection('contact')}
           >
-            Contact Us
+            Get Started Today
           </Button>
         </div>
       </div>
