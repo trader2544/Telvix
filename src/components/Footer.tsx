@@ -119,20 +119,27 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 mb-4 md:mb-0 flex items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-gray-400 flex items-center">
               <span>© {new Date().getFullYear()} Digitel. Made with</span>
               <Heart className="w-4 h-4 text-red-500 mx-1 animate-pulse" />
               <span>for digital innovation.</span>
             </div>
+            
+            <div className="text-center">
+              <span className="text-sm text-gray-500 bg-gradient-to-r from-accent/20 to-primary/20 px-3 py-1 rounded-full border border-gray-600">
+                Powered by Digitel
+              </span>
+            </div>
+            
             <div className="flex space-x-6 text-gray-400">
-              <button onClick={navigateToPrivacyPolicy} className="hover:text-accent transition-colors duration-300">
+              <button onClick={navigateToPrivacyPolicy} className="hover:text-accent transition-colors duration-300 text-sm">
                 Privacy Policy
               </button>
-              <button onClick={navigateToTermsOfService} className="hover:text-accent transition-colors duration-300">
+              <button onClick={navigateToTermsOfService} className="hover:text-accent transition-colors duration-300 text-sm">
                 Terms of Service
               </button>
-              <button onClick={navigateToCookiePolicy} className="hover:text-accent transition-colors duration-300">
+              <button onClick={navigateToCookiePolicy} className="hover:text-accent transition-colors duration-300 text-sm">
                 Cookie Policy
               </button>
             </div>

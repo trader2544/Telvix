@@ -19,7 +19,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden pt-28">
       <div className="absolute inset-0 bg-black/5"></div>
       
       {/* Animated Background Elements */}
@@ -59,7 +59,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white/50 text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg backdrop-blur-sm bg-white/10"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 text-lg backdrop-blur-sm bg-white/10"
                 onClick={navigateToPortfolio}
               >
                 <Play className="mr-2 w-5 h-5" />
