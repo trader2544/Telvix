@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, LinkedIn } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -108,7 +108,7 @@ const Footer = () => {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                  <LinkedIn className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5" />
                 </a>
               </div>
             </div>

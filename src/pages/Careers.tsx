@@ -1,271 +1,197 @@
 
-import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Clock, DollarSign, Users, Code, Smartphone, Globe, Database, Zap } from 'lucide-react';
+import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const Careers = () => {
-  const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('all');
-
-  const jobs = [
+  const gigs = [
     {
-      id: 1,
-      title: "M-Pesa Integration Setup",
-      category: "web",
-      location: "Remote (Kenya)",
-      type: "Small Gig",
-      budget: "KSh 15,000 - 25,000",
-      description: "Integrate M-Pesa payment gateway into existing websites or new applications.",
-      skills: ["PHP", "JavaScript", "M-Pesa API", "Laravel/React"],
-      urgent: true
+      title: "M-Pesa Integration Developer",
+      location: "Kenya (Remote)",
+      type: "Freelance",
+      budget: "KSh 15,000 - 30,000",
+      currency: "KSh",
+      icon: Wallet,
+      description: "Integrate M-Pesa payment gateway into existing web applications.",
+      skills: ["PHP", "Node.js", "M-Pesa API", "MySQL"],
+      duration: "1-2 weeks"
     },
     {
-      id: 2,
-      title: "Simple Business Website",
-      category: "web",
-      location: "Remote (Nigeria)",
-      type: "Small Project",
-      budget: "₦80,000 - 120,000",
-      description: "Create responsive business websites with contact forms and basic SEO.",
-      skills: ["HTML", "CSS", "JavaScript", "WordPress"],
-      urgent: false
+      title: "React Frontend Developer", 
+      location: "Nigeria (Remote)",
+      type: "Freelance",
+      budget: "₦50,000 - 80,000",
+      currency: "₦",
+      icon: Code,
+      description: "Build responsive React components for e-commerce platform.",
+      skills: ["React", "TypeScript", "Tailwind CSS", "Redux"],
+      duration: "2-3 weeks"
     },
     {
-      id: 3,
-      title: "Mobile App UI Design",
-      category: "design",
-      location: "Remote (Kenya)",
-      type: "Design Gig",
-      budget: "KSh 20,000 - 35,000",
-      description: "Design mobile app interfaces using Figma for local businesses.",
-      skills: ["Figma", "UI/UX Design", "Mobile Design", "Prototyping"],
-      urgent: true
+      title: "WordPress Plugin Developer",
+      location: "Kenya (Remote)", 
+      type: "Freelance",
+      budget: "KSh 20,000 - 40,000",
+      currency: "KSh",
+      icon: Globe,
+      description: "Create custom WordPress plugin for rental management system.",
+      skills: ["WordPress", "PHP", "MySQL", "JavaScript"],
+      duration: "1-2 weeks"
     },
     {
-      id: 4,
-      title: "WhatsApp Business Integration",
-      category: "web",
-      location: "Remote (Nigeria)",
-      type: "Quick Task",
-      budget: "₦25,000 - 40,000",
-      description: "Set up WhatsApp Business API for customer communication systems.",
-      skills: ["WhatsApp API", "Node.js", "PHP", "JavaScript"],
-      urgent: false
+      title: "Mobile App UI Designer",
+      location: "Nigeria (Remote)",
+      type: "Freelance", 
+      budget: "₦40,000 - 70,000",
+      currency: "₦",
+      icon: Smartphone,
+      description: "Design modern UI/UX for Flutter mobile application.",
+      skills: ["Figma", "Adobe XD", "UI/UX", "Mobile Design"],
+      duration: "1-2 weeks"
     },
     {
-      id: 5,
-      title: "WordPress Customization",
-      category: "web",
-      location: "Remote (Kenya)",
-      type: "Small Gig",
-      budget: "KSh 12,000 - 20,000",
-      description: "Customize WordPress themes and add basic e-commerce functionality.",
-      skills: ["WordPress", "PHP", "WooCommerce", "CSS"],
-      urgent: true
+      title: "Database Optimization Specialist",
+      location: "Kenya (Remote)",
+      type: "Freelance",
+      budget: "KSh 25,000 - 45,000", 
+      currency: "KSh",
+      icon: Zap,
+      description: "Optimize MySQL database performance for high-traffic application.",
+      skills: ["MySQL", "Database Design", "Performance Tuning", "Indexing"],
+      duration: "1 week"
     },
     {
-      id: 6,
-      title: "Social Media Automation",
-      category: "automation",
-      location: "Remote (Nigeria)",
-      type: "Automation Task",
-      budget: "₦30,000 - 50,000",
-      description: "Create automated posting systems for social media management.",
-      skills: ["Python", "APIs", "Automation", "Social Media"],
-      urgent: false
-    },
-    {
-      id: 7,
-      title: "Simple Mobile App",
-      category: "mobile",
-      location: "Remote (Kenya)",
-      type: "App Project",
-      budget: "KSh 40,000 - 70,000",
-      description: "Build basic mobile apps for local businesses using React Native.",
-      skills: ["React Native", "JavaScript", "Mobile Development"],
-      urgent: true
-    },
-    {
-      id: 8,
-      title: "Database Setup & Migration",
-      category: "backend",
-      location: "Remote (Nigeria)",
-      type: "Technical Task",
-      budget: "₦35,000 - 60,000",
-      description: "Set up databases and migrate data for small to medium businesses.",
-      skills: ["MySQL", "PostgreSQL", "Data Migration", "PHP"],
-      urgent: false
+      title: "API Integration Developer",
+      location: "Nigeria (Remote)",
+      type: "Freelance",
+      budget: "₦60,000 - 100,000",
+      currency: "₦", 
+      icon: Code,
+      description: "Integrate third-party APIs for fintech application.",
+      skills: ["Node.js", "Express", "REST APIs", "Authentication"],
+      duration: "2-3 weeks"
     }
   ];
 
-  const categories = [
-    { id: 'all', name: 'All Gigs', icon: Globe },
-    { id: 'web', name: 'Web Tasks', icon: Code },
-    { id: 'mobile', name: 'Mobile', icon: Smartphone },
-    { id: 'design', name: 'Design', icon: Zap },
-    { id: 'automation', name: 'Automation', icon: Bot },
-    { id: 'backend', name: 'Backend', icon: Database }
+  const benefits = [
+    "Flexible working hours",
+    "Remote work opportunities", 
+    "Competitive project rates",
+    "Skill development programs",
+    "Direct client communication",
+    "Portfolio building projects"
   ];
 
-  const filteredJobs = selectedCategory === 'all' 
-    ? jobs 
-    : jobs.filter(job => job.category === selectedCategory);
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-primary to-accent text-white">
+      <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/')}
-              className="text-white hover:bg-white/10 mr-4"
+          {/* Hero Section */}
+          <div className="text-center mb-16 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Freelance <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Opportunities</span>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Join our network of talented developers from Kenya and Nigeria. Work on exciting projects with competitive rates and flexible schedules.
+            </p>
+          </div>
+
+          {/* Available Gigs */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Available Gigs</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {gigs.map((gig, index) => {
+                const IconComponent = gig.icon;
+                return (
+                  <Card key={index} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center mr-4">
+                          <IconComponent className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">
+                            {gig.title}
+                          </h3>
+                          <div className="flex items-center text-sm text-gray-600 mt-1">
+                            <MapPin className="w-4 h-4 mr-1" />
+                            {gig.location}
+                          </div>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                        {gig.description}
+                      </p>
+
+                      <div className="space-y-3 mb-4">
+                        <div className="flex items-center text-sm">
+                          <Wallet className="w-4 h-4 text-green-600 mr-2" />
+                          <span className="font-semibold text-green-600">{gig.budget}</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <Clock className="w-4 h-4 text-blue-600 mr-2" />
+                          <span className="text-gray-600">{gig.duration}</span>
+                        </div>
+                      </div>
+
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold text-gray-700 mb-2">Required Skills:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {gig.skills.map((skill, skillIndex) => (
+                            <span key={skillIndex} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <Button 
+                        className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                        onClick={() => window.open('https://wa.me/254741947599', '_blank')}
+                      >
+                        Apply Now
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Why Work With Us?</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                  <span className="text-gray-700">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Join Our Team?</h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Send us your portfolio and let's discuss how we can work together on exciting projects.
+            </p>
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg"
+              onClick={() => window.open('https://wa.me/254741947599', '_blank')}
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
+              Contact Us on WhatsApp
             </Button>
           </div>
-          
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Small <span className="text-accent">Gigs & Tasks</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Quick projects for talented developers from Kenya and Nigeria
-            </p>
-            
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Users className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Remote Work</h3>
-                <p className="text-white/80">Work from anywhere in Kenya or Nigeria</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <DollarSign className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Local Currency</h3>
-                <p className="text-white/80">Payment in KSh and Naira for quick tasks</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Clock className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Fast Turnaround</h3>
-                <p className="text-white/80">Complete tasks within days, not weeks</p>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
-
-      {/* Job Categories */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => {
-              const IconComponent = category.icon;
-              return (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center space-x-2"
-                >
-                  <IconComponent className="w-4 h-4" />
-                  <span>{category.name}</span>
-                </Button>
-              );
-            })}
-          </div>
-
-          {/* Job Listings */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredJobs.map((job) => (
-              <div key={job.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
-                    {job.urgent && (
-                      <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded-full">
-                        Urgent
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{job.location}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{job.type}</span>
-                    </div>
-                    <div className="flex items-center text-green-600">
-                      <DollarSign className="w-4 h-4 mr-2" />
-                      <span className="text-sm font-semibold">{job.budget}</span>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-700 mb-4 text-sm leading-relaxed">
-                    {job.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {job.skills.map((skill) => (
-                      <span key={skill} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <Button className="w-full bg-accent hover:bg-accent/90">
-                    Apply Now
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Application Process */}
-          <div className="mt-16 bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-3xl font-bold text-center mb-8">How to Apply</h2>
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
-                  1
-                </div>
-                <h3 className="font-semibold mb-2">Submit Portfolio</h3>
-                <p className="text-gray-600 text-sm">Send us your best work samples</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
-                  2
-                </div>
-                <h3 className="font-semibold mb-2">Quick Chat</h3>
-                <p className="text-gray-600 text-sm">Brief discussion about the task</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
-                  3
-                </div>
-                <h3 className="font-semibold mb-2">Start Task</h3>
-                <p className="text-gray-600 text-sm">Begin working on the project</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
-                  4
-                </div>
-                <h3 className="font-semibold mb-2">Get Paid</h3>
-                <p className="text-gray-600 text-sm">Receive payment in local currency</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </main>
 
       <Footer />
     </div>
