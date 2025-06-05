@@ -6,10 +6,6 @@ import { ArrowRight, Play } from 'lucide-react';
 const Hero = () => {
   const navigate = useNavigate();
 
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const navigateToPortfolio = () => {
     navigate('/portfolio');
   };
@@ -18,14 +14,29 @@ const Hero = () => {
     navigate('/careers');
   };
 
+  const navigateToQuote = () => {
+    navigate('/quote');
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden pt-28">
       <div className="absolute inset-0 bg-black/5"></div>
       
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute top-20 right-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
+      
+      {/* Additional floating elements */}
+      <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-white/5 to-accent/10 rounded-full blur-2xl animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-48 h-48 bg-gradient-to-br from-accent/15 to-white/5 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+      <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      <div className="absolute bottom-1/3 left-1/4 w-40 h-40 bg-accent/5 rounded-full blur-2xl animate-float" style={{animationDelay: '3s'}}></div>
+      
+      {/* Geometric shapes */}
+      <div className="absolute top-40 right-1/4 w-6 h-6 bg-white/20 rotate-45 animate-spin" style={{animationDuration: '8s'}}></div>
+      <div className="absolute bottom-40 left-1/3 w-4 h-4 bg-accent/30 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-3/4 right-20 w-8 h-8 bg-white/15 rotate-12 animate-bounce" style={{animationDelay: '1.5s'}}></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -51,7 +62,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-4 text-lg group"
-                onClick={() => scrollToSection('contact')}
+                onClick={navigateToQuote}
               >
                 Get Free Quote
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

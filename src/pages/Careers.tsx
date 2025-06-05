@@ -13,67 +13,101 @@ const Careers = () => {
   const jobs = [
     {
       id: 1,
-      title: "Frontend React Developer",
+      title: "M-Pesa Integration Setup",
       category: "web",
-      location: "Remote (Kenya/Nigeria)",
-      type: "Freelance",
-      budget: "$800 - $1,200",
-      description: "Build modern React applications with TypeScript and Tailwind CSS for international clients.",
-      skills: ["React", "TypeScript", "Tailwind CSS", "JavaScript"],
+      location: "Remote (Kenya)",
+      type: "Small Gig",
+      budget: "KSh 15,000 - 25,000",
+      description: "Integrate M-Pesa payment gateway into existing websites or new applications.",
+      skills: ["PHP", "JavaScript", "M-Pesa API", "Laravel/React"],
       urgent: true
     },
     {
       id: 2,
-      title: "Mobile App Developer",
-      category: "mobile",
-      location: "Remote (Kenya/Nigeria)",
-      type: "Project-based",
-      budget: "$1,500 - $2,500",
-      description: "Develop cross-platform mobile applications using React Native or Flutter.",
-      skills: ["React Native", "Flutter", "Mobile UI/UX", "API Integration"],
+      title: "Simple Business Website",
+      category: "web",
+      location: "Remote (Nigeria)",
+      type: "Small Project",
+      budget: "₦80,000 - 120,000",
+      description: "Create responsive business websites with contact forms and basic SEO.",
+      skills: ["HTML", "CSS", "JavaScript", "WordPress"],
       urgent: false
     },
     {
       id: 3,
-      title: "Full Stack MERN Developer",
-      category: "fullstack",
-      location: "Remote (Kenya/Nigeria)",
-      type: "Freelance",
-      budget: "$1,200 - $2,000",
-      description: "Build complete web applications using MongoDB, Express, React, and Node.js stack.",
-      skills: ["MongoDB", "Express.js", "React", "Node.js", "REST APIs"],
+      title: "Mobile App UI Design",
+      category: "design",
+      location: "Remote (Kenya)",
+      type: "Design Gig",
+      budget: "KSh 20,000 - 35,000",
+      description: "Design mobile app interfaces using Figma for local businesses.",
+      skills: ["Figma", "UI/UX Design", "Mobile Design", "Prototyping"],
       urgent: true
     },
     {
       id: 4,
-      title: "WordPress Developer",
+      title: "WhatsApp Business Integration",
       category: "web",
-      location: "Remote (Kenya/Nigeria)",
-      type: "Part-time",
-      budget: "$500 - $800",
-      description: "Create custom WordPress themes and plugins for small to medium businesses.",
-      skills: ["WordPress", "PHP", "MySQL", "CSS", "JavaScript"],
+      location: "Remote (Nigeria)",
+      type: "Quick Task",
+      budget: "₦25,000 - 40,000",
+      description: "Set up WhatsApp Business API for customer communication systems.",
+      skills: ["WhatsApp API", "Node.js", "PHP", "JavaScript"],
       urgent: false
     },
     {
       id: 5,
-      title: "UI/UX Designer & Developer",
-      category: "design",
-      location: "Remote (Kenya/Nigeria)",
-      type: "Freelance",
-      budget: "$700 - $1,100",
-      description: "Design and implement user interfaces for web and mobile applications.",
-      skills: ["Figma", "Adobe XD", "HTML/CSS", "Responsive Design", "Prototyping"],
+      title: "WordPress Customization",
+      category: "web",
+      location: "Remote (Kenya)",
+      type: "Small Gig",
+      budget: "KSh 12,000 - 20,000",
+      description: "Customize WordPress themes and add basic e-commerce functionality.",
+      skills: ["WordPress", "PHP", "WooCommerce", "CSS"],
       urgent: true
+    },
+    {
+      id: 6,
+      title: "Social Media Automation",
+      category: "automation",
+      location: "Remote (Nigeria)",
+      type: "Automation Task",
+      budget: "₦30,000 - 50,000",
+      description: "Create automated posting systems for social media management.",
+      skills: ["Python", "APIs", "Automation", "Social Media"],
+      urgent: false
+    },
+    {
+      id: 7,
+      title: "Simple Mobile App",
+      category: "mobile",
+      location: "Remote (Kenya)",
+      type: "App Project",
+      budget: "KSh 40,000 - 70,000",
+      description: "Build basic mobile apps for local businesses using React Native.",
+      skills: ["React Native", "JavaScript", "Mobile Development"],
+      urgent: true
+    },
+    {
+      id: 8,
+      title: "Database Setup & Migration",
+      category: "backend",
+      location: "Remote (Nigeria)",
+      type: "Technical Task",
+      budget: "₦35,000 - 60,000",
+      description: "Set up databases and migrate data for small to medium businesses.",
+      skills: ["MySQL", "PostgreSQL", "Data Migration", "PHP"],
+      urgent: false
     }
   ];
 
   const categories = [
-    { id: 'all', name: 'All Jobs', icon: Globe },
-    { id: 'web', name: 'Web Development', icon: Code },
-    { id: 'mobile', name: 'Mobile Apps', icon: Smartphone },
-    { id: 'fullstack', name: 'Full Stack', icon: Database },
-    { id: 'design', name: 'UI/UX Design', icon: Zap }
+    { id: 'all', name: 'All Gigs', icon: Globe },
+    { id: 'web', name: 'Web Tasks', icon: Code },
+    { id: 'mobile', name: 'Mobile', icon: Smartphone },
+    { id: 'design', name: 'Design', icon: Zap },
+    { id: 'automation', name: 'Automation', icon: Bot },
+    { id: 'backend', name: 'Backend', icon: Database }
   ];
 
   const filteredJobs = selectedCategory === 'all' 
@@ -100,27 +134,27 @@ const Careers = () => {
           
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Join Our <span className="text-accent">Remote Team</span>
+              Small <span className="text-accent">Gigs & Tasks</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Exclusive opportunities for talented developers from Kenya and Nigeria
+              Quick projects for talented developers from Kenya and Nigeria
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 mt-12">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
                 <Users className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Remote First</h3>
+                <h3 className="text-lg font-semibold mb-2">Remote Work</h3>
                 <p className="text-white/80">Work from anywhere in Kenya or Nigeria</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
                 <DollarSign className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Competitive Pay</h3>
-                <p className="text-white/80">Fair compensation in USD for quality work</p>
+                <h3 className="text-lg font-semibold mb-2">Local Currency</h3>
+                <p className="text-white/80">Payment in KSh and Naira for quick tasks</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
                 <Clock className="w-12 h-12 text-accent mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold mb-2">Flexible Hours</h3>
-                <p className="text-white/80">Choose your own working schedule</p>
+                <h3 className="text-lg font-semibold mb-2">Fast Turnaround</h3>
+                <p className="text-white/80">Complete tasks within days, not weeks</p>
               </div>
             </div>
           </div>
@@ -211,22 +245,22 @@ const Careers = () => {
                 <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
                   2
                 </div>
-                <h3 className="font-semibold mb-2">Technical Interview</h3>
-                <p className="text-gray-600 text-sm">Quick skills assessment call</p>
+                <h3 className="font-semibold mb-2">Quick Chat</h3>
+                <p className="text-gray-600 text-sm">Brief discussion about the task</p>
               </div>
               <div className="text-center">
                 <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
                   3
                 </div>
-                <h3 className="font-semibold mb-2">Test Project</h3>
-                <p className="text-gray-600 text-sm">Small paid test assignment</p>
+                <h3 className="font-semibold mb-2">Start Task</h3>
+                <p className="text-gray-600 text-sm">Begin working on the project</p>
               </div>
               <div className="text-center">
                 <div className="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-lg font-bold">
                   4
                 </div>
-                <h3 className="font-semibold mb-2">Start Working</h3>
-                <p className="text-gray-600 text-sm">Join our remote team!</p>
+                <h3 className="font-semibold mb-2">Get Paid</h3>
+                <p className="text-gray-600 text-sm">Receive payment in local currency</p>
               </div>
             </div>
           </div>

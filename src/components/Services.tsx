@@ -1,9 +1,12 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette, Calendar } from 'lucide-react';
 
 const Services = () => {
+  const navigate = useNavigate();
+
   const services = [
     {
       icon: Globe,
@@ -59,6 +62,10 @@ const Services = () => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleBookService = (serviceName: string) => {
+    navigate(`/quote?service=${encodeURIComponent(serviceName)}`);
+  };
+
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/20 to-teal-50/30 relative overflow-hidden">
       {/* Background Elements */}
@@ -100,9 +107,17 @@ const Services = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed mb-6">
                     {service.description}
                   </p>
+                  <Button
+                    onClick={() => handleBookService(service.title)}
+                    size="sm"
+                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white`}
+                  >
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Book Service
+                  </Button>
                 </CardContent>
               </Card>
             );
@@ -128,9 +143,16 @@ const Services = () => {
                   <h3 className="text-sm font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors text-center leading-tight">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed text-center line-clamp-3">
+                  <p className="text-xs text-gray-600 leading-relaxed text-center line-clamp-3 mb-3">
                     {service.description}
                   </p>
+                  <Button
+                    onClick={() => handleBookService(service.title)}
+                    size="sm"
+                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white text-xs py-2`}
+                  >
+                    Book
+                  </Button>
                 </CardContent>
               </Card>
             );
@@ -141,9 +163,9 @@ const Services = () => {
           <Button 
             size="lg" 
             className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg mr-4 shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => scrollToSection('contact')}
+            onClick={() => navigate('/portfolio')}
           >
-            Explore All Services
+            View Our Portfolio
           </Button>
           <Button 
             size="lg" 

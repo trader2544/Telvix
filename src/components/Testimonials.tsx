@@ -1,36 +1,41 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { MessageCircle, ExternalLink } from 'lucide-react';
 
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Sarah Thompson",
-      role: "Property Manager",
-      company: "Elite Real Estate",
-      content: "Digitel's rental system transformed our real estate business! The automation features saved us countless hours and improved our client satisfaction dramatically.",
-      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=100&h=100&q=80"
+      name: "NuchoBlackHatey",
+      role: "VPN Platform",
+      company: "Security & Privacy",
+      content: "A secure, high-speed VPN platform delivering optimized configuration files for private internet access across all devices.",
+      logo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=100&h=100&q=80",
+      link: "http://nuchoblackhatey.ct.ws"
     },
     {
-      name: "Michael Chen",
-      role: "CEO", 
-      company: "TechStart Solutions",
-      content: "The custom SaaS platform Digitel built for us exceeded all expectations. Their attention to detail and technical expertise is unmatched.",
-      logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=100&h=100&q=80"
+      name: "Elso Boutique",
+      role: "E-commerce Platform", 
+      company: "Kenyan Craftsmanship",
+      content: "Modern e-commerce platform celebrating Kenyan craftsmanship, connecting global shoppers with authentic local artisans.",
+      logo: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=100&h=100&q=80",
+      link: "https://elso-atelier.com"
     },
     {
-      name: "Emily Rodriguez",
-      role: "Marketing Director",
-      company: "Growth Dynamics", 
-      content: "Working with Digitel was a game-changer. Their digital marketing strategies increased our online presence by 300% in just 6 months.",
-      logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=100&h=100&q=80"
+      name: "Kwa Kamande Space",
+      role: "Rental Management",
+      company: "Property Tech",
+      content: "Comprehensive rental management platform streamlining property management for landlords and tenants with automated tools.",
+      logo: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=100&h=100&q=80",
+      link: "https://kwakamande.space"
     },
     {
-      name: "David Wilson",
-      role: "Founder",
-      company: "AutoFlow Systems",
-      content: "The automation solutions provided by Digitel streamlined our entire workflow. We're now operating 50% more efficiently than before.",
-      logo: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=100&h=100&q=80"
+      name: "Paul Rentals",
+      role: "Luxury Rentals",
+      company: "Premium Service",
+      content: "Exclusive platform for luxury car and property rentals in Nairobi, providing VIP service for distinguished clients.",
+      logo: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=100&h=100&q=80",
+      link: "https://paulrentals.netlify.app"
     }
   ];
 
@@ -50,7 +55,7 @@ const Testimonials = () => {
             <MessageCircle className="w-8 h-8 text-white" />
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-            Trusted by Businesses Worldwide
+            Our Portfolio Projects
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-teal-500 mx-auto rounded-full"></div>
         </div>
@@ -87,21 +92,21 @@ const Testimonials = () => {
                 </blockquote>
                 
                 {/* Client Info */}
-                <div className="text-center">
+                <div className="text-center mb-6">
                   <h4 className="font-bold text-gray-900 text-lg mb-1">{testimonial.name}</h4>
                   <p className="text-blue-600 font-semibold mb-1">{testimonial.role}</p>
                   <p className="text-gray-500 text-sm">{testimonial.company}</p>
                 </div>
-                
-                {/* Rating Stars */}
-                <div className="flex justify-center mt-6 space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-5 h-5 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full transform group-hover:scale-110 transition-transform duration-300"
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    ></div>
-                  ))}
+
+                {/* View Project Button */}
+                <div className="text-center">
+                  <Button
+                    onClick={() => window.open(testimonial.link, '_blank')}
+                    className="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-2"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Project
+                  </Button>
                 </div>
 
                 {/* Mobile App-like Indicator */}
@@ -144,34 +149,12 @@ const Testimonials = () => {
             </div>
           </div>
         </div>
-
-        {/* Trust Indicators */}
-        <div className="mt-16 text-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-            <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
-              <div className="text-3xl font-bold text-blue-600">200+</div>
-              <div className="text-gray-600 text-sm">Projects Delivered</div>
-            </div>
-            <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
-              <div className="text-3xl font-bold text-teal-600">10+</div>
-              <div className="text-gray-600 text-sm">Years Experience</div>
-            </div>
-            <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
-              <div className="text-3xl font-bold text-blue-600">95%</div>
-              <div className="text-gray-600 text-sm">Client Retention</div>
-            </div>
-            <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
-              <div className="text-3xl font-bold text-teal-600">24/7</div>
-              <div className="text-gray-600 text-sm">Support Available</div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* WhatsApp Floating Button */}
       <div className="fixed bottom-6 right-6 z-50 group">
         <a
-          href="https://wa.me/1234567890"
+          href="https://wa.me/254741947599"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full shadow-2xl hover:shadow-green-500/25 transform hover:scale-110 transition-all duration-300 group"
