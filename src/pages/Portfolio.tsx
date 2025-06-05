@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
@@ -57,7 +56,7 @@ const Portfolio = () => {
     enabled: !!githubUsername,
   });
 
-  // Real portfolio projects
+  // Real portfolio projects with uploaded images
   const portfolioProjects: ProjectDetails[] = [
     {
       id: 1,
@@ -78,7 +77,7 @@ const Portfolio = () => {
       language: "JavaScript",
       topics: ["vpn", "security", "privacy", "networking"],
       icon: Shield,
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
     },
     {
       id: 2,
@@ -99,7 +98,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["ecommerce", "kenya", "craftsmanship", "marketplace"],
       icon: ShoppingBag,
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png"
     },
     {
       id: 3,
@@ -120,7 +119,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["property-management", "rental", "dashboard", "supabase"],
       icon: Globe,
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png"
     },
     {
       id: 4,
@@ -141,7 +140,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["luxury-rentals", "vehicles", "properties", "nairobi"],
       icon: Car,
-      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png"
     },
     {
       id: 5,
@@ -162,7 +161,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["fintech", "investment", "africa", "wealth-management"],
       icon: TrendingUp,
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/c84b6d6c-0b8c-42af-a8b5-4779c3c0f1f2.png"
     },
     {
       id: 6,
@@ -183,7 +182,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["environment", "conservation", "kenya", "sustainability"],
       icon: Leaf,
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/f7b6da4f-1260-4f3e-8c2f-2510fe076664.png"
     },
     {
       id: 7,
@@ -204,7 +203,7 @@ const Portfolio = () => {
       language: "JavaScript",
       topics: ["news", "vpn", "aggregation", "security"],
       icon: Newspaper,
-      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80"
+      image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
     }
   ];
 

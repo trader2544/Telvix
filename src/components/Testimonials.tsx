@@ -10,7 +10,7 @@ const Testimonials = () => {
       role: "VPN Platform",
       company: "Security & Privacy",
       content: "A secure, high-speed VPN platform delivering optimized configuration files for private internet access across all devices.",
-      logo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=100&h=100&q=80",
+      logo: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png",
       link: "http://nuchoblackhatey.ct.ws"
     },
     {
@@ -18,7 +18,7 @@ const Testimonials = () => {
       role: "E-commerce Platform", 
       company: "Kenyan Craftsmanship",
       content: "Modern e-commerce platform celebrating Kenyan craftsmanship, connecting global shoppers with authentic local artisans.",
-      logo: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=100&h=100&q=80",
+      logo: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png",
       link: "https://elso-atelier.com"
     },
     {
@@ -26,7 +26,7 @@ const Testimonials = () => {
       role: "Rental Management",
       company: "Property Tech",
       content: "Comprehensive rental management platform streamlining property management for landlords and tenants with automated tools.",
-      logo: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=100&h=100&q=80",
+      logo: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png",
       link: "https://kwakamande.space"
     },
     {
@@ -34,7 +34,7 @@ const Testimonials = () => {
       role: "Luxury Rentals",
       company: "Premium Service",
       content: "Exclusive platform for luxury car and property rentals in Nairobi, providing VIP service for distinguished clients.",
-      logo: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=100&h=100&q=80",
+      logo: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png",
       link: "https://paulrentals.netlify.app"
     }
   ];
