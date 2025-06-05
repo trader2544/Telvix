@@ -1,9 +1,20 @@
 
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const CTA = () => {
+  const navigate = useNavigate();
+
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const navigateToPortfolio = () => {
+    navigate('/portfolio');
+  };
+
+  const navigateToQuote = () => {
+    navigate('/quote');
   };
 
   return (
@@ -23,7 +34,7 @@ const CTA = () => {
             <Button 
               size="lg" 
               className="bg-white text-accent hover:bg-gray-100 font-semibold px-10 py-4 text-lg"
-              onClick={() => scrollToSection('contact')}
+              onClick={navigateToQuote}
             >
               Request a Free Consultation
             </Button>
@@ -31,7 +42,7 @@ const CTA = () => {
               size="lg" 
               variant="outline" 
               className="border-white text-white hover:bg-white hover:text-accent font-semibold px-10 py-4 text-lg"
-              onClick={() => scrollToSection('testimonials')}
+              onClick={navigateToPortfolio}
             >
               View Our Portfolio
             </Button>

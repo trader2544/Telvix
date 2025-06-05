@@ -41,32 +41,32 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-transparent backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <button onClick={navigateToHome} className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors">
+            <button onClick={navigateToHome} className="text-2xl font-bold text-gray-900 hover:text-primary transition-colors">
               Digitel
             </button>
           </div>
           
           <nav className="hidden md:flex space-x-8">
-            <button onClick={navigateToHome} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={navigateToHome} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Home
             </button>
-            <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={() => scrollToSection('services')} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Services
             </button>
-            <button onClick={() => scrollToSection('why-choose')} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={() => scrollToSection('why-choose')} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Why Us
             </button>
-            <button onClick={navigateToPortfolio} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={navigateToPortfolio} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Portfolio
             </button>
-            <button onClick={navigateToCareers} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={navigateToCareers} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Careers
             </button>
-            <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <button onClick={() => scrollToSection('contact')} className="text-gray-900 hover:text-primary transition-colors font-medium">
               Contact
             </button>
           </nav>
@@ -78,7 +78,7 @@ const Header = () => {
           </div>
 
           <button 
-            className="md:hidden text-gray-700"
+            className="md:hidden text-gray-900"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,22 +90,22 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-lg">
             <div className="flex flex-col space-y-4 px-4">
-              <button onClick={navigateToHome} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={navigateToHome} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Home
               </button>
-              <button onClick={() => scrollToSection('services')} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={() => scrollToSection('services')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Services
               </button>
-              <button onClick={() => scrollToSection('why-choose')} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={() => scrollToSection('why-choose')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Why Us
               </button>
-              <button onClick={navigateToPortfolio} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={navigateToPortfolio} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Portfolio
               </button>
-              <button onClick={navigateToCareers} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={navigateToCareers} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Careers
               </button>
-              <button onClick={() => scrollToSection('contact')} className="text-left text-gray-700 hover:text-primary transition-colors font-medium">
+              <button onClick={() => scrollToSection('contact')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium">
                 Contact
               </button>
               <Button onClick={navigateToQuote} className="bg-accent hover:bg-accent/90 w-full text-white font-semibold">

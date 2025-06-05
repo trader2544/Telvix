@@ -16,6 +16,7 @@ const Quote = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userCurrency, setUserCurrency] = useState('USD');
   
   const [formData, setFormData] = useState({
     service: '',
@@ -24,6 +25,34 @@ const Quote = () => {
     phone: '',
     projectDetails: ''
   });
+
+  // Get user's location and set currency
+  useEffect(() => {
+    const getUserLocation = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        // Set currency based on country
+        if (data.country_code === 'KE') {
+          setUserCurrency('KSh');
+        } else if (data.country_code === 'NG') {
+          setUserCurrency('₦');
+        } else if (data.country_code === 'UG') {
+          setUserCurrency('UGX');
+        } else if (data.country_code === 'TZ') {
+          setUserCurrency('TZS');
+        } else {
+          setUserCurrency('USD');
+        }
+      } catch (error) {
+        console.log('Could not detect location, using USD as default');
+        setUserCurrency('USD');
+      }
+    };
+
+    getUserLocation();
+  }, []);
 
   // Get service from URL params
   useEffect(() => {
@@ -153,23 +182,17 @@ const Quote = () => {
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Budget Range *
+                      Budget Range ({userCurrency}) *
                     </label>
-                    <select
+                    <Input
+                      type="text"
                       name="priceRange"
+                      placeholder={`Enter your budget in ${userCurrency}`}
                       value={formData.priceRange}
                       onChange={handleChange}
                       required
-                      className="w-full h-12 border-2 border-gray-200 focus:border-primary rounded-xl px-4 bg-white"
-                    >
-                      <option value="">Select budget range</option>
-                      <option value="$500 - $1,000">$500 - $1,000</option>
-                      <option value="$1,000 - $2,500">$1,000 - $2,500</option>
-                      <option value="$2,500 - $5,000">$2,500 - $5,000</option>
-                      <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                      <option value="$10,000+">$10,000+</option>
-                      <option value="Not sure">Not sure</option>
-                    </select>
+                      className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                    />
                   </div>
 
                   <div>

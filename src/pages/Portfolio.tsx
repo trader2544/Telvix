@@ -77,7 +77,7 @@ const Portfolio = () => {
       language: "JavaScript",
       topics: ["vpn", "security", "privacy", "networking"],
       icon: Shield,
-      image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
+      image: "/lovable-uploads/3c7281a2-ebad-4c8a-b44b-77093874a604.png"
     },
     {
       id: 2,
