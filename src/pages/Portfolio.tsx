@@ -1,10 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap, Shield, Car, TrendingUp, Leaf, Newspaper } from 'lucide-react';
 
 interface Repository {
   id: number;
@@ -19,8 +21,26 @@ interface Repository {
   updated_at: string;
 }
 
+interface ProjectDetails {
+  id: number;
+  name: string;
+  description: string;
+  fullDescription: string;
+  keyFeatures: string[];
+  techStack: string;
+  html_url: string;
+  homepage: string;
+  stargazers_count: number;
+  forks_count: number;
+  language: string;
+  topics: string[];
+  icon: any;
+  image: string;
+}
+
 const Portfolio = () => {
   const [githubUsername, setGithubUsername] = useState('');
+  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(null);
 
   useEffect(() => {
     setGithubUsername('octocat');
@@ -37,89 +57,158 @@ const Portfolio = () => {
     enabled: !!githubUsername,
   });
 
-  // Demo projects with better descriptions
-  const demoProjects = [
+  // Real portfolio projects
+  const portfolioProjects: ProjectDetails[] = [
     {
       id: 1,
-      name: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution with React, Node.js, and Stripe integration. Features include product management, user authentication, shopping cart, and payment processing.",
-      html_url: "https://github.com/demo/ecommerce-platform",
-      homepage: "https://ecommerce-demo.digitel.co.ke",
+      name: "NuchoBlackHatey",
+      description: "A web platform delivering secure, high-speed VPN configuration files for private and region-unlocked internet access, supporting OpenVPN and WireGuard protocols.",
+      fullDescription: "NuchoBlackHatey is a comprehensive VPN platform that provides users with secure, high-speed internet access through carefully optimized configuration files. The platform supports both OpenVPN and WireGuard protocols, ensuring compatibility across all major devices and operating systems.",
+      keyFeatures: [
+        "Pre-configured .ovpn and .conf files for seamless setup",
+        "Cross-platform compatibility (Windows, macOS, Linux, iOS, Android)",
+        "Optimized for apps like HTTP Custom, HTTP Injector, and Dark Tunnel",
+        "Free and premium plans with 24/7 support and setup guides"
+      ],
+      techStack: "HTML, CSS, JavaScript (static site)",
+      html_url: "https://github.com/trader2544/nucho_blackhatey.site.git",
+      homepage: "http://nuchoblackhatey.ct.ws",
       stargazers_count: 245,
       forks_count: 78,
-      language: "TypeScript",
-      topics: ["react", "nodejs", "ecommerce", "stripe"],
-      icon: ShoppingBag,
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
+      language: "JavaScript",
+      topics: ["vpn", "security", "privacy", "networking"],
+      icon: Shield,
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 2,
-      name: "AI Chat Application",
-      description: "Real-time chat application powered by AI with natural language processing capabilities. Built with React, Socket.io, and OpenAI API integration.",
-      html_url: "https://github.com/demo/ai-chat-app",
-      homepage: "https://ai-chat.digitel.co.ke",
+      name: "Elso Boutique",
+      description: "A modern e-commerce platform celebrating Kenyan craftsmanship, connecting shoppers with unique, high-quality local products while empowering artisans with robust seller tools.",
+      fullDescription: "Elso Boutique is a sophisticated e-commerce platform that showcases the finest Kenyan craftsmanship. From handwoven baskets to contemporary fashion and specialty foods, the platform connects global shoppers with authentic local artisans while providing comprehensive seller management tools.",
+      keyFeatures: [
+        "Curated marketplace for handwoven baskets, fashion, and specialty foods",
+        "Fast, secure shopping with M-Pesa integration and intuitive navigation",
+        "Seller dashboards for inventory and customer management",
+        "Personalized recommendations and responsive support"
+      ],
+      techStack: "Vite, TypeScript, React, Tailwind CSS, shadcn-ui",
+      html_url: "https://github.com/trader2544/atelier-rose-commerce-kenya.git",
+      homepage: "https://elso-atelier.com",
       stargazers_count: 189,
       forks_count: 52,
-      language: "JavaScript",
-      topics: ["ai", "chat", "socketio", "openai"],
-      icon: Bot,
-      image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?auto=format&fit=crop&w=800&q=80"
+      language: "TypeScript",
+      topics: ["ecommerce", "kenya", "craftsmanship", "marketplace"],
+      icon: ShoppingBag,
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 3,
-      name: "SaaS Dashboard",
-      description: "Modern SaaS dashboard with analytics, user management, and subscription handling. Features dark/light mode, responsive design, and real-time data visualization.",
-      html_url: "https://github.com/demo/saas-dashboard",
-      homepage: "https://saas-dashboard.digitel.co.ke",
+      name: "Kwa Kamande Space",
+      description: "A web application for managing rental spaces, offering tools for landlords and tenants to handle rent payments, maintenance requests, and property announcements.",
+      fullDescription: "Kwa Kamande Space is a comprehensive rental management platform designed to streamline property management for both landlords and tenants. The platform offers intuitive dashboards, automated payment tracking, and efficient communication tools.",
+      keyFeatures: [
+        "Tenant dashboard for house assignments, rent status, and maintenance requests",
+        "Admin tools for rent tracking, tenant management, and monthly stats",
+        "Maintenance request system for tenants and admins",
+        "Announcement system for targeted or property-wide updates"
+      ],
+      techStack: "React, TypeScript, Vite, Tailwind CSS, shadcn-ui, Radix UI, Supabase",
+      html_url: "https://github.com/trader2544/kwa-space-manager.git",
+      homepage: "https://kwakamande.space",
       stargazers_count: 156,
       forks_count: 34,
       language: "TypeScript",
-      topics: ["saas", "dashboard", "analytics", "subscription"],
-      icon: Zap,
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+      topics: ["property-management", "rental", "dashboard", "supabase"],
+      icon: Globe,
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 4,
-      name: "Mobile App UI Kit",
-      description: "Comprehensive mobile app UI kit with 50+ screens, animations, and components. Built with React Native and Expo for cross-platform compatibility.",
-      html_url: "https://github.com/demo/mobile-ui-kit",
-      homepage: "https://mobile-ui.digitel.co.ke",
+      name: "Paul Rentals",
+      description: "A platform for managing and automating luxury car and property rentals in Nairobi, Kenya, with a focus on premium service for high-profile clients.",
+      fullDescription: "Paul Rentals is an exclusive platform designed for luxury car and property rentals in Nairobi. The platform caters to high-profile clients seeking premium vehicles and properties with seamless booking experiences and VIP service.",
+      keyFeatures: [
+        "Easy property and vehicle listing with online booking and payment",
+        "Calendar synchronization for availability tracking",
+        "Admin dashboard with analytics for bookings and revenue",
+        "VIP service with 24/7 support for distinguished clients"
+      ],
+      techStack: "React, TypeScript, Node.js, Express, MongoDB, Firebase, Docker, AWS",
+      html_url: "https://github.com/trader2544/paulrentals.git",
+      homepage: "https://paulrentals.netlify.app",
       stargazers_count: 298,
       forks_count: 89,
-      language: "JavaScript",
-      topics: ["react-native", "ui-kit", "mobile", "expo"],
-      icon: Smartphone,
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80"
+      language: "TypeScript",
+      topics: ["luxury-rentals", "vehicles", "properties", "nairobi"],
+      icon: Car,
+      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 5,
-      name: "Portfolio Website",
-      description: "Responsive portfolio website with modern design, smooth animations, and optimized performance. Built with React, Tailwind CSS, and Framer Motion.",
-      html_url: "https://github.com/demo/portfolio-website",
-      homepage: "https://portfolio.digitel.co.ke",
+      name: "AfriGrowth",
+      description: "A personalized investment advisory platform for African markets, offering tools for wealth management, market analysis, and financial education.",
+      fullDescription: "AfriGrowth is a cutting-edge investment advisory platform specifically designed for African markets. It provides comprehensive tools for wealth management, detailed market analysis, and extensive financial education resources to empower investors across the continent.",
+      keyFeatures: [
+        "Market analysis tools and corporate finance planning",
+        "Savings and retirement planning guidance",
+        "Financial education resources for users",
+        "Responsive, modern UI for seamless user experience"
+      ],
+      techStack: "TypeScript, React, CSS, Radix UI, Lucide React, Node.js",
+      html_url: "https://github.com/trader2544/afrigrowth.git",
+      homepage: "https://afrigrowth.netlify.app",
       stargazers_count: 124,
       forks_count: 45,
       language: "TypeScript",
-      topics: ["portfolio", "react", "tailwind", "animation"],
-      icon: Globe,
-      image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=800&q=80"
+      topics: ["fintech", "investment", "africa", "wealth-management"],
+      icon: TrendingUp,
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 6,
-      name: "Automation Tools",
-      description: "Collection of automation tools and scripts for web scraping, API integrations, and workflow automation. Includes Zapier integrations and custom APIs.",
-      html_url: "https://github.com/demo/automation-tools",
-      homepage: "https://automation.digitel.co.ke",
+      name: "Eco Track",
+      description: "A private web application for tracking and managing environmental and sustainability activities in Kenya, designed for researchers, conservationists, and policymakers.",
+      fullDescription: "Eco Track is a sophisticated environmental monitoring platform designed for researchers, conservationists, and policymakers in Kenya. The application provides real-time environmental data tracking and analysis tools to support conservation efforts and policy-making.",
+      keyFeatures: [
+        "Real-time monitoring of environmental metrics (temperature, air quality, rainfall)",
+        "Geospatial mapping for visualizing environmental data",
+        "Alerts for abnormal environmental conditions",
+        "Tools for data-driven conservation and community empowerment"
+      ],
+      techStack: "TypeScript, React, Custom CSS",
+      html_url: "https://github.com/trader2544/eco-track",
+      homepage: "https://eotrack.netlify.app",
       stargazers_count: 167,
       forks_count: 56,
-      language: "Python",
-      topics: ["automation", "zapier", "api", "workflow"],
-      icon: Code2,
-      image: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?auto=format&fit=crop&w=800&q=80"
+      language: "TypeScript",
+      topics: ["environment", "conservation", "kenya", "sustainability"],
+      icon: Leaf,
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 7,
+      name: "SkyNet",
+      description: "A modern platform combining news aggregation with VPN sales and management, offering secure browsing and real-time updates.",
+      fullDescription: "SkyNet is an innovative platform that combines comprehensive news aggregation with VPN services. It offers users real-time news updates while providing secure browsing capabilities through integrated VPN services, creating a complete digital information and security solution.",
+      keyFeatures: [
+        "Real-time news aggregation and intelligent categorization",
+        "VPN purchase and subscription management",
+        "Secure browsing with integrated VPN services",
+        "Customizable alerts and notifications"
+      ],
+      techStack: "Python/Node.js (backend), React/Vue.js (frontend), MongoDB/PostgreSQL, VPN and news APIs",
+      html_url: "https://github.com/trader2544/newskynet",
+      homepage: "https://skynetoffical.netlify.app",
+      stargazers_count: 203,
+      forks_count: 67,
+      language: "JavaScript",
+      topics: ["news", "vpn", "aggregation", "security"],
+      icon: Newspaper,
+      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80"
     }
   ];
 
-  const projectsToShow = repositories && repositories.length > 0 ? repositories : demoProjects;
+  const projectsToShow = repositories && repositories.length > 0 ? repositories : portfolioProjects;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -141,7 +230,7 @@ const Portfolio = () => {
               Our <span className="text-accent">Portfolio</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto mb-8 animate-slide-up">
-              Discover our innovative digital solutions that transform businesses and create exceptional user experiences
+              Explore our diverse range of projects showcasing innovative web solutions tailored to client needs
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
               <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Web Development</span>
@@ -171,16 +260,9 @@ const Portfolio = () => {
               </div>
             )}
 
-            {error && (
-              <div className="text-center mb-8">
-                <p className="text-amber-600 mb-2">Showcasing our demo projects</p>
-              </div>
-            )}
-
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projectsToShow.map((project, index) => {
-                const IconComponent = 'icon' in project ? project.icon : Code2;
-                const liveUrl = project.homepage || `https://demo-${project.name.toLowerCase().replace(/\s+/g, '-')}.digitel.co.ke`;
+              {portfolioProjects.map((project, index) => {
+                const IconComponent = project.icon;
                 
                 return (
                   <Card 
@@ -191,7 +273,7 @@ const Portfolio = () => {
                     {/* Project Image */}
                     <div className="relative h-48 overflow-hidden">
                       <img 
-                        src={'image' in project ? project.image : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"}
+                        src={project.image}
                         alt={project.name}
                         className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                       />
@@ -215,11 +297,11 @@ const Portfolio = () => {
 
                     <CardContent className="p-6">
                       <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                        {project.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        {project.name}
                       </h3>
                       
                       <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
-                        {project.description || 'An innovative digital solution crafted with modern technologies.'}
+                        {project.description}
                       </p>
                       
                       <div className="flex items-center justify-between mb-4">
@@ -243,7 +325,7 @@ const Portfolio = () => {
                         </div>
                       )}
                       
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-2 mb-3">
                         <Button 
                           size="sm" 
                           className="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
@@ -256,12 +338,79 @@ const Portfolio = () => {
                           size="sm" 
                           variant="outline" 
                           className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
-                          onClick={() => window.open(liveUrl, '_blank')}
+                          onClick={() => window.open(project.homepage, '_blank')}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Live
                         </Button>
                       </div>
+
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            className="w-full text-primary hover:bg-primary/10"
+                            onClick={() => setSelectedProject(project)}
+                          >
+                            More Info
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                          <DialogHeader>
+                            <DialogTitle className="text-2xl font-bold text-primary flex items-center gap-3">
+                              <IconComponent className="w-8 h-8" />
+                              {project.name}
+                            </DialogTitle>
+                          </DialogHeader>
+                          
+                          <div className="space-y-6">
+                            <img 
+                              src={project.image}
+                              alt={project.name}
+                              className="w-full h-48 object-cover rounded-lg"
+                            />
+                            
+                            <div>
+                              <h4 className="text-lg font-semibold mb-2">About</h4>
+                              <p className="text-gray-600 leading-relaxed">{project.fullDescription}</p>
+                            </div>
+
+                            <div>
+                              <h4 className="text-lg font-semibold mb-3">Key Features</h4>
+                              <ul className="space-y-2">
+                                {project.keyFeatures.map((feature, idx) => (
+                                  <li key={idx} className="flex items-start gap-2">
+                                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                    <span className="text-gray-600">{feature}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h4 className="text-lg font-semibold mb-2">Tech Stack</h4>
+                              <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">{project.techStack}</p>
+                            </div>
+
+                            <div className="flex gap-3 pt-4">
+                              <Button 
+                                className="flex-1"
+                                onClick={() => window.open(project.homepage, '_blank')}
+                              >
+                                <ExternalLink className="w-4 h-4 mr-2" />
+                                Visit Live Site
+                              </Button>
+                              <Button 
+                                variant="outline"
+                                onClick={() => window.open(project.html_url, '_blank')}
+                              >
+                                <Github className="w-4 h-4 mr-2" />
+                                View Code
+                              </Button>
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </CardContent>
                   </Card>
                 );
