@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
@@ -23,7 +22,7 @@ const Footer = () => {
             <div className="lg:col-span-1">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                  Digitel
+                  Telvix
                 </h3>
                 <p className="text-gray-300 mt-2 leading-relaxed">
                   Transforming ideas into powerful digital experiences through innovative web solutions and cutting-edge technology.
@@ -33,7 +32,7 @@ const Footer = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-accent" />
-                  <span className="text-gray-300">digitelhr@outlook.com</span>
+                  <span className="text-gray-300">telvixhr@outlook.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="w-5 h-5 text-accent" />
@@ -119,7 +118,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              Powered by Digitel
+              Powered by Telvix
             </div>
             
             <div className="flex space-x-6 text-sm">

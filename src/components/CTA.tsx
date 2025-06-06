@@ -26,7 +26,7 @@ const CTA = () => {
           </h2>
           
           <p className="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed">
-            Partner with Digitel for cutting-edge web design, automation, SaaS solutions, and more. 
+            Partner with Telvix for cutting-edge web design, automation, SaaS solutions, and more. 
             Let's bring your vision to life and take your business to the next level.
           </p>
           

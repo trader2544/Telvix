@@ -47,7 +47,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 leading-tight">
-              <span className="text-accent">Digitel:</span> Your Gateway to
+              <span className="text-accent">Telvix:</span> Your Gateway to
               <span className="block bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
                 Digital Excellence
               </span>
