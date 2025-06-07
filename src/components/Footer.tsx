@@ -1,11 +1,49 @@
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { useToast } from '@/hooks/use-toast';
 
 const Footer = () => {
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter signup
+    setIsLoading(true);
+
+    try {
+      await emailjs.send(
+        'service_nzx6w0k',
+        'template_krkmosf',
+        {
+          to_email: 'telvixhr@outlook.com',
+          from_email: email,
+          message: `Newsletter subscription request from: ${email}`,
+          subject: 'Newsletter Subscription',
+        },
+        'sDPnCjZEzOqbAQz7l'
+      );
+
+      toast({
+        title: "Subscribed!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
+      
+      setEmail('');
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to subscribe. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,14 +121,18 @@ const Footer = () => {
                 <Input
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-accent"
                   required
+                  disabled={isLoading}
                 />
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90"
+                  disabled={isLoading}
                 >
-                  Subscribe
+                  {isLoading ? 'Subscribing...' : 'Subscribe'}
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </form>
