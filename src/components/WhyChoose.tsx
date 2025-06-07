@@ -25,28 +25,28 @@ const WhyChoose = () => {
   ];
 
   return (
-    <section id="why-choose" className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="why-choose" className="mobile-spacing bg-white">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6">
         {/* Desktop Version */}
         <div className="hidden md:block">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Why Digitel is Your Ultimate <span className="text-primary">Digital Partner</span>
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="mobile-text-4xl text-gray-900 mb-4">
+              Why Telvix is Your Ultimate <span className="text-primary">Digital Partner</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
               We combine expertise, innovation, and dedication to deliver exceptional results that drive your business forward.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-up">
-              <div className="grid sm:grid-cols-2 gap-8">
+              <div className="grid sm:grid-cols-2 gap-6">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="text-center sm:text-left">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
                       {benefit.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {benefit.description}
                     </p>
                   </div>
@@ -58,9 +58,9 @@ const WhyChoose = () => {
               <img 
                 src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" 
                 alt="Digital Innovation" 
-                className="rounded-2xl shadow-2xl w-full"
+                className="rounded-xl md:rounded-2xl shadow-2xl w-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-xl md:rounded-2xl"></div>
             </div>
           </div>
         </div>
@@ -68,25 +68,25 @@ const WhyChoose = () => {
         {/* Mobile Collapsible Version */}
         <div className="md:hidden">
           <div 
-            className="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer"
+            className="flex items-center justify-between bg-gray-50 p-3 rounded-lg cursor-pointer"
             onClick={() => setIsExpanded(!isExpanded)}
           >
-            <h2 className="text-lg font-bold text-gray-900">
-              Why Choose Digitel?
+            <h2 className="text-base font-bold text-gray-900">
+              Why Choose Telvix?
             </h2>
             {isExpanded ? (
-              <ChevronUp className="w-5 h-5 text-primary" />
+              <ChevronUp className="w-4 h-4 text-primary" />
             ) : (
-              <ChevronDown className="w-5 h-5 text-primary" />
+              <ChevronDown className="w-4 h-4 text-primary" />
             )}
           </div>
 
           {isExpanded && (
-            <div className="mt-4 animate-fade-in">
-              <div className="space-y-4">
+            <div className="mt-3 animate-fade-in">
+              <div className="space-y-3">
                 {benefits.map((benefit, index) => (
-                  <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                  <div key={index} className="bg-white p-3 rounded-lg shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
                       {benefit.title}
                     </h3>
                     <p className="text-xs text-gray-600 leading-relaxed">

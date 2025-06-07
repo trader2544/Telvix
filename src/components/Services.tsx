@@ -67,90 +67,55 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/20 to-teal-50/30 relative overflow-hidden">
+    <section id="services" className="mobile-spacing bg-gradient-to-br from-gray-50 via-blue-50/20 to-teal-50/30 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-blue-200/20 to-teal-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+      <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-gradient-to-br from-blue-200/20 to-teal-200/20 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 left-20 w-32 h-32 md:w-80 md:h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-6 shadow-lg">
-            <Code2 className="w-8 h-8 text-white" />
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+        <div className="text-center mb-8 md:mb-12 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-4 shadow-lg">
+            <Code2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="mobile-text-4xl text-gray-900 mb-4">
             All Digital Services <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Under One Roof</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
             From concept to launch, we provide comprehensive digital solutions that drive growth and innovation for your business.
           </p>
         </div>
 
-        {/* Desktop/Tablet Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        {/* Service Cards Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
               <Card 
                 key={index} 
-                className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 rounded-3xl overflow-hidden animate-slide-up"
+                className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-3 rounded-xl md:rounded-3xl overflow-hidden animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Gradient Border Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-xl md:rounded-3xl`}></div>
                 
-                <CardContent className="relative p-8">
-                  <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center shadow-lg`}>
-                      <IconComponent className="w-8 h-8 text-white" />
+                <CardContent className="relative p-3 md:p-6">
+                  <div className="mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                    <div className={`w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br ${service.gradient} rounded-lg md:rounded-xl flex items-center justify-center shadow-md`}>
+                      <IconComponent className="w-4 h-4 md:w-6 md:h-6 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-xs md:text-lg font-bold text-gray-900 mb-2 md:mb-3 group-hover:text-primary transition-colors text-center leading-tight">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed mb-6">
+                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed text-center line-clamp-3 mb-3 md:mb-4 hidden md:block">
                     {service.description}
                   </p>
                   <Button
                     onClick={() => handleBookService(service.title)}
                     size="sm"
-                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white`}
+                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white text-xs py-1 md:py-2`}
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Book Service
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Mobile Grid - Smaller Cards */}
-        <div className="md:hidden grid grid-cols-2 gap-4 mb-12">
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
-            return (
-              <Card 
-                key={index} 
-                className="group relative bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-2xl overflow-hidden animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <CardContent className="p-4">
-                  <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                    <div className={`w-10 h-10 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center shadow-md`}>
-                      <IconComponent className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors text-center leading-tight">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed text-center line-clamp-3 mb-3">
-                    {service.description}
-                  </p>
-                  <Button
-                    onClick={() => handleBookService(service.title)}
-                    size="sm"
-                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white text-xs py-2`}
-                  >
+                    <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                     Book
                   </Button>
                 </CardContent>
@@ -161,16 +126,16 @@ const Services = () => {
 
         <div className="text-center">
           <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg mr-4 shadow-lg hover:shadow-xl transition-all duration-300"
+            size="sm" 
+            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-6 py-3 text-sm mr-3 shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={() => navigate('/portfolio')}
           >
             View Our Portfolio
           </Button>
           <Button 
-            size="lg" 
+            size="sm" 
             variant="outline" 
-            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 text-sm shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={() => scrollToSection('contact')}
           >
             Get Started Today

@@ -18,48 +18,48 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-r from-accent to-accent/80 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="mobile-spacing bg-gradient-to-r from-accent to-accent/80 text-white">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 text-center">
         <div className="max-w-4xl mx-auto animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="mobile-text-4xl font-bold mb-4">
             Ready to Transform Your <span className="text-white/90">Digital Future?</span>
           </h2>
           
-          <p className="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed">
+          <p className="text-sm md:text-lg mb-8 text-white/90 leading-relaxed">
             Partner with Telvix for cutting-edge web design, automation, SaaS solutions, and more. 
             Let's bring your vision to life and take your business to the next level.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              size="lg" 
-              className="bg-white text-accent hover:bg-gray-100 font-semibold px-10 py-4 text-lg"
+              size="sm" 
+              className="bg-white text-accent hover:bg-gray-100 font-semibold px-6 py-3 text-sm"
               onClick={navigateToQuote}
             >
               Request a Free Consultation
             </Button>
             <Button 
-              size="lg" 
+              size="sm" 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-accent font-semibold px-10 py-4 text-lg"
+              className="border-white text-white hover:bg-white hover:text-accent font-semibold px-6 py-3 text-sm"
               onClick={navigateToPortfolio}
             >
               View Our Portfolio
             </Button>
           </div>
           
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-white/80">
+          <div className="mt-8 flex flex-wrap justify-center items-center gap-6 text-white/80">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-              <span>Free Initial Consultation</span>
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <span className="text-xs">Free Initial Consultation</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-              <span>No Long-term Contracts</span>
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <span className="text-xs">No Long-term Contracts</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-              <span>24/7 Support Available</span>
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <span className="text-xs">24/7 Support Available</span>
             </div>
           </div>
         </div>
