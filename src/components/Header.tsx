@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Phone } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,6 +45,10 @@ const Header = () => {
     window.open('tel:+254741947599', '_self');
   };
 
+  const handleWhatsApp = () => {
+    window.open('https://wa.me/254741947599', '_blank');
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
@@ -53,9 +57,9 @@ const Header = () => {
             <div className="flex items-center">
               <button onClick={navigateToHome} className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <img 
-                  src="/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png" 
+                  src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
                   alt="Telvix Logo" 
-                  className="h-12 w-auto"
+                  className="h-16 w-auto"
                 />
               </button>
             </div>
@@ -127,7 +131,7 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Call Icon - positioned opposite to WhatsApp */}
+      {/* Call Icon - positioned on the left */}
       <div className="fixed bottom-6 left-6 z-50">
         <button
           onClick={handleCall}
@@ -135,6 +139,17 @@ const Header = () => {
           aria-label="Call us"
         >
           <Phone className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* WhatsApp Icon - positioned on the right */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={handleWhatsApp}
+          className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          aria-label="Contact us on WhatsApp"
+        >
+          <MessageCircle className="w-6 h-6" />
         </button>
       </div>
     </>
