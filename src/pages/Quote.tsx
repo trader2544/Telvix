@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,9 +5,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Send, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Send, CheckCircle, PhoneCall } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+declare global {
+  interface Window {
+    emailjs: any;
+  }
+}
 
 const Quote = () => {
   const location = useLocation();
@@ -74,15 +79,41 @@ const Quote = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const templateParams = {
+        service: formData.service,
+        price_range: formData.priceRange,
+        email: formData.email,
+        phone: formData.phone,
+        project_details: formData.projectDetails,
+        currency: userCurrency
+      };
+
+      await window.emailjs.send(
+        'service_nzx6w0k',
+        'template_krkmosf',
+        templateParams
+      );
+
       setIsSubmitted(true);
-      setIsLoading(false);
       toast({
         title: "Quote Request Submitted!",
         description: "We'll contact you within 24 hours via call or email.",
       });
-    }, 1000);
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send quote request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePhoneCall = () => {
+    window.open('tel:+254741947599', '_self');
   };
 
   if (isSubmitted) {
@@ -129,6 +160,18 @@ const Quote = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
       <Header />
+      
+      {/* Floating Phone Call Button */}
+      <div className="fixed bottom-4 left-4 z-50">
+        <Button
+          onClick={handlePhoneCall}
+          size="lg"
+          className="rounded-full w-14 h-14 bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl transition-all duration-300"
+          title="Call us now"
+        >
+          <PhoneCall className="w-6 h-6" />
+        </Button>
+      </div>
       
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

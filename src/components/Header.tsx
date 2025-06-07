@@ -45,8 +45,12 @@ const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <button onClick={navigateToHome} className="text-2xl font-bold text-gray-900 hover:text-primary transition-colors">
-              Telvix
+            <button onClick={navigateToHome} className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+              <img 
+                src="/lovable-uploads/a62654f0-a94f-466a-a34a-95214d1db9e4.png" 
+                alt="Telvix Logo" 
+                className="h-8 w-auto"
+              />
             </button>
           </div>
           
