@@ -1,24 +1,19 @@
-
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-
 const CTA = () => {
   const navigate = useNavigate();
-
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: 'smooth'
+    });
   };
-
   const navigateToPortfolio = () => {
     navigate('/portfolio');
   };
-
   const navigateToQuote = () => {
     navigate('/quote');
   };
-
-  return (
-    <section className="mobile-spacing bg-gradient-to-r from-accent to-accent/80 text-white">
+  return <section className="mobile-spacing bg-gradient-to-r from-accent to-accent/80 text-white">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 text-center">
         <div className="max-w-4xl mx-auto animate-fade-in">
           <h2 className="mobile-text-4xl font-bold mb-4">
@@ -31,19 +26,10 @@ const CTA = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="sm" 
-              className="bg-white text-accent hover:bg-gray-100 font-semibold px-6 py-3 text-sm"
-              onClick={navigateToQuote}
-            >
+            <Button size="sm" className="bg-white text-accent hover:bg-gray-100 font-semibold px-6 py-3 text-sm" onClick={navigateToQuote}>
               Request a Free Consultation
             </Button>
-            <Button 
-              size="sm" 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-accent font-semibold px-6 py-3 text-sm"
-              onClick={navigateToPortfolio}
-            >
+            <Button size="sm" variant="outline" onClick={navigateToPortfolio} className="border-white hover:bg-white font-semibold px-6 py-3 text-sm text-cyan-500">
               View Our Portfolio
             </Button>
           </div>
@@ -64,8 +50,6 @@ const CTA = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CTA;
