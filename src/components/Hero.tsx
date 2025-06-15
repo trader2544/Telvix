@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Calculator, Clock, HelpCircle, BarChart3 } from 'lucide-react';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -16,6 +16,10 @@ const Hero = () => {
 
   const navigateToQuote = () => {
     navigate('/quote');
+  };
+
+  const scrollToCompetitiveAnalysis = () => {
+    document.getElementById('competitive-analysis')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -67,21 +71,65 @@ const Hero = () => {
               </Button>
             </div>
 
-            {/* New Features Advertisement Section */}
-            <div className="mb-4 md:mb-6 p-2 md:p-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-              <div className="flex items-center mb-1 md:mb-2">
-                <span className="text-accent font-semibold text-xs md:text-sm">🚀 New Interactive Tools</span>
+            {/* Enhanced Interactive Tools Section */}
+            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+              <div className="flex items-center mb-2 md:mb-3">
+                <span className="text-accent font-semibold text-sm md:text-base">🚀 Free Interactive Tools</span>
               </div>
-              <p className="text-xs text-white/80 mb-1 md:mb-2">
-                Try our new cost calculator, timeline estimator, service quiz & premium consultations!
+              <p className="text-xs md:text-sm text-white/80 mb-3 md:mb-4">
+                Try our powerful business tools: cost calculator, timeline estimator, service quiz & SEO intelligence!
               </p>
+              
+              {/* Tools Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  onClick={navigateToQuote}
+                >
+                  <Calculator className="w-3 h-3" />
+                  <span>Cost Calculator</span>
+                </Button>
+                
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  onClick={navigateToQuote}
+                >
+                  <Clock className="w-3 h-3" />
+                  <span>Timeline Tool</span>
+                </Button>
+                
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  onClick={navigateToQuote}
+                >
+                  <HelpCircle className="w-3 h-3" />
+                  <span>Service Quiz</span>
+                </Button>
+                
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  onClick={scrollToCompetitiveAnalysis}
+                >
+                  <BarChart3 className="w-3 h-3" />
+                  <span>SEO Intelligence</span>
+                </Button>
+              </div>
+              
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-2 py-1 text-xs"
+                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs w-full"
                 onClick={navigateToQuote}
               >
-                Explore Tools
+                Explore All Tools
               </Button>
             </div>
 
