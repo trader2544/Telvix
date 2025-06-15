@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
@@ -67,17 +68,17 @@ const Hero = () => {
             </div>
 
             {/* New Features Advertisement Section */}
-            <div className="mb-6 p-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-              <div className="flex items-center mb-2">
-                <span className="text-accent font-semibold text-sm">🚀 New Interactive Tools</span>
+            <div className="mb-4 md:mb-6 p-2 md:p-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+              <div className="flex items-center mb-1 md:mb-2">
+                <span className="text-accent font-semibold text-xs md:text-sm">🚀 New Interactive Tools</span>
               </div>
-              <p className="text-xs text-white/80 mb-2">
+              <p className="text-xs text-white/80 mb-1 md:mb-2">
                 Try our new cost calculator, timeline estimator, service quiz & premium consultations!
               </p>
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs"
+                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-2 py-1 text-xs"
                 onClick={navigateToQuote}
               >
                 Explore Tools

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { HelpCircle, CheckCircle, ArrowRight } from 'lucide-react';
+import { HelpCircle, CheckCircle, ArrowRight, Target } from 'lucide-react';
 
 const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (service: string) => void }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -11,39 +11,39 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
 
   const questions = [
     {
-      question: "What's your primary business goal?",
+      question: "What's your main business goal? 🎯",
       options: [
-        "Establish online presence",
-        "Sell products/services online",
-        "Automate business processes",
-        "Create a software product"
+        { text: "Establish online presence", icon: "🌐" },
+        { text: "Sell products/services online", icon: "🛒" },
+        { text: "Automate business processes", icon: "🤖" },
+        { text: "Create a software product", icon: "💻" }
       ]
     },
     {
-      question: "What's your current situation?",
+      question: "What's your current situation? 📊",
       options: [
-        "Starting from scratch",
-        "Have existing website/app",
-        "Need to modernize",
-        "Looking to scale"
+        { text: "Starting from scratch", icon: "🚀" },
+        { text: "Have existing website/app", icon: "🔧" },
+        { text: "Need to modernize", icon: "⚡" },
+        { text: "Looking to scale", icon: "📈" }
       ]
     },
     {
-      question: "What's your budget range?",
+      question: "What's your budget range? 💰",
       options: [
-        "Under $1,000",
-        "$1,000 - $5,000",
-        "$5,000 - $15,000",
-        "$15,000+"
+        { text: "Under KSh 20,000", icon: "💵" },
+        { text: "KSh 20,000 - KSh 50,000", icon: "💸" },
+        { text: "KSh 50,000 - KSh 100,000", icon: "💰" },
+        { text: "KSh 100,000+", icon: "💎" }
       ]
     },
     {
-      question: "How technical is your team?",
+      question: "How technical is your team? 🔧",
       options: [
-        "Non-technical",
-        "Some technical knowledge",
-        "Technical team",
-        "Very technical"
+        { text: "Non-technical", icon: "👥" },
+        { text: "Some technical knowledge", icon: "🎓" },
+        { text: "Technical team", icon: "👨‍💻" },
+        { text: "Very technical", icon: "🚀" }
       ]
     }
   ];
@@ -65,7 +65,7 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
     const [goal, situation, budget, technical] = userAnswers;
 
     if (goal === "Establish online presence") {
-      if (budget === "Under $1,000") return "Web Design & Development";
+      if (budget === "Under KSh 20,000") return "Web Design & Development";
       return "Web Design & Development";
     }
     
@@ -78,7 +78,7 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
     }
     
     if (goal === "Create a software product") {
-      if (budget === "$15,000+") return "SaaS Development";
+      if (budget === "KSh 100,000+") return "SaaS Development";
       return "Custom Software Development";
     }
 
@@ -93,28 +93,38 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
 
   if (recommendation) {
     return (
-      <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-primary">
-            <CheckCircle className="w-5 h-5 text-green-500" />
-            Your Recommended Service
+      <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-xl">
+        <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-t-lg">
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="w-5 h-5" />
+            Perfect Match Found! 🎉
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-            <h3 className="text-xl font-bold text-green-800 mb-2">{recommendation}</h3>
-            <p className="text-green-600 text-sm mb-4">
-              Based on your answers, this service aligns best with your needs and goals.
-            </p>
-            <div className="space-y-2">
+        <CardContent className="p-4 md:p-6 text-center">
+          <div className="bg-white rounded-xl p-6 shadow-inner">
+            <div className="mb-4">
+              <Target className="w-16 h-16 mx-auto text-green-600 mb-3" />
+              <h3 className="text-xl md:text-2xl font-bold text-green-800 mb-2">
+                {recommendation}
+              </h3>
+              <p className="text-green-600 text-sm mb-4">
+                Based on your answers, this service perfectly aligns with your needs and budget in Kenya! 🇰🇪
+              </p>
+            </div>
+            
+            <div className="space-y-3">
               <Button 
                 onClick={() => onServiceSelect(recommendation)}
-                className="w-full bg-gradient-to-r from-primary to-accent"
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-3"
               >
-                Get Quote for {recommendation}
+                Get Quote for {recommendation} 💰
               </Button>
-              <Button variant="outline" onClick={resetQuiz} className="w-full">
-                Take Quiz Again
+              <Button 
+                variant="outline" 
+                onClick={resetQuiz} 
+                className="w-full border-green-500 text-green-600 hover:bg-green-50"
+              >
+                Take Quiz Again 🔄
               </Button>
             </div>
           </div>
@@ -124,41 +134,46 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
   }
 
   return (
-    <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-primary">
+    <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 shadow-xl">
+      <CardHeader className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
+        <CardTitle className="flex items-center gap-2">
           <HelpCircle className="w-5 h-5" />
-          Service Recommendation Quiz
+          Find Your Perfect Service 🇰🇪
         </CardTitle>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <p className="text-purple-100 text-sm">Answer 4 quick questions to get personalized recommendations</p>
+        <div className="w-full bg-purple-300/30 rounded-full h-3 mt-3">
           <div 
-            className="bg-gradient-to-r from-primary to-accent h-2 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-white to-pink-200 h-3 rounded-full transition-all duration-500 flex items-center justify-end pr-2"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-          ></div>
+          >
+            <span className="text-xs font-bold text-purple-600">
+              {currentQuestion + 1}/{questions.length}
+            </span>
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <h3 className="text-lg font-semibold mb-4">
+      <CardContent className="p-4 md:p-6">
+        <div className="bg-white rounded-xl p-6 shadow-inner">
+          <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-6 text-center">
             {questions[currentQuestion].question}
           </h3>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
                 key={index}
                 variant="outline"
-                className="w-full justify-between hover:bg-primary hover:text-white"
-                onClick={() => handleAnswer(option)}
+                className="w-full justify-between hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white hover:border-transparent transition-all duration-300 p-4 h-auto"
+                onClick={() => handleAnswer(option.text)}
               >
-                {option}
+                <div className="flex items-center gap-3">
+                  <span className="text-lg">{option.icon}</span>
+                  <span className="font-medium">{option.text}</span>
+                </div>
                 <ArrowRight className="w-4 h-4" />
               </Button>
             ))}
           </div>
         </div>
-        <p className="text-sm text-gray-500 text-center">
-          Question {currentQuestion + 1} of {questions.length}
-        </p>
       </CardContent>
     </Card>
   );
