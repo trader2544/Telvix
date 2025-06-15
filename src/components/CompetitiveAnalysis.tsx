@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, MapPin, TrendingUp, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 const CompetitiveAnalysis = () => {
   const navigate = useNavigate();
@@ -111,8 +110,8 @@ const CompetitiveAnalysis = () => {
           </Button>
         </div>
 
-        {/* Google Custom Search Results in Scrollable Card */}
-        <Card className="bg-white border border-gray-200">
+        {/* Google Custom Search Results in Fixed Height Card */}
+        <Card className="bg-white border border-gray-200 h-96">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-blue-600" />
@@ -122,10 +121,8 @@ const CompetitiveAnalysis = () => {
               Real-time competitor search powered by Google
             </p>
           </CardHeader>
-          <CardContent className="p-0">
-            <ScrollArea className="h-96 p-4">
-              <div className="gcse-search"></div>
-            </ScrollArea>
+          <CardContent className="p-4 h-[calc(100%-120px)] overflow-auto">
+            <div className="gcse-search"></div>
           </CardContent>
         </Card>
 
