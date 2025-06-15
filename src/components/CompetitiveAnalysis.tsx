@@ -1,18 +1,31 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, MapPin, TrendingUp, ArrowRight, Globe, Target, Lightbulb, BarChart3 } from 'lucide-react';
+import { Search, MapPin, TrendingUp, ArrowRight, Globe, Target, Lightbulb, BarChart3, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+interface SearchResult {
+  title: string;
+  link: string;
+  snippet: string;
+  displayLink: string;
+}
 
 const CompetitiveAnalysis = () => {
   const navigate = useNavigate();
   const [niche, setNiche] = useState('');
   const [location, setLocation] = useState('');
   const [customSearch, setCustomSearch] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('competitors');
+
+  const API_KEY = 'AIzaSyDkV_n8U04bIBvC7febed0Uzljosz1h-38';
+  const SEARCH_ENGINE_ID = '7423a42fe367a43c8';
 
   const locations = [
     'Kenya',
@@ -31,24 +44,6 @@ const CompetitiveAnalysis = () => {
     { id: 'ideas', label: 'Business Ideas', icon: Lightbulb, description: 'Get inspiration for your business' },
     { id: 'analysis', label: 'Market Analysis', icon: BarChart3, description: 'Analyze market conditions and demand' }
   ];
-
-  const [activeCategory, setActiveCategory] = useState('competitors');
-
-  useEffect(() => {
-    // Load Google Custom Search script
-    const script = document.createElement('script');
-    script.src = 'https://cse.google.com/cse.js?cx=7423a42fe367a43c8';
-    script.async = true;
-    document.head.appendChild(script);
-
-    return () => {
-      // Cleanup script on unmount
-      const existingScript = document.querySelector('script[src*="cse.google.com"]');
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
 
   const generateSearchQuery = (category: string) => {
     let baseQuery = '';
@@ -77,24 +72,48 @@ const CompetitiveAnalysis = () => {
     return baseQuery;
   };
 
-  const updateSearch = (category: string = activeCategory) => {
-    const searchQuery = category === 'custom' ? customSearch : generateSearchQuery(category);
-    
-    // Update the Google search input if it exists
-    const searchInput = document.querySelector('.gsc-input input') as HTMLInputElement;
-    if (searchInput) {
-      searchInput.value = searchQuery;
-      // Trigger search
-      const searchButton = document.querySelector('.gsc-search-button') as HTMLButtonElement;
-      if (searchButton) {
-        searchButton.click();
+  const performSearch = async (query: string) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`
+      );
+      
+      if (!response.ok) {
+        throw new Error('Search failed');
       }
+      
+      const data = await response.json();
+      
+      if (data.items) {
+        const results: SearchResult[] = data.items.map((item: any) => ({
+          title: item.title,
+          link: item.link,
+          snippet: item.snippet,
+          displayLink: item.displayLink
+        }));
+        setSearchResults(results);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      setSearchResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSearch = (category: string = activeCategory) => {
+    const searchQuery = category === 'custom' ? customSearch : generateSearchQuery(category);
+    if (searchQuery.trim()) {
+      performSearch(searchQuery);
     }
   };
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
-    setTimeout(() => updateSearch(category), 100);
+    handleSearch(category);
   };
 
   const handleGetStarted = () => {
@@ -192,18 +211,18 @@ const CompetitiveAnalysis = () => {
             </div>
             
             <Button 
-              onClick={() => updateSearch()}
+              onClick={() => handleSearch()}
               disabled={!niche.trim() && !customSearch.trim()}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
             >
               <Search className="w-4 h-4 mr-2" />
-              Start Research
+              {isLoading ? 'Searching...' : 'Start Research'}
             </Button>
           </CardContent>
         </Card>
 
         {/* Search Results */}
-        <Card className="bg-white border border-gray-200 h-[500px]">
+        <Card className="bg-white border border-gray-200">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -218,8 +237,48 @@ const CompetitiveAnalysis = () => {
               Real-time internet research results for your business intelligence
             </p>
           </CardHeader>
-          <CardContent className="p-4 h-[calc(100%-120px)] overflow-auto">
-            <div className="gcse-search"></div>
+          <CardContent className="p-4">
+            <div className="h-[400px] overflow-y-auto space-y-4">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                    <p className="text-gray-600">Searching...</p>
+                  </div>
+                </div>
+              ) : searchResults.length > 0 ? (
+                searchResults.map((result, index) => (
+                  <Card key={index} className="border border-gray-100 hover:border-blue-200 transition-colors">
+                    <CardContent className="p-4">
+                      <div className="space-y-2">
+                        <div className="flex items-start justify-between">
+                          <h4 className="font-medium text-blue-600 hover:underline">
+                            <a 
+                              href={result.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1"
+                            >
+                              {result.title}
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </h4>
+                        </div>
+                        <p className="text-xs text-green-600">{result.displayLink}</p>
+                        <p className="text-sm text-gray-600 leading-relaxed">{result.snippet}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  <div className="text-center">
+                    <Search className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                    <p>Enter your search terms and click "Start Research" to begin</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
 
