@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
@@ -219,35 +220,35 @@ const Portfolio = () => {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative py-32 bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
+        <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute top-20 right-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-20 left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 animate-fade-in">
+            <h1 className="text-4xl md:text-7xl font-bold mb-6 md:mb-8 animate-fade-in">
               Our <span className="text-accent">Portfolio</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto mb-8 animate-slide-up">
+            <p className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto mb-6 md:mb-8 animate-slide-up">
               Explore our diverse range of projects showcasing innovative web solutions tailored to client needs
             </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
-              <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Web Development</span>
-              <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Mobile Apps</span>
-              <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">SaaS Solutions</span>
-              <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">AI Integration</span>
+            <div className="flex flex-wrap justify-center gap-3 text-sm md:text-base">
+              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">Web Development</span>
+              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">Mobile Apps</span>
+              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">SaaS Solutions</span>
+              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">AI Integration</span>
             </div>
           </div>
         </section>
 
         {/* Projects Section */}
-        <section className="py-20">
+        <section className="py-12 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 animate-fade-in">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 md:mb-6 animate-fade-in">
                 Featured Projects
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-slide-up">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-slide-up">
                 Each project represents our commitment to excellence and innovation in digital solutions
               </p>
             </div>
@@ -259,53 +260,53 @@ const Portfolio = () => {
               </div>
             )}
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {portfolioProjects.map((project, index) => {
                 const IconComponent = project.icon;
                 
                 return (
                   <Card 
                     key={project.id} 
-                    className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 rounded-3xl overflow-hidden animate-slide-up"
+                    className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 rounded-2xl overflow-hidden animate-slide-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {/* Project Image */}
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-32 md:h-40 overflow-hidden">
                       <img 
                         src={project.image}
                         alt={project.name}
                         className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      <div className="absolute top-4 left-4">
-                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
-                          <IconComponent className="w-6 h-6 text-white" />
+                      <div className="absolute top-2 left-2">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
+                          <IconComponent className="w-4 h-4 text-white" />
                         </div>
                       </div>
-                      <div className="absolute top-4 right-4 flex space-x-2">
-                        <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-full px-2 py-1">
-                          <Star className="w-4 h-4 text-yellow-400" />
-                          <span className="text-white text-sm">{project.stargazers_count}</span>
+                      <div className="absolute top-2 right-2 flex space-x-1">
+                        <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-full px-1.5 py-0.5">
+                          <Star className="w-3 h-3 text-yellow-400" />
+                          <span className="text-white text-xs">{project.stargazers_count}</span>
                         </div>
-                        <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-full px-2 py-1">
-                          <GitFork className="w-4 h-4 text-blue-400" />
-                          <span className="text-white text-sm">{project.forks_count}</span>
+                        <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-full px-1.5 py-0.5">
+                          <GitFork className="w-3 h-3 text-blue-400" />
+                          <span className="text-white text-xs">{project.forks_count}</span>
                         </div>
                       </div>
                     </div>
 
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-1">
                         {project.name}
                       </h3>
                       
-                      <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                      <p className="text-gray-600 mb-3 line-clamp-2 text-sm leading-relaxed">
                         {project.description}
                       </p>
                       
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-3">
                         {project.language && (
-                          <span className="inline-block bg-gradient-to-r from-primary to-accent text-white px-3 py-1 rounded-full text-sm font-medium">
+                          <span className="inline-block bg-gradient-to-r from-primary to-accent text-white px-2 py-1 rounded-full text-xs font-medium">
                             {project.language}
                           </span>
                         )}
@@ -315,31 +316,31 @@ const Portfolio = () => {
                       </div>
                       
                       {project.topics && project.topics.length > 0 && (
-                        <div className="mb-4 flex flex-wrap gap-2">
-                          {project.topics.slice(0, 3).map((topic) => (
-                            <span key={topic} className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                        <div className="mb-3 flex flex-wrap gap-1">
+                          {project.topics.slice(0, 2).map((topic) => (
+                            <span key={topic} className="inline-block bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full text-xs">
                               #{topic}
                             </span>
                           ))}
                         </div>
                       )}
                       
-                      <div className="flex space-x-2 mb-3">
+                      <div className="flex space-x-1 mb-2">
                         <Button 
                           size="sm" 
-                          className="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                          className="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-xs py-1.5"
                           onClick={() => window.open(project.html_url, '_blank')}
                         >
-                          <Github className="w-4 h-4 mr-2" />
+                          <Github className="w-3 h-3 mr-1" />
                           Code
                         </Button>
                         <Button 
                           size="sm" 
                           variant="outline" 
-                          className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
+                          className="flex-1 border-primary text-primary hover:bg-primary hover:text-white text-xs py-1.5"
                           onClick={() => window.open(project.homepage, '_blank')}
                         >
-                          <ExternalLink className="w-4 h-4 mr-2" />
+                          <ExternalLink className="w-3 h-3 mr-1" />
                           Live
                         </Button>
                       </div>
@@ -348,7 +349,7 @@ const Portfolio = () => {
                         <DialogTrigger asChild>
                           <Button 
                             variant="ghost" 
-                            className="w-full text-primary hover:bg-primary/10"
+                            className="w-full text-primary hover:bg-primary/10 text-xs py-1.5"
                             onClick={() => setSelectedProject(project)}
                           >
                             More Info
@@ -419,22 +420,22 @@ const Portfolio = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-primary to-accent text-white relative overflow-hidden">
+        <section className="py-16 md:py-20 bg-gradient-to-r from-primary to-accent text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 animate-fade-in">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto animate-slide-up">
+            <p className="text-lg md:text-xl text-white/90 mb-6 md:mb-8 max-w-2xl mx-auto animate-slide-up">
               Let's collaborate and bring your digital vision to life with our expertise
             </p>
             <Button 
               size="lg" 
               variant="secondary"
               onClick={scrollToTop}
-              className="px-8 py-4 text-lg bg-white text-primary hover:bg-white/90 font-semibold"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg bg-white text-primary hover:bg-white/90 font-semibold"
             >
               Start Your Project Today
             </Button>
