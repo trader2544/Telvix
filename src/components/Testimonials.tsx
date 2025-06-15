@@ -54,7 +54,7 @@ const Testimonials = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl mb-6 shadow-lg">
             <MessageCircle className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+          <h2 className="mobile-text-4xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
             Our Portfolio Projects
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-teal-500 mx-auto rounded-full"></div>
@@ -85,7 +85,7 @@ const Testimonials = () => {
                 </div>
                 
                 {/* Quote */}
-                <blockquote className="text-gray-700 leading-relaxed text-lg italic text-center mb-8 relative">
+                <blockquote className="text-gray-700 leading-relaxed text-sm md:text-base italic text-center mb-8 relative">
                   <div className="absolute -top-4 -left-2 text-4xl text-blue-200 font-serif">"</div>
                   {testimonial.content}
                   <div className="absolute -bottom-8 -right-2 text-4xl text-teal-200 font-serif">"</div>
@@ -93,16 +93,16 @@ const Testimonials = () => {
                 
                 {/* Client Info */}
                 <div className="text-center mb-6">
-                  <h4 className="font-bold text-gray-900 text-lg mb-1">{testimonial.name}</h4>
-                  <p className="text-blue-600 font-semibold mb-1">{testimonial.role}</p>
-                  <p className="text-gray-500 text-sm">{testimonial.company}</p>
+                  <h4 className="font-bold text-gray-900 text-base md:text-lg mb-1">{testimonial.name}</h4>
+                  <p className="text-blue-600 font-semibold mb-1 text-sm md:text-base">{testimonial.role}</p>
+                  <p className="text-gray-500 text-xs md:text-sm">{testimonial.company}</p>
                 </div>
 
                 {/* View Project Button */}
                 <div className="text-center">
                   <Button
                     onClick={() => window.open(testimonial.link, '_blank')}
-                    className="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-2"
+                    className="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-2 text-sm"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     View Project
