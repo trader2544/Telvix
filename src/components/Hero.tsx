@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
@@ -67,21 +66,21 @@ const Hero = () => {
               </Button>
             </div>
 
-            {/* New Careers Section */}
+            {/* New Features Advertisement Section */}
             <div className="mb-6 p-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
               <div className="flex items-center mb-2">
-                <span className="text-accent font-semibold text-sm">🚀 Join Our Team</span>
+                <span className="text-accent font-semibold text-sm">🚀 New Interactive Tools</span>
               </div>
               <p className="text-xs text-white/80 mb-2">
-                We're hiring talented developers from Kenya and Nigeria for exciting freelance projects!
+                Try our new cost calculator, timeline estimator, service quiz & premium consultations!
               </p>
               <Button 
                 size="sm" 
                 variant="outline" 
                 className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs"
-                onClick={navigateToCareers}
+                onClick={navigateToQuote}
               >
-                View Opportunities
+                Explore Tools
               </Button>
             </div>
 

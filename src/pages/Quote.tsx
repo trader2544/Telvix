@@ -193,17 +193,17 @@ const Quote = () => {
                   <Calculator className="w-3 h-3" />
                   <span className="hidden sm:inline">Cost</span>
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Clock className="w-3 h-3" />
-                  <span className="hidden sm:inline">Time</span>
+                <TabsTrigger value="premium" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Star className="w-3 h-3" />
+                  <span className="hidden sm:inline">Pro</span>
                 </TabsTrigger>
                 <TabsTrigger value="quiz" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
                   <HelpCircle className="w-3 h-3" />
                   <span className="hidden sm:inline">Quiz</span>
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Star className="w-3 h-3" />
-                  <span className="hidden sm:inline">Pro</span>
+                <TabsTrigger value="timeline" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Clock className="w-3 h-3" />
+                  <span className="hidden sm:inline">Time</span>
                 </TabsTrigger>
               </TabsList>
 

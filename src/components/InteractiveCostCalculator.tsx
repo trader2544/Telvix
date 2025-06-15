@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,23 +12,23 @@ const InteractiveCostCalculator = ({ userCurrency = 'KSh' }: { userCurrency?: st
   const [estimate, setEstimate] = useState<any>(null);
 
   const services = [
-    { name: 'Web Design & Development', basePrice: 25000 },
-    { name: 'AI & Automation Solutions', basePrice: 35000 },
-    { name: 'SaaS Development', basePrice: 75000 },
-    { name: 'E-commerce Solutions', basePrice: 45000 },
-    { name: 'Mobile App Development', basePrice: 85000 },
-    { name: 'Custom Software Development', basePrice: 65000 }
+    { name: 'Web Design & Development', basePrice: 15000 },
+    { name: 'AI & Automation Solutions', basePrice: 25000 },
+    { name: 'SaaS Development', basePrice: 45000 },
+    { name: 'E-commerce Solutions', basePrice: 30000 },
+    { name: 'Mobile App Development', basePrice: 55000 },
+    { name: 'Custom Software Development', basePrice: 40000 }
   ];
 
   const availableFeatures = [
-    { name: 'Responsive Design', price: 8000 },
-    { name: 'SEO Optimization', price: 12000 },
-    { name: 'Payment Integration', price: 15000 },
-    { name: 'User Authentication', price: 10000 },
-    { name: 'Admin Dashboard', price: 20000 },
-    { name: 'API Integration', price: 15000 },
-    { name: 'Database Setup', price: 12000 },
-    { name: 'SSL Certificate', price: 3000 }
+    { name: 'Responsive Design', price: 5000 },
+    { name: 'SEO Optimization', price: 8000 },
+    { name: 'Payment Integration', price: 10000 },
+    { name: 'User Authentication', price: 7000 },
+    { name: 'Admin Dashboard', price: 15000 },
+    { name: 'API Integration', price: 10000 },
+    { name: 'Database Setup', price: 8000 },
+    { name: 'SSL Certificate', price: 2000 }
   ];
 
   const complexityMultipliers = [1, 1.3, 1.6, 2.0, 2.5];
