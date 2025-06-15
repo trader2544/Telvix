@@ -8,10 +8,17 @@ import CTA from '@/components/CTA';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import CompetitiveAnalysis from '@/components/CompetitiveAnalysis';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import SocialIntegration from '@/components/SocialIntegration';
+import PerformanceOptimizer from '@/components/PerformanceOptimizer';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      {/* Performance and Analytics Components */}
+      <PerformanceOptimizer />
+      <GoogleAnalytics />
+      
       {/* Enhanced semantic HTML structure for SEO */}
       <Header />
       
@@ -41,6 +48,14 @@ const Index = () => {
         <Testimonials />
         <CTA />
         <Contact />
+        
+        {/* Social Media Integration */}
+        <section className="py-8 bg-gray-50" aria-label="Social Media">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Connect With Us</h3>
+            <SocialIntegration />
+          </div>
+        </section>
       </main>
       
       <Footer />
