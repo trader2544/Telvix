@@ -276,49 +276,49 @@ const CompetitiveAnalysis = () => {
             {isLoading ? 'Researching...' : 'Start Digital Intelligence Search'}
           </Button>
 
-          {/* Search Results */}
+          {/* Search Results - Reduced Height and Smaller Text */}
           <Card className="bg-white border border-gray-200">
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-4 h-4 text-white" />
+                  <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-3 h-3 text-white" />
                   </div>
-                  <h3 className="font-bold text-gray-800">Live Intelligence Results</h3>
+                  <h3 className="text-sm font-bold text-gray-800">Live Intelligence Results</h3>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-3 py-1 rounded-full">
+                <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full">
                   <Globe className="w-3 h-3" />
                   Powered by Telvix AI
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="p-4">
-              <div className="h-[400px] overflow-y-auto space-y-3">
+            <CardContent className="p-3">
+              <div className="h-[250px] overflow-y-auto space-y-2">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-                      <p className="text-gray-600 font-medium">Analyzing digital landscape...</p>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-3"></div>
+                      <p className="text-gray-600 text-sm font-medium">Analyzing digital landscape...</p>
                     </div>
                   </div>
                 ) : searchResults.length > 0 ? (
                   searchResults.map((result, index) => (
-                    <Card key={index} className="border border-gray-100 hover:border-purple-200 transition-all duration-200 hover:shadow-md">
-                      <CardContent className="p-4">
-                        <div className="space-y-2">
-                          <h4 className="font-semibold text-purple-700 hover:text-purple-800 leading-tight">
+                    <Card key={index} className="border border-gray-100 hover:border-purple-200 transition-all duration-200 hover:shadow-sm">
+                      <CardContent className="p-3">
+                        <div className="space-y-1">
+                          <h4 className="text-sm font-semibold text-purple-700 hover:text-purple-800 leading-tight">
                             <a 
                               href={result.link} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="flex items-start gap-2 hover:underline"
+                              className="flex items-start gap-1 hover:underline"
                             >
                               {result.title}
-                              <ExternalLink className="w-3 h-3 mt-1 flex-shrink-0" />
+                              <ExternalLink className="w-3 h-3 mt-0.5 flex-shrink-0" />
                             </a>
                           </h4>
                           <p className="text-xs text-green-600 font-medium">{result.displayLink}</p>
-                          <p className="text-sm text-gray-600 leading-relaxed">{result.snippet}</p>
+                          <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">{result.snippet}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -326,11 +326,11 @@ const CompetitiveAnalysis = () => {
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-500">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Search className="w-8 h-8 text-gray-400" />
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Search className="w-6 h-6 text-gray-400" />
                       </div>
-                      <p className="font-medium">Ready to explore the digital landscape?</p>
-                      <p className="text-sm mt-1">Select a service type and start your research</p>
+                      <p className="text-sm font-medium">Ready to explore the digital landscape?</p>
+                      <p className="text-xs mt-1">Select a service type and start your research</p>
                     </div>
                   </div>
                 )}
