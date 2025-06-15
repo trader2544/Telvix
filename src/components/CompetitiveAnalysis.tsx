@@ -187,62 +187,114 @@ const CompetitiveAnalysis = () => {
     setIsLoading(true);
     
     try {
-      // Enhanced search queries for better business results
+      // Enhanced, highly targeted search queries for specific location and category
+      const targetLocation = location || 'Kenya';
       const businessQueries = [
-        `${niche} business ${location ? location : 'Kenya'} website -wikipedia -facebook -instagram`,
-        `"${niche}" ${location ? location : 'Kenya'} company website contact`,
-        `${niche} services ${location ? location : 'Kenya'} professional website`
+        // Most specific - exact business category with location and website requirement
+        `"${niche}" business "${targetLocation}" site:*.com OR site:*.co.ke -wikipedia -facebook -instagram -linkedin -twitter`,
+        
+        // Professional services in specific location
+        `"${niche} services" "${targetLocation}" contact website phone -directory -wikipedia -social`,
+        
+        // Business listings with location specification
+        `professional "${niche}" "${targetLocation}" website contact address -wikipedia -facebook -instagram`,
+        
+        // Local business directory style search
+        `"${niche}" company "${targetLocation}" website phone address -ads -wikipedia -social`,
+        
+        // Specific location with business type
+        `"${targetLocation}" "${niche}" business website contact professional -wikipedia -facebook -instagram -linkedin`
       ];
 
       let allResults: SearchResult[] = [];
 
-      // Execute multiple searches for comprehensive results
+      // Execute searches with more specific targeting
       for (const query of businessQueries) {
         try {
+          console.log('Searching with query:', query);
+          
           const response = await fetch(
-            `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(query)}&num=4`
+            `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(query)}&num=3&gl=ke&cr=countryKE`
           );
 
           if (response.ok) {
             const data = await response.json();
             if (data.items && data.items.length > 0) {
-              const enhancedResults = data.items.map((item: any) => ({
-                ...item,
-                businessInfo: extractBusinessInfo(item)
-              }));
-              allResults = [...allResults, ...enhancedResults];
+              const filteredResults = data.items
+                .filter((item: any) => {
+                  const domain = item.displayLink.toLowerCase();
+                  const title = item.title.toLowerCase();
+                  const snippet = item.snippet.toLowerCase();
+                  
+                  // Filter for business-relevant content
+                  const hasBusinessInfo = 
+                    snippet.includes('contact') ||
+                    snippet.includes('phone') ||
+                    snippet.includes('address') ||
+                    snippet.includes('service') ||
+                    snippet.includes('business') ||
+                    snippet.includes('professional') ||
+                    title.includes(niche.toLowerCase()) ||
+                    snippet.includes(niche.toLowerCase());
+                  
+                  const hasLocationInfo = 
+                    snippet.includes(targetLocation.toLowerCase()) ||
+                    title.includes(targetLocation.toLowerCase()) ||
+                    domain.includes('.ke');
+                  
+                  // Exclude unwanted domains
+                  const isExcluded = 
+                    domain.includes('wikipedia') ||
+                    domain.includes('facebook') ||
+                    domain.includes('instagram') ||
+                    domain.includes('linkedin') ||
+                    domain.includes('twitter') ||
+                    domain.includes('youtube') ||
+                    domain.includes('pinterest') ||
+                    domain.includes('directory') ||
+                    !domain.includes('.');
+                  
+                  return hasBusinessInfo && (hasLocationInfo || targetLocation === 'Kenya') && !isExcluded;
+                })
+                .map((item: any) => ({
+                  ...item,
+                  businessInfo: extractBusinessInfo(item)
+                }));
+              
+              allResults = [...allResults, ...filteredResults];
             }
           }
           
-          // Small delay between requests
-          await new Promise(resolve => setTimeout(resolve, 500));
+          // Delay between requests to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 800));
         } catch (error) {
           console.log('Search query failed:', query, error);
         }
       }
 
-      // Remove duplicates and filter results
+      // Remove duplicates and prioritize business websites
       const uniqueResults = allResults
         .filter((result, index, self) => 
           index === self.findIndex(r => r.displayLink === result.displayLink)
         )
-        .filter(result => 
-          !result.displayLink.includes('wikipedia') &&
-          !result.displayLink.includes('facebook.com') &&
-          !result.displayLink.includes('instagram.com') &&
-          result.displayLink.includes('.')
-        )
+        .sort((a, b) => {
+          // Prioritize .co.ke domains and business-looking domains
+          const aScore = getDomainBusinessScore(a.displayLink, a.title, a.snippet);
+          const bScore = getDomainBusinessScore(b.displayLink, b.title, b.snippet);
+          return bScore - aScore;
+        })
         .slice(0, 8);
 
       if (uniqueResults.length > 0) {
         setResults(uniqueResults);
         setTrends(generateAdvancedTrends(niche, location));
         setSeoMetrics(generateAdvancedSEO(uniqueResults));
+        console.log(`Found ${uniqueResults.length} relevant business competitors`);
       } else {
         setResults([]);
         setTrends([]);
         setSeoMetrics([]);
-        alert('No business websites found. Try a different niche or location.');
+        alert(`No ${niche} business websites found in ${targetLocation}. Try a different niche or location.`);
       }
     } catch (error) {
       console.error('Search error:', error);
@@ -253,6 +305,33 @@ const CompetitiveAnalysis = () => {
     }
     
     setIsLoading(false);
+  };
+
+  // Score domains based on how business-like they appear
+  const getDomainBusinessScore = (domain: string, title: string, snippet: string): number => {
+    let score = 0;
+    
+    // Domain scoring
+    if (domain.includes('.co.ke')) score += 30;
+    else if (domain.includes('.com')) score += 20;
+    else if (domain.includes('.org')) score += 15;
+    
+    // Business indicators in content
+    const businessKeywords = ['contact', 'services', 'professional', 'business', 'company', 'phone', 'address'];
+    const content = (title + ' ' + snippet).toLowerCase();
+    
+    businessKeywords.forEach(keyword => {
+      if (content.includes(keyword)) score += 5;
+    });
+    
+    // Niche relevance
+    if (content.includes(niche.toLowerCase())) score += 25;
+    
+    // Location relevance
+    const targetLocation = location || 'Kenya';
+    if (content.includes(targetLocation.toLowerCase())) score += 15;
+    
+    return score;
   };
 
   const checkCustomDomain = async () => {
@@ -555,10 +634,12 @@ const CompetitiveAnalysis = () => {
                 <div className="bg-gradient-to-r from-orange-100 to-red-100 border border-orange-300 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Target className="w-5 h-5 text-orange-600" />
-                    <h3 className="font-bold text-orange-800">Live Business Competitors Found</h3>
+                    <h3 className="font-bold text-orange-800">
+                      Live {niche} Competitors in {location || 'Kenya'}
+                    </h3>
                   </div>
                   <p className="text-sm text-orange-700">
-                    Found {results.length} active business websites in your market with Google presence! 🎯
+                    Found {results.length} active {niche.toLowerCase()} business websites in your exact market! 🎯
                   </p>
                 </div>
 
