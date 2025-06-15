@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { useToast } from '@/hooks/use-toast';
 
@@ -10,6 +11,7 @@ const Footer = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +46,18 @@ const Footer = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handlePrivacyClick = () => {
+    navigate('/privacy-policy');
+  };
+
+  const handleTermsClick = () => {
+    navigate('/terms-of-service');
+  };
+
+  const handleCookieClick = () => {
+    navigate('/cookie-policy');
   };
 
   return (
@@ -104,9 +118,9 @@ const Footer = () => {
                 <li><a href="/careers" className="text-gray-300 hover:text-accent transition-colors text-xs">Careers</a></li>
                 <li><a href="#testimonials" className="text-gray-300 hover:text-accent transition-colors text-xs">Testimonials</a></li>
                 <li><a href="#contact" className="text-gray-300 hover:text-accent transition-colors text-xs">Contact</a></li>
-                <li><a href="/privacy-policy" className="text-gray-300 hover:text-accent transition-colors text-xs">Privacy Policy</a></li>
-                <li><a href="/terms-of-service" className="text-gray-300 hover:text-accent transition-colors text-xs">Terms of Service</a></li>
-                <li><a href="/cookie-policy" className="text-gray-300 hover:text-accent transition-colors text-xs">Cookie Policy</a></li>
+                <li><button onClick={handlePrivacyClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Privacy Policy</button></li>
+                <li><button onClick={handleTermsClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Terms of Service</button></li>
+                <li><button onClick={handleCookieClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Cookie Policy</button></li>
               </ul>
             </div>
 
@@ -165,9 +179,9 @@ const Footer = () => {
             </div>
             
             <div className="flex space-x-4 text-xs">
-              <a href="/privacy-policy" className="text-gray-400 hover:text-accent transition-colors">Privacy</a>
-              <a href="/terms-of-service" className="text-gray-400 hover:text-accent transition-colors">Terms</a>
-              <a href="/cookie-policy" className="text-gray-400 hover:text-accent transition-colors">Cookies</a>
+              <button onClick={handlePrivacyClick} className="text-gray-400 hover:text-accent transition-colors">Privacy</button>
+              <button onClick={handleTermsClick} className="text-gray-400 hover:text-accent transition-colors">Terms</button>
+              <button onClick={handleCookieClick} className="text-gray-400 hover:text-accent transition-colors">Cookies</button>
             </div>
           </div>
         </div>

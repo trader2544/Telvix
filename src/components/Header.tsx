@@ -1,7 +1,8 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Phone } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,6 +43,10 @@ const Header = () => {
 
   const handleCall = () => {
     window.open('tel:+254741947599', '_self');
+  };
+
+  const handleWhatsApp = () => {
+    window.open('https://wa.me/254741947599', '_blank');
   };
 
   return (
@@ -125,6 +130,17 @@ const Header = () => {
           )}
         </div>
       </header>
+
+      {/* WhatsApp Icon - positioned on the bottom left */}
+      <div className="fixed bottom-4 left-4 z-50">
+        <button
+          onClick={handleWhatsApp}
+          className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          aria-label="Contact us on WhatsApp"
+        >
+          <MessageCircle className="w-4 h-4" />
+        </button>
+      </div>
 
       {/* Call Icon - positioned on the bottom right */}
       <div className="fixed bottom-4 right-4 z-50">
