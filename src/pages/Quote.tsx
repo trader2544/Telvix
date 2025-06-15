@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -109,16 +110,16 @@ const Quote = () => {
         
         <main className="pt-20 pb-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center py-20">
-              <div className="mb-8">
-                <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <div className="max-w-2xl mx-auto text-center py-12 md:py-20">
+              <div className="mb-6 md:mb-8">
+                <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-green-500 mx-auto mb-4 md:mb-6" />
+                <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
                   Quote Request Submitted!
                 </h1>
-                <p className="text-xl text-gray-600 mb-8">
+                <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
                   Thank you for your interest in our services. We'll review your requirements and contact you within 24 hours via call or email.
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <Button 
                     onClick={() => navigate('/')}
                     className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 mr-4"
@@ -152,16 +153,16 @@ const Quote = () => {
         <Button
           onClick={handlePhoneCall}
           size="lg"
-          className="rounded-full w-14 h-14 bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl transition-all duration-300"
+          className="rounded-full w-12 h-12 md:w-14 md:h-14 bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl transition-all duration-300"
           title="Call us now"
         >
-          <PhoneCall className="w-6 h-6" />
+          <PhoneCall className="w-4 h-4 md:w-6 md:h-6" />
         </Button>
       </div>
       
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 md:mb-8">
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
@@ -173,43 +174,43 @@ const Quote = () => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
                 Get Your <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Free Quote</span>
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg md:text-xl text-gray-600">
                 Use our interactive tools to estimate costs, timelines, and find the perfect service for your needs.
               </p>
             </div>
 
-            <Tabs defaultValue="quote" className="space-y-8">
+            <Tabs defaultValue="quote" className="space-y-6 md:space-y-8">
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-white/80 backdrop-blur-sm p-1">
-                <TabsTrigger value="quote" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
-                  <Send className="w-3 h-3 md:w-4 md:h-4" />
-                  <span>Quote</span>
+                <TabsTrigger value="quote" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Send className="w-3 h-3" />
+                  <span className="hidden sm:inline">Quote</span>
                 </TabsTrigger>
-                <TabsTrigger value="calculator" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
-                  <Calculator className="w-3 h-3 md:w-4 md:h-4" />
-                  <span>Cost</span>
+                <TabsTrigger value="calculator" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Calculator className="w-3 h-3" />
+                  <span className="hidden sm:inline">Cost</span>
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
-                  <Clock className="w-3 h-3 md:w-4 md:h-4" />
-                  <span>Time</span>
+                <TabsTrigger value="timeline" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Clock className="w-3 h-3" />
+                  <span className="hidden sm:inline">Time</span>
                 </TabsTrigger>
-                <TabsTrigger value="quiz" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
-                  <HelpCircle className="w-3 h-3 md:w-4 md:h-4" />
-                  <span>Quiz</span>
+                <TabsTrigger value="quiz" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <HelpCircle className="w-3 h-3" />
+                  <span className="hidden sm:inline">Quiz</span>
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
-                  <Star className="w-3 h-3 md:w-4 md:h-4" />
-                  <span>Pro</span>
+                <TabsTrigger value="premium" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
+                  <Star className="w-3 h-3" />
+                  <span className="hidden sm:inline">Pro</span>
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="quote">
-                <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border-0 rounded-3xl">
-                  <CardContent className="p-8">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border-0 rounded-2xl md:rounded-3xl">
+                  <CardContent className="p-4 md:p-8">
+                    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
                           Service Needed *
@@ -219,7 +220,7 @@ const Quote = () => {
                           value={formData.service}
                           onChange={handleChange}
                           required
-                          className="w-full h-12 border-2 border-gray-200 focus:border-primary rounded-xl px-4 bg-white"
+                          className="w-full h-10 md:h-12 border-2 border-gray-200 focus:border-primary rounded-xl px-4 bg-white text-sm"
                         >
                           <option value="">Select a service</option>
                           <option value="Web Design & Development">Web Design & Development</option>
@@ -245,7 +246,7 @@ const Quote = () => {
                           value={formData.priceRange}
                           onChange={handleChange}
                           required
-                          className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                          className="h-10 md:h-12 border-2 border-gray-200 focus:border-primary rounded-xl text-sm"
                         />
                       </div>
 
@@ -260,7 +261,7 @@ const Quote = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                          className="h-10 md:h-12 border-2 border-gray-200 focus:border-primary rounded-xl text-sm"
                         />
                       </div>
 
@@ -275,7 +276,7 @@ const Quote = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           required
-                          className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                          className="h-10 md:h-12 border-2 border-gray-200 focus:border-primary rounded-xl text-sm"
                         />
                       </div>
 
@@ -289,12 +290,12 @@ const Quote = () => {
                           value={formData.projectDetails}
                           onChange={handleChange}
                           required
-                          rows={6}
-                          className="border-2 border-gray-200 focus:border-primary rounded-xl resize-none"
+                          rows={5}
+                          className="border-2 border-gray-200 focus:border-primary rounded-xl resize-none text-sm"
                         />
                       </div>
 
-                      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4">
                         <p className="text-sm text-blue-800">
                           <strong>Response Time:</strong> We'll respond within 24 hours via call or email with a detailed quote and project timeline.
                         </p>
@@ -303,17 +304,17 @@ const Quote = () => {
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-3 md:py-4 text-base md:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                         disabled={isLoading}
                       >
                         {isLoading ? (
                           <div className="flex items-center">
-                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                            <div className="animate-spin rounded-full h-4 w-4 md:h-5 md:w-5 border-b-2 border-white mr-2"></div>
                             Submitting...
                           </div>
                         ) : (
                           <div className="flex items-center">
-                            <Send className="w-5 h-5 mr-2" />
+                            <Send className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                             Submit Quote Request
                           </div>
                         )}
