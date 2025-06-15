@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -289,7 +288,7 @@ const CompetitiveAnalysis = () => {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-3 py-1 rounded-full">
                   <Globe className="w-3 h-3" />
-                  Powered by Google
+                  Powered by Telvix AI
                 </div>
               </div>
             </CardHeader>
