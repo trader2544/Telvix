@@ -1,10 +1,12 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { HelpCircle, CheckCircle, ArrowRight, Target } from 'lucide-react';
 
 const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (service: string) => void }) => {
+  const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [recommendation, setRecommendation] = useState<string | null>(null);
@@ -91,6 +93,13 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
     setRecommendation(null);
   };
 
+  const handleGetQuote = () => {
+    if (recommendation) {
+      const encodedService = encodeURIComponent(recommendation);
+      navigate(`/quote?service=${encodedService}`);
+    }
+  };
+
   if (recommendation) {
     return (
       <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-xl">
@@ -114,7 +123,7 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
             
             <div className="space-y-3">
               <Button 
-                onClick={() => onServiceSelect(recommendation)}
+                onClick={handleGetQuote}
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-3"
               >
                 Get Quote for {recommendation} 💰
