@@ -1,3 +1,4 @@
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +13,12 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://telvix.app/sitemap.xml
+
+# SEO optimization
+Crawl-delay: 1
+
+# Block access to admin areas if any exist in the future
+Disallow: /admin/
+Disallow: /private/
