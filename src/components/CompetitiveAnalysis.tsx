@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -522,15 +523,15 @@ const CompetitiveAnalysis = () => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-lg">
-        <div className="flex justify-between items-center">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <Search className="w-5 h-5" />
+    <Card className="w-full bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 shadow-lg mx-auto">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-lg p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="flex-1">
+            <CardTitle className="flex items-center gap-2 text-lg md:text-xl mb-2">
+              <Search className="w-4 h-4 md:w-5 md:h-5" />
               AI Market Intelligence Hub 🇰🇪
             </CardTitle>
-            <p className="text-blue-100 text-sm">
+            <p className="text-blue-100 text-xs md:text-sm leading-relaxed">
               Live business data from Google Maps & Web • Real competitor analysis powered by AI
             </p>
           </div>
@@ -542,16 +543,16 @@ const CompetitiveAnalysis = () => {
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
+      <CardContent className="p-3 md:p-6">
         <div className="space-y-4 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-3 md:gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Your Business Niche</label>
               <Input
                 placeholder="e.g., Restaurant, Salon, Photography..."
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                className="border-blue-300 focus:border-blue-500"
+                className="border-blue-300 focus:border-blue-500 text-sm md:text-base"
               />
             </div>
             
@@ -573,85 +574,85 @@ const CompetitiveAnalysis = () => {
           <Button 
             onClick={searchCompetitors}
             disabled={!niche.trim() || isLoading}
-            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm md:text-base py-2 md:py-3"
           >
             {isLoading ? (
               <div className="flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                Scanning Live Business Data...
+                <span className="text-xs md:text-sm">Scanning Live Business Data...</span>
               </div>
             ) : (
               <>
                 <Zap className="w-4 h-4 mr-2" />
-                Launch Live Market Analysis
+                <span className="text-xs md:text-sm">Launch Live Market Analysis</span>
               </>
             )}
           </Button>
         </div>
 
         {results.length > 0 && (
-          <div className="space-y-6">
-            {/* Tab Navigation */}
-            <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+          <div className="space-y-4 md:space-y-6">
+            {/* Mobile-Optimized Tab Navigation */}
+            <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg overflow-x-auto">
               <button
                 onClick={() => setActiveTab('competitors')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                className={`flex-1 min-w-[100px] py-2 px-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors ${
                   activeTab === 'competitors'
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <Building className="w-4 h-4 inline mr-2" />
-                Live Competitors
+                <Building className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Live </span>Competitors
               </button>
               <button
                 onClick={() => setActiveTab('trends')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                className={`flex-1 min-w-[100px] py-2 px-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors ${
                   activeTab === 'trends'
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <TrendingUp className="w-4 h-4 inline mr-2" />
-                Market Trends
+                <TrendingUp className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Market </span>Trends
               </button>
               <button
                 onClick={() => setActiveTab('seo')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                className={`flex-1 min-w-[100px] py-2 px-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors ${
                   activeTab === 'seo'
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <BarChart3 className="w-4 h-4 inline mr-2" />
-                SEO Intelligence
+                <BarChart3 className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+                <span className="hidden sm:inline">SEO </span>Intelligence
               </button>
             </div>
 
-            {/* Competitors Tab */}
+            {/* Competitors Tab - Mobile Optimized */}
             {activeTab === 'competitors' && (
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-orange-100 to-red-100 border border-orange-300 rounded-lg p-4">
+              <div className="space-y-3 md:space-y-4">
+                <div className="bg-gradient-to-r from-orange-100 to-red-100 border border-orange-300 rounded-lg p-3 md:p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-orange-600" />
-                    <h3 className="font-bold text-orange-800">
+                    <Target className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
+                    <h3 className="font-bold text-orange-800 text-sm md:text-base">
                       Live {niche} Competitors in {location || 'Kenya'}
                     </h3>
                   </div>
-                  <p className="text-sm text-orange-700">
+                  <p className="text-xs md:text-sm text-orange-700">
                     Found {results.length} active {niche.toLowerCase()} business websites in your exact market! 🎯
                   </p>
                 </div>
 
-                <ScrollArea className="h-[400px]">
-                  <div className="grid gap-4 pr-4">
+                <ScrollArea className="h-[350px] md:h-[400px]">
+                  <div className="grid gap-3 md:gap-4 pr-2 md:pr-4">
                     {results.map((result, index) => (
-                      <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-gray-800 text-sm mb-1">{result.title}</h4>
+                      <div key={index} className="bg-white rounded-lg border border-gray-200 p-3 md:p-4 hover:shadow-md transition-shadow">
+                        <div className="flex justify-between items-start mb-2 md:mb-3">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-gray-800 text-xs md:text-sm mb-1 truncate">{result.title}</h4>
                             <div className="flex items-center gap-1 text-xs text-gray-600 mb-2">
-                              <Globe className="w-3 h-3" />
+                              <Globe className="w-3 h-3 flex-shrink-0" />
                               <a 
                                 href={result.link} 
                                 target="_blank" 
@@ -662,29 +663,29 @@ const CompetitiveAnalysis = () => {
                               </a>
                             </div>
                             
-                            {/* Business Info */}
-                            <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 mb-2">
+                            {/* Mobile-Optimized Business Info */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600 mb-2">
                               {result.businessInfo?.rating && (
                                 <div className="flex items-center gap-1">
-                                  <Star className="w-3 h-3 text-yellow-500" />
+                                  <Star className="w-3 h-3 text-yellow-500 flex-shrink-0" />
                                   <span>{result.businessInfo.rating}</span>
                                   {result.businessInfo.reviews && (
-                                    <span className="text-gray-500">({result.businessInfo.reviews} reviews)</span>
+                                    <span className="text-gray-500">({result.businessInfo.reviews})</span>
                                   )}
                                 </div>
                               )}
                               
                               {result.businessInfo?.phone && (
                                 <div className="flex items-center gap-1">
-                                  <Phone className="w-3 h-3" />
-                                  <span>{result.businessInfo.phone}</span>
+                                  <Phone className="w-3 h-3 flex-shrink-0" />
+                                  <span className="truncate">{result.businessInfo.phone}</span>
                                 </div>
                               )}
                               
                               {result.businessInfo?.address && (
-                                <div className="flex items-center gap-1">
-                                  <MapPin className="w-3 h-3" />
-                                  <span className="truncate max-w-[200px]">{result.businessInfo.address}</span>
+                                <div className="flex items-center gap-1 col-span-full">
+                                  <MapPin className="w-3 h-3 flex-shrink-0" />
+                                  <span className="truncate">{result.businessInfo.address}</span>
                                 </div>
                               )}
                             </div>
@@ -694,9 +695,9 @@ const CompetitiveAnalysis = () => {
                             href={result.link} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-gray-400 hover:text-blue-600"
+                            className="text-gray-400 hover:text-blue-600 ml-2"
                           >
-                            <ExternalLink className="w-4 h-4" />
+                            <ExternalLink className="w-3 h-3 md:w-4 md:h-4" />
                           </a>
                         </div>
                         <p className="text-xs text-gray-600 line-clamp-2">{result.snippet}</p>
@@ -707,94 +708,96 @@ const CompetitiveAnalysis = () => {
               </div>
             )}
 
-            {/* Market Trends Tab */}
+            {/* Market Trends Tab - Mobile Optimized */}
             {activeTab === 'trends' && (
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-lg p-4">
+              <div className="space-y-3 md:space-y-4">
+                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-lg p-3 md:p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-5 h-5 text-purple-600" />
-                    <h3 className="font-bold text-purple-800">Live Market Trends & Keywords</h3>
+                    <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
+                    <h3 className="font-bold text-purple-800 text-sm md:text-base">Live Market Trends & Keywords</h3>
                   </div>
-                  <p className="text-sm text-purple-700">
+                  <p className="text-xs md:text-sm text-purple-700">
                     Real-time search volumes and competition data for your niche 📊
                   </p>
                 </div>
 
-                <ScrollArea className="h-[400px]">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Keyword</TableHead>
-                        <TableHead>Volume/mo</TableHead>
-                        <TableHead>Competition</TableHead>
-                        <TableHead>CPC</TableHead>
-                        <TableHead>Trend</TableHead>
-                        <TableHead>Difficulty</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {trends.map((trend, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium text-sm">{trend.keyword}</TableCell>
-                          <TableCell className="text-sm">{trend.volume.toLocaleString()}</TableCell>
-                          <TableCell>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCompetitionColor(trend.competition)}`}>
-                              {trend.competition}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-sm">${trend.cpc}</TableCell>
-                          <TableCell className="text-sm">
-                            {getTrendIcon(trend.trend)} {trend.trend}
-                          </TableCell>
-                          <TableCell className="text-sm">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-2 bg-gray-200 rounded-full">
-                                <div 
-                                  className="h-2 bg-purple-500 rounded-full" 
-                                  style={{ width: `${trend.difficulty}%` }}
-                                ></div>
-                              </div>
-                              <span className="text-xs">{trend.difficulty}</span>
-                            </div>
-                          </TableCell>
+                <ScrollArea className="h-[350px] md:h-[400px]">
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-xs md:text-sm">Keyword</TableHead>
+                          <TableHead className="text-xs md:text-sm">Volume</TableHead>
+                          <TableHead className="text-xs md:text-sm">Competition</TableHead>
+                          <TableHead className="text-xs md:text-sm hidden sm:table-cell">CPC</TableHead>
+                          <TableHead className="text-xs md:text-sm">Trend</TableHead>
+                          <TableHead className="text-xs md:text-sm hidden md:table-cell">Difficulty</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {trends.map((trend, index) => (
+                          <TableRow key={index}>
+                            <TableCell className="font-medium text-xs md:text-sm max-w-[120px] truncate">{trend.keyword}</TableCell>
+                            <TableCell className="text-xs md:text-sm">{(trend.volume / 1000).toFixed(0)}k</TableCell>
+                            <TableCell>
+                              <span className={`px-1 md:px-2 py-1 rounded-full text-xs font-medium ${getCompetitionColor(trend.competition)}`}>
+                                {trend.competition.substring(0, 1)}
+                              </span>
+                            </TableCell>
+                            <TableCell className="text-xs md:text-sm hidden sm:table-cell">${trend.cpc}</TableCell>
+                            <TableCell className="text-xs md:text-sm">
+                              {getTrendIcon(trend.trend)}
+                            </TableCell>
+                            <TableCell className="text-xs md:text-sm hidden md:table-cell">
+                              <div className="flex items-center gap-1">
+                                <div className="w-6 md:w-8 h-1 md:h-2 bg-gray-200 rounded-full">
+                                  <div 
+                                    className="h-1 md:h-2 bg-purple-500 rounded-full" 
+                                    style={{ width: `${trend.difficulty}%` }}
+                                  ></div>
+                                </div>
+                                <span className="text-xs">{trend.difficulty}</span>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </ScrollArea>
               </div>
             )}
 
-            {/* Enhanced SEO Metrics Tab */}
+            {/* Enhanced SEO Metrics Tab - Mobile Optimized */}
             {activeTab === 'seo' && (
-              <div className="space-y-6">
-                <div className="bg-gradient-to-r from-green-100 to-teal-100 border border-green-300 rounded-lg p-4">
+              <div className="space-y-4 md:space-y-6">
+                <div className="bg-gradient-to-r from-green-100 to-teal-100 border border-green-300 rounded-lg p-3 md:p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <BarChart3 className="w-5 h-5 text-green-600" />
-                    <h3 className="font-bold text-green-800">SEO Performance Intelligence</h3>
+                    <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
+                    <h3 className="font-bold text-green-800 text-sm md:text-base">SEO Performance Intelligence</h3>
                   </div>
-                  <p className="text-sm text-green-700">
+                  <p className="text-xs md:text-sm text-green-700">
                     Check your own domain or analyze competitor SEO metrics 📈
                   </p>
                 </div>
 
-                {/* Custom Domain Checker */}
-                <div className="bg-white rounded-lg border border-gray-200 p-4">
-                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                {/* Custom Domain Checker - Mobile Optimized */}
+                <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-4">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2 text-sm md:text-base">
                     <Globe className="w-4 h-4" />
                     Check Your Domain SEO Status
                   </h4>
-                  <div className="flex gap-3 mb-4">
+                  <div className="flex flex-col sm:flex-row gap-3 mb-4">
                     <Input
                       placeholder="Enter your domain (e.g., example.com)"
                       value={customDomain}
                       onChange={(e) => setCustomDomain(e.target.value)}
-                      className="flex-1"
+                      className="flex-1 text-sm"
                     />
                     <Button 
                       onClick={checkCustomDomain}
                       disabled={!customDomain.trim() || isDomainLoading}
-                      className="bg-green-600 hover:bg-green-700"
+                      className="bg-green-600 hover:bg-green-700 text-sm w-full sm:w-auto"
                     >
                       {isDomainLoading ? (
                         <div className="flex items-center gap-2">
@@ -810,10 +813,10 @@ const CompetitiveAnalysis = () => {
                     </Button>
                   </div>
 
-                  {/* Domain Status Results */}
+                  {/* Domain Status Results - Mobile Optimized */}
                   {domainStatus && (
                     <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                         <div className="bg-gray-50 rounded-lg p-3">
                           <div className="flex items-center gap-2 mb-1">
                             {domainStatus.exists ? (
@@ -855,9 +858,9 @@ const CompetitiveAnalysis = () => {
                         </div>
                       </div>
 
-                      {/* Recommendations */}
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h5 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                      {/* Recommendations - Mobile Optimized */}
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 md:p-4">
+                        <h5 className="font-semibold text-blue-800 mb-2 flex items-center gap-2 text-sm md:text-base">
                           <Target className="w-4 h-4" />
                           Personalized Recommendations
                         </h5>
@@ -865,7 +868,7 @@ const CompetitiveAnalysis = () => {
                           {domainStatus.recommendations.map((recommendation, index) => (
                             <div key={index} className="flex items-start gap-2">
                               <div className="w-1 h-1 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                              <p className="text-sm text-blue-700">{recommendation}</p>
+                              <p className="text-xs md:text-sm text-blue-700">{recommendation}</p>
                             </div>
                           ))}
                         </div>
@@ -874,65 +877,68 @@ const CompetitiveAnalysis = () => {
                   )}
                 </div>
 
-                {/* Competitor SEO Metrics */}
-                <div className="bg-white rounded-lg border border-gray-200 p-4">
-                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                {/* Competitor SEO Metrics - Mobile Optimized */}
+                <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-4">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2 text-sm md:text-base">
                     <BarChart3 className="w-4 h-4" />
                     Competitor SEO Analysis
                   </h4>
                   
-                  <ScrollArea className="h-[300px]">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Domain</TableHead>
-                          <TableHead>Traffic/mo</TableHead>
-                          <TableHead>DA Score</TableHead>
-                          <TableHead>Backlinks</TableHead>
-                          <TableHead>Keywords</TableHead>
-                          <TableHead>Trust Score</TableHead>
-                          <TableHead>Speed</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {seoMetrics.map((metric, index) => (
-                          <TableRow key={index}>
-                            <TableCell className="font-medium text-sm">{metric.domain}</TableCell>
-                            <TableCell className="text-sm">{metric.estimatedTraffic.toLocaleString()}</TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-2 bg-gray-200 rounded-full">
-                                  <div 
-                                    className="h-2 bg-blue-500 rounded-full" 
-                                    style={{ width: `${metric.domainAuthority}%` }}
-                                  ></div>
-                                </div>
-                                <span className="text-xs">{metric.domainAuthority}</span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-sm">{metric.backlinks.toLocaleString()}</TableCell>
-                            <TableCell className="text-sm">{metric.keywords.toLocaleString()}</TableCell>
-                            <TableCell className={`text-sm font-medium ${getTrustScoreColor(metric.trustScore)}`}>
-                              {metric.trustScore}%
-                            </TableCell>
-                            <TableCell className="text-sm">{metric.loadSpeed}s</TableCell>
+                  <ScrollArea className="h-[250px] md:h-[300px]">
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="text-xs md:text-sm">Domain</TableHead>
+                            <TableHead className="text-xs md:text-sm">Traffic</TableHead>
+                            <TableHead className="text-xs md:text-sm">DA</TableHead>
+                            <TableHead className="text-xs md:text-sm hidden sm:table-cell">Backlinks</TableHead>
+                            <TableHead className="text-xs md:text-sm hidden md:table-cell">Keywords</TableHead>
+                            <TableHead className="text-xs md:text-sm">Trust</TableHead>
+                            <TableHead className="text-xs md:text-sm hidden lg:table-cell">Speed</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                        </TableHeader>
+                        <TableBody>
+                          {seoMetrics.map((metric, index) => (
+                            <TableRow key={index}>
+                              <TableCell className="font-medium text-xs md:text-sm max-w-[100px] truncate">{metric.domain}</TableCell>
+                              <TableCell className="text-xs md:text-sm">{(metric.estimatedTraffic / 1000).toFixed(0)}k</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-1">
+                                  <div className="w-6 md:w-8 h-1 md:h-2 bg-gray-200 rounded-full">
+                                    <div 
+                                      className="h-1 md:h-2 bg-blue-500 rounded-full" 
+                                      style={{ width: `${metric.domainAuthority}%` }}
+                                    ></div>
+                                  </div>
+                                  <span className="text-xs">{metric.domainAuthority}</span>
+                                </div>
+                              </TableCell>
+                              <TableCell className="text-xs md:text-sm hidden sm:table-cell">{(metric.backlinks / 1000).toFixed(0)}k</TableCell>
+                              <TableCell className="text-xs md:text-sm hidden md:table-cell">{(metric.keywords / 1000).toFixed(0)}k</TableCell>
+                              <TableCell className={`text-xs md:text-sm font-medium ${getTrustScoreColor(metric.trustScore)}`}>
+                                {metric.trustScore}%
+                              </TableCell>
+                              <TableCell className="text-xs md:text-sm hidden lg:table-cell">{metric.loadSpeed}s</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </ScrollArea>
                 </div>
               </div>
             )}
 
+            {/* Call to Action - Mobile Optimized */}
             <div className="bg-gradient-to-r from-green-100 to-emerald-100 border border-green-300 rounded-lg p-4 text-center">
-              <h3 className="font-bold text-green-800 mb-2">Ready to Outrank Your Competition? 🚀</h3>
-              <p className="text-sm text-green-700 mb-3">
+              <h3 className="font-bold text-green-800 mb-2 text-sm md:text-base">Ready to Outrank Your Competition? 🚀</h3>
+              <p className="text-xs md:text-sm text-green-700 mb-3">
                 Armed with live market intelligence, create a website that dominates search results!
               </p>
               <Button 
                 onClick={handleGetStarted}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold w-full sm:w-auto text-sm"
               >
                 Build My Winning Website
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -942,9 +948,9 @@ const CompetitiveAnalysis = () => {
         )}
 
         {results.length === 0 && (
-          <div className="text-center py-8">
+          <div className="text-center py-6 md:py-8">
             <div className="text-gray-500 mb-4">
-              <Search className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <Search className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 opacity-50" />
               <p className="text-sm">Enter your niche to discover live competitors and market intelligence</p>
               <p className="text-xs text-gray-400 mt-2">
                 Powered by Google Business & Maps data • Real-time market analysis
