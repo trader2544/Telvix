@@ -83,80 +83,82 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
+    <section id="contact" className="mobile-spacing bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-12">
+          <h2 className="mobile-text-4xl font-bold text-gray-900 mb-4">
             Let's Start Your <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Digital Journey</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
             Ready to transform your business? Get in touch with our expert team and let's discuss how we can bring your vision to life.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="space-y-6">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Get In Touch</h3>
-              <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-white" />
+              <h3 className="mobile-text-2xl font-bold text-gray-900 mb-4">Get In Touch</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Phone</p>
-                    <p className="text-gray-600">+254 741 947 599</p>
+                    <p className="text-sm font-semibold text-gray-900">Phone</p>
+                    <p className="text-xs md:text-sm text-gray-600">+254 741 947 599</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Email</p>
-                    <p className="text-gray-600">telvixhr@outlook.com</p>
+                    <p className="text-sm font-semibold text-gray-900">Email</p>
+                    <p className="text-xs md:text-sm text-gray-600">telvixhr@outlook.com</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-white" />
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">Nairobi, Kenya</p>
+                    <p className="text-sm font-semibold text-gray-900">Location</p>
+                    <p className="text-xs md:text-sm text-gray-600">Nairobi, Kenya</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 flex space-x-4">
+              <div className="mt-6 flex space-x-3">
                 <Button
                   onClick={handleWhatsApp}
+                  size="sm"
                   className="bg-green-500 hover:bg-green-600 text-white flex items-center space-x-2"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>WhatsApp</span>
+                  <span className="text-sm">WhatsApp</span>
                 </Button>
                 <Button
                   onClick={handlePhoneCall}
+                  size="sm"
                   variant="outline"
                   className="border-primary text-primary hover:bg-primary hover:text-white flex items-center space-x-2"
                 >
                   <PhoneCall className="w-4 h-4" />
-                  <span>Call Now</span>
+                  <span className="text-sm">Call Now</span>
                 </Button>
               </div>
             </div>
           </div>
 
           <div>
-            <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border-0 rounded-3xl">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+            <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border-0 rounded-2xl">
+              <CardContent className="p-6">
+                <h3 className="mobile-text-2xl font-bold text-gray-900 mb-4">Send us a Message</h3>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-3">
                     <div>
                       <Input
                         type="text"
@@ -165,7 +167,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                        className="h-10 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
                       />
                     </div>
                     <div>
@@ -176,12 +178,12 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                        className="h-10 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
                       />
                     </div>
                   </div>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-2 gap-3">
                     <div>
                       <Input
                         type="tel"
@@ -189,7 +191,7 @@ const Contact = () => {
                         placeholder="Your Phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                        className="h-10 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
                       />
                     </div>
                     <div>
@@ -200,7 +202,7 @@ const Contact = () => {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="h-12 border-2 border-gray-200 focus:border-primary rounded-xl"
+                        className="h-10 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
                       />
                     </div>
                   </div>
@@ -212,25 +214,25 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      rows={5}
-                      className="border-2 border-gray-200 focus:border-primary rounded-xl resize-none"
+                      rows={4}
+                      className="border-2 border-gray-200 focus:border-primary rounded-lg resize-none text-sm"
                     />
                   </div>
                   
                   <Button 
                     type="submit" 
-                    size="lg" 
-                    className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    size="sm" 
+                    className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-3 text-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                     disabled={isLoading}
                   >
                     {isLoading ? (
                       <div className="flex items-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                         Sending...
                       </div>
                     ) : (
                       <div className="flex items-center">
-                        <Send className="w-5 h-5 mr-2" />
+                        <Send className="w-4 h-4 mr-2" />
                         Send Message
                       </div>
                     )}
