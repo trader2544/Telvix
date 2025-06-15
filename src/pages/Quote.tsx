@@ -183,26 +183,26 @@ const Quote = () => {
             </div>
 
             <Tabs defaultValue="quote" className="space-y-6 md:space-y-8">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-white/80 backdrop-blur-sm p-0.5 md:p-1">
-                <TabsTrigger value="quote" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 px-1 md:px-3 py-1.5 md:py-2 text-xs md:text-sm">
-                  <Send className="w-3 h-3 md:w-5 md:h-5" />
-                  <span className="text-xs">Quote</span>
+              <TabsList className="grid w-full grid-cols-5 bg-white/80 backdrop-blur-sm p-0.5">
+                <TabsTrigger value="quote" className="flex flex-col items-center gap-0.5 px-0.5 py-1 text-xs">
+                  <Send className="w-3 h-3" />
+                  <span className="text-xs leading-none">Quote</span>
                 </TabsTrigger>
-                <TabsTrigger value="calculator" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 px-1 md:px-3 py-1.5 md:py-2 text-xs md:text-sm">
-                  <Calculator className="w-3 h-3 md:w-5 md:h-5" />
-                  <span className="text-xs">Cost</span>
+                <TabsTrigger value="calculator" className="flex flex-col items-center gap-0.5 px-0.5 py-1 text-xs">
+                  <Calculator className="w-3 h-3" />
+                  <span className="text-xs leading-none">Cost</span>
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 px-1 md:px-3 py-1.5 md:py-2 text-xs md:text-sm">
-                  <Star className="w-3 h-3 md:w-5 md:h-5" />
-                  <span className="text-xs">Pro</span>
+                <TabsTrigger value="premium" className="flex flex-col items-center gap-0.5 px-0.5 py-1 text-xs">
+                  <Star className="w-3 h-3" />
+                  <span className="text-xs leading-none">Pro</span>
                 </TabsTrigger>
-                <TabsTrigger value="quiz" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 px-1 md:px-3 py-1.5 md:py-2 text-xs md:text-sm">
-                  <HelpCircle className="w-3 h-3 md:w-5 md:h-5" />
-                  <span className="text-xs">Quiz</span>
+                <TabsTrigger value="quiz" className="flex flex-col items-center gap-0.5 px-0.5 py-1 text-xs">
+                  <HelpCircle className="w-3 h-3" />
+                  <span className="text-xs leading-none">Quiz</span>
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 px-1 md:px-3 py-1.5 md:py-2 text-xs md:text-sm">
-                  <Clock className="w-3 h-3 md:w-5 md:h-5" />
-                  <span className="text-xs">Time</span>
+                <TabsTrigger value="timeline" className="flex flex-col items-center gap-0.5 px-0.5 py-1 text-xs">
+                  <Clock className="w-3 h-3" />
+                  <span className="text-xs leading-none">Time</span>
                 </TabsTrigger>
               </TabsList>
 
