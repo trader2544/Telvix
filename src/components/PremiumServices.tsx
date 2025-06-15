@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Video, FileText, Zap, Star, Calendar, Download } from 'lucide-react';
@@ -9,7 +8,7 @@ const PremiumServices = () => {
       icon: Video,
       title: "1-on-1 Strategy Session",
       description: "60-minute consultation to discuss your project goals, technology stack, and roadmap.",
-      price: "KSh 8,500",
+      price: "KSh 5,500",
       features: [
         "Personalized project assessment",
         "Technology recommendations",
@@ -23,7 +22,7 @@ const PremiumServices = () => {
       icon: FileText,
       title: "Project Audit & Consultation",
       description: "Comprehensive review of your existing project with improvement recommendations.",
-      price: "KSh 15,000",
+      price: "KSh 10,000",
       features: [
         "Code review and analysis",
         "Performance assessment",
