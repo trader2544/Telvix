@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -185,24 +184,24 @@ const Quote = () => {
 
             <Tabs defaultValue="quote" className="space-y-6 md:space-y-8">
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-white/80 backdrop-blur-sm p-1">
-                <TabsTrigger value="quote" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Send className="w-3 h-3" />
+                <TabsTrigger value="quote" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 text-xs md:text-sm">
+                  <Send className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Quote</span>
                 </TabsTrigger>
-                <TabsTrigger value="calculator" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Calculator className="w-3 h-3" />
+                <TabsTrigger value="calculator" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 text-xs md:text-sm">
+                  <Calculator className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Cost</span>
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Star className="w-3 h-3" />
+                <TabsTrigger value="premium" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 text-xs md:text-sm">
+                  <Star className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Pro</span>
                 </TabsTrigger>
-                <TabsTrigger value="quiz" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <HelpCircle className="w-3 h-3" />
+                <TabsTrigger value="quiz" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 text-xs md:text-sm">
+                  <HelpCircle className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Quiz</span>
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="flex items-center gap-1 px-1 md:px-2 py-2 text-xs">
-                  <Clock className="w-3 h-3" />
+                <TabsTrigger value="timeline" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 text-xs md:text-sm">
+                  <Clock className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Time</span>
                 </TabsTrigger>
               </TabsList>
