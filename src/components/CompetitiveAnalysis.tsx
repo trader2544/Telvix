@@ -1,11 +1,12 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Globe, TrendingUp, ArrowRight, Target, Lightbulb, BarChart3, ExternalLink, Code2, Palette, Smartphone } from 'lucide-react';
+import { Search, Globe, MapPin, TrendingUp, ArrowRight, ExternalLink, Settings, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface SearchResult {
   title: string;
@@ -16,362 +17,280 @@ interface SearchResult {
 
 const CompetitiveAnalysis = () => {
   const navigate = useNavigate();
-  const [serviceType, setServiceType] = useState('');
+  const [niche, setNiche] = useState('');
   const [location, setLocation] = useState('');
-  const [customSearch, setCustomSearch] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('competitors');
-
-  const API_KEY = 'AIzaSyDkV_n8U04bIBvC7febed0Uzljosz1h-38';
-  const SEARCH_ENGINE_ID = '7423a42fe367a43c8';
-
-  const serviceTypes = [
-    'Web Design & Development',
-    'Mobile App Development',
-    'E-commerce Solutions',
-    'SaaS Development',
-    'AI & Automation',
-    'Digital Marketing & SEO',
-    'UI/UX Design',
-    'Custom Software Development'
-  ];
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [apiKey, setApiKey] = useState('');
+  const [searchEngineId, setSearchEngineId] = useState('');
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   const locations = [
-    'Kenya', 'Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Eldoret', 'Thika', 'Malindi'
+    'Kenya',
+    'Nairobi',
+    'Mombasa',
+    'Kisumu',
+    'Nakuru',
+    'Eldoret',
+    'Thika',
+    'Malindi'
   ];
 
-  const searchCategories = [
-    { 
-      id: 'competitors', 
-      label: 'Find Competitors', 
-      icon: Target, 
-      description: 'Discover web agencies and developers in your area',
-      color: 'from-blue-500 to-cyan-500'
-    },
-    { 
-      id: 'trends', 
-      label: 'Tech Trends', 
-      icon: TrendingUp, 
-      description: 'Latest web development and design trends',
-      color: 'from-purple-500 to-pink-500'
-    },
-    { 
-      id: 'inspiration', 
-      label: 'Design Ideas', 
-      icon: Lightbulb, 
-      description: 'Get inspired by amazing websites and apps',
-      color: 'from-orange-500 to-red-500'
-    },
-    { 
-      id: 'market', 
-      label: 'Market Research', 
-      icon: BarChart3, 
-      description: 'Analyze demand for digital services',
-      color: 'from-green-500 to-emerald-500'
-    }
-  ];
+  useEffect(() => {
+    // Load saved API credentials from localStorage
+    const savedApiKey = localStorage.getItem('google_search_api_key');
+    const savedSearchEngineId = localStorage.getItem('google_search_engine_id');
+    if (savedApiKey) setApiKey(savedApiKey);
+    if (savedSearchEngineId) setSearchEngineId(savedSearchEngineId);
+  }, []);
 
-  const generateSearchQuery = (category: string) => {
-    let baseQuery = '';
-    
-    switch (category) {
-      case 'competitors':
-        baseQuery = serviceType 
-          ? `${serviceType} agency company services` 
-          : 'web design development agency services';
-        break;
-      case 'trends':
-        baseQuery = serviceType 
-          ? `${serviceType} trends 2024 latest` 
-          : 'web development design trends 2024';
-        break;
-      case 'inspiration':
-        baseQuery = serviceType 
-          ? `best ${serviceType} examples portfolio showcase` 
-          : 'best website design examples portfolio';
-        break;
-      case 'market':
-        baseQuery = serviceType 
-          ? `${serviceType} market demand pricing` 
-          : 'web development market demand pricing';
-        break;
-      default:
-        baseQuery = customSearch || 'web design development services';
-    }
-
-    if (location && category !== 'custom') {
-      baseQuery += ` ${location}`;
-    }
-
-    return baseQuery;
+  const saveApiCredentials = () => {
+    localStorage.setItem('google_search_api_key', apiKey);
+    localStorage.setItem('google_search_engine_id', searchEngineId);
+    setIsConfigOpen(false);
   };
 
-  const performSearch = async (query: string) => {
+  const searchCompetitors = async () => {
+    if (!apiKey || !searchEngineId) {
+      alert('Please configure your Google Custom Search API credentials first.');
+      setIsConfigOpen(true);
+      return;
+    }
+
+    if (!niche.trim()) return;
+
     setIsLoading(true);
+    
     try {
+      const searchQuery = location 
+        ? `${niche} business ${location} website`
+        : `${niche} business website`;
+      
       const response = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`
+        `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(searchQuery)}&num=6`
       );
-      
+
       if (!response.ok) {
-        throw new Error('Search failed');
+        throw new Error(`API Error: ${response.status}`);
       }
-      
+
       const data = await response.json();
       
-      if (data.items) {
-        const results: SearchResult[] = data.items.map((item: any) => ({
-          title: item.title,
-          link: item.link,
-          snippet: item.snippet,
-          displayLink: item.displayLink
-        }));
-        setSearchResults(results);
+      if (data.items && data.items.length > 0) {
+        setResults(data.items.slice(0, 5)); // Limit to 5 results
       } else {
-        setSearchResults([]);
+        setResults([]);
+        alert('No results found. Try a different niche or location.');
       }
     } catch (error) {
       console.error('Search error:', error);
-      setSearchResults([]);
-    } finally {
-      setIsLoading(false);
+      alert('Error searching for competitors. Please check your API credentials and try again.');
+      setResults([]);
     }
+    
+    setIsLoading(false);
   };
 
-  const handleSearch = (category: string = activeCategory) => {
-    const searchQuery = category === 'custom' ? customSearch : generateSearchQuery(category);
-    if (searchQuery.trim()) {
-      performSearch(searchQuery);
-    }
+  const handleGetStarted = () => {
+    navigate('/quote');
   };
-
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-    handleSearch(category);
-  };
-
-  const currentCategory = searchCategories.find(cat => cat.id === activeCategory);
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden py-4 md:py-6">
-      {/* Background Elements */}
-      <div className="absolute top-10 right-10 w-32 md:w-48 h-32 md:h-48 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-10 w-40 md:w-60 h-40 md:h-60 bg-gradient-to-br from-purple-200/20 to-pink-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
-
-      <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-2xl max-w-6xl mx-2 md:mx-4">
-        <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-t-lg pb-3 md:pb-4">
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-8 md:w-10 h-8 md:h-10 bg-white/20 rounded-xl flex items-center justify-center">
-              <Globe className="w-4 md:w-5 h-4 md:h-5" />
-            </div>
-            <div>
-              <CardTitle className="text-lg md:text-xl font-bold">
-                Digital Intelligence Hub 🇰🇪
-              </CardTitle>
-              <p className="text-blue-100 text-xs md:text-sm leading-tight">
-                Research competitors, trends, and opportunities in web development & digital services
-              </p>
-            </div>
+    <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 shadow-lg">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-lg">
+        <div className="flex justify-between items-center">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="w-5 h-5" />
+              Real Competitive Analysis Tool 🇰🇪
+            </CardTitle>
+            <p className="text-blue-100 text-sm">
+              Discover real competitors in your niche using Google Search!
+            </p>
           </div>
-        </CardHeader>
-        
-        <CardContent className="p-3 md:p-4">
-          {/* Search Configuration */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 mb-3 md:mb-4">
-            <div className="space-y-1 md:space-y-2">
-              <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2">
-                <Code2 className="w-3 h-3 md:w-4 md:h-4" />
-                Service Type
-              </label>
-              <Select value={serviceType} onValueChange={setServiceType}>
-                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm">
-                  <SelectValue placeholder="Select service type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {serviceTypes.map((service) => (
-                    <SelectItem key={service} value={service} className="text-sm">{service}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-white hover:bg-blue-700">
+                <Settings className="w-4 h-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Configure Google Custom Search API</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Google Custom Search API Key</label>
+                  <div className="relative">
+                    <Input
+                      type={showApiKey ? "text" : "password"}
+                      placeholder="Enter your API key"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-1/2 -translate-y-1/2"
+                      onClick={() => setShowApiKey(!showApiKey)}
+                    >
+                      {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </Button>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Search Engine ID</label>
+                  <Input
+                    placeholder="Enter your Custom Search Engine ID"
+                    value={searchEngineId}
+                    onChange={(e) => setSearchEngineId(e.target.value)}
+                  />
+                </div>
+                <div className="text-xs text-gray-600">
+                  <p>Get these credentials from Google Cloud Console:</p>
+                  <p>1. Enable Custom Search API</p>
+                  <p>2. Create a Custom Search Engine at cse.google.com</p>
+                </div>
+                <Button onClick={saveApiCredentials} className="w-full">
+                  Save Credentials
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </CardHeader>
+      
+      <CardContent className="p-4 md:p-6">
+        <div className="space-y-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Your Business Niche</label>
+              <Input
+                placeholder="e.g., Restaurant, Salon, Photography..."
+                value={niche}
+                onChange={(e) => setNiche(e.target.value)}
+                className="border-blue-300 focus:border-blue-500"
+              />
             </div>
             
-            <div className="space-y-1 md:space-y-2">
-              <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2">
-                <Target className="w-3 h-3 md:w-4 md:h-4" />
-                Location
-              </label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Location (Optional)</label>
               <Select value={location} onValueChange={setLocation}>
-                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm">
+                <SelectTrigger className="border-blue-300 focus:border-blue-500">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
                   {locations.map((loc) => (
-                    <SelectItem key={loc} value={loc} className="text-sm">{loc}</SelectItem>
+                    <SelectItem key={loc} value={loc}>{loc}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
-
-          {/* Search Categories */}
-          <Tabs value={activeCategory} onValueChange={handleCategoryChange} className="mb-3 md:mb-4">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-gradient-to-r from-blue-50 to-purple-50 p-1 h-auto">
-              {searchCategories.map((category) => (
-                <TabsTrigger 
-                  key={category.id} 
-                  value={category.id}
-                  className="flex flex-col items-center gap-1 p-2 md:p-3 data-[state=active]:bg-white data-[state=active]:shadow-sm min-h-[60px] md:min-h-[70px]"
-                >
-                  <div className={`w-5 md:w-6 h-5 md:h-6 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center`}>
-                    <category.icon className="w-3 h-3 text-white" />
-                  </div>
-                  <span className="text-[10px] md:text-xs font-medium text-center leading-tight">{category.label}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200/50">
-              <div className="flex items-start md:items-center gap-2 mb-1">
-                {currentCategory && <currentCategory.icon className="w-3 h-3 md:w-4 md:h-4 text-blue-600 mt-0.5 md:mt-0" />}
-                <span className="text-xs md:text-sm font-medium text-blue-800 leading-tight">
-                  {currentCategory?.description}
-                </span>
-              </div>
-              <p className="text-xs text-blue-600 leading-relaxed">
-                Searching: "{generateSearchQuery(activeCategory)}"
-              </p>
-            </div>
-          </Tabs>
-
-          {/* Custom Search */}
-          <div className="mb-3 md:mb-4">
-            <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2 mb-2">
-              <Search className="w-3 h-3 md:w-4 md:h-4" />
-              Custom Search
-            </label>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Input
-                placeholder="Enter specific search terms..."
-                value={customSearch}
-                onChange={(e) => setCustomSearch(e.target.value)}
-                className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm flex-1"
-              />
-              <Button 
-                onClick={() => handleCategoryChange('custom')}
-                disabled={!customSearch.trim()}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 h-9 md:h-10 px-4 text-sm whitespace-nowrap"
-                size="sm"
-              >
-                Search
-              </Button>
-            </div>
-          </div>
           
           <Button 
-            onClick={() => handleSearch()}
-            disabled={!serviceType.trim() && !customSearch.trim()}
-            className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold py-2 mb-3 md:mb-4 h-10 md:h-12 text-sm md:text-base"
+            onClick={searchCompetitors}
+            disabled={!niche.trim() || isLoading}
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
           >
-            <Search className="w-4 h-4 mr-2" />
-            {isLoading ? 'Researching...' : 'Start Digital Intelligence Search'}
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                Searching Real Competitors...
+              </div>
+            ) : (
+              <>
+                <Search className="w-4 h-4 mr-2" />
+                Find Real Competitors
+              </>
+            )}
           </Button>
+        </div>
 
-          {/* Search Results */}
-          <Card className="bg-white border border-gray-200">
-            <CardHeader className="pb-2">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-5 md:w-6 h-5 md:h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-3 h-3 text-white" />
-                  </div>
-                  <h3 className="font-bold text-gray-800 text-sm md:text-base">Live Intelligence Results</h3>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full self-start sm:self-auto">
-                  <Globe className="w-3 h-3" />
-                  Powered by Telvix AI
-                </div>
+        {results.length > 0 && (
+          <div className="space-y-4">
+            <div className="bg-gradient-to-r from-orange-100 to-red-100 border border-orange-300 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="w-5 h-5 text-orange-600" />
+                <h3 className="font-bold text-orange-800">Real Market Analysis Results</h3>
               </div>
-            </CardHeader>
-            <CardContent className="p-3">
-              <div className="h-[180px] md:h-[220px] overflow-y-auto space-y-2">
-                {isLoading ? (
-                  <div className="flex items-center justify-center h-full">
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-6 md:h-8 w-6 md:w-8 border-b-2 border-purple-600 mx-auto mb-2 md:mb-3"></div>
-                      <p className="text-gray-600 font-medium text-xs md:text-sm">Analyzing digital landscape...</p>
-                    </div>
-                  </div>
-                ) : searchResults.length > 0 ? (
-                  searchResults.map((result, index) => (
-                    <Card key={index} className="border border-gray-100 hover:border-purple-200 transition-all duration-200 hover:shadow-md">
-                      <CardContent className="p-3">
-                        <div className="space-y-1">
-                          <h4 className="font-semibold text-purple-700 hover:text-purple-800 leading-tight text-sm md:text-base">
-                            <a 
-                              href={result.link} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="flex items-start gap-2 hover:underline"
-                            >
-                              <span className="flex-1">{result.title}</span>
-                              <ExternalLink className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                            </a>
-                          </h4>
-                          <p className="text-xs text-green-600 font-medium break-all">{result.displayLink}</p>
-                          <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-3">{result.snippet}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="flex items-center justify-center h-full text-gray-500">
-                    <div className="text-center px-4">
-                      <div className="w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
-                        <Search className="w-5 md:w-6 h-5 md:h-6 text-gray-400" />
-                      </div>
-                      <p className="font-medium text-sm md:text-base">Ready to explore the digital landscape?</p>
-                      <p className="text-xs md:text-sm mt-1">Select a service type and start your research</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Action Section */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-3 md:p-4 text-center mt-3 md:mt-4">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Palette className="w-4 md:w-5 h-4 md:h-5 text-green-600" />
-              <h3 className="font-bold text-green-800 text-sm md:text-base">Ready to Build Something Amazing? 🚀</h3>
+              <p className="text-sm text-orange-700 mb-3">
+                Found {results.length} real competitors in your niche! 🎯 Time to stand out with your own professional website.
+              </p>
             </div>
-            <p className="text-green-700 mb-3 max-w-2xl mx-auto text-xs md:text-sm leading-relaxed">
-              Now that you've researched the competition, let's create a digital solution that stands out. 
-              From websites to mobile apps, we've got you covered!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+
+            <div className="grid gap-3">
+              {results.map((result, index) => (
+                <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 text-sm">{result.title}</h4>
+                      <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
+                        <Globe className="w-3 h-3" />
+                        <a 
+                          href={result.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-600 truncate"
+                        >
+                          {result.displayLink}
+                        </a>
+                      </div>
+                    </div>
+                    <a 
+                      href={result.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-blue-600"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                  
+                  <p className="text-xs text-gray-600 line-clamp-2">{result.snippet}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-gradient-to-r from-green-100 to-emerald-100 border border-green-300 rounded-lg p-4 text-center">
+              <h3 className="font-bold text-green-800 mb-2">Ready to Compete? 🚀</h3>
+              <p className="text-sm text-green-700 mb-3">
+                These are your real competitors! Don't let them get ahead - create a professional website that outshines the competition.
+              </p>
               <Button 
-                onClick={() => navigate('/quote')}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold px-4 py-2 h-9 md:h-10 text-sm"
-                size="sm"
+                onClick={handleGetStarted}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold"
               >
-                Start Your Project
-                <ArrowRight className="w-3 h-3 ml-2" />
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => navigate('/portfolio')}
-                className="border-green-600 text-green-600 hover:bg-green-50 px-4 py-2 h-9 md:h-10 text-sm"
-                size="sm"
-              >
-                <Smartphone className="w-3 h-3 mr-2" />
-                View Our Work
+                Build My Website Now
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        )}
+
+        {!apiKey || !searchEngineId ? (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+            <p className="text-sm text-yellow-800 mb-2">
+              📋 API Configuration Required
+            </p>
+            <p className="text-xs text-yellow-700 mb-3">
+              Configure your Google Custom Search API credentials to search for real competitors.
+            </p>
+            <Button 
+              onClick={() => setIsConfigOpen(true)}
+              variant="outline"
+              size="sm"
+              className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Configure API
+            </Button>
+          </div>
+        ) : null}
+      </CardContent>
+    </Card>
   );
 };
 
