@@ -154,60 +154,60 @@ const CompetitiveAnalysis = () => {
   const currentCategory = searchCategories.find(cat => cat.id === activeCategory);
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden py-6">
+    <div className="bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden py-4 md:py-6">
       {/* Background Elements */}
-      <div className="absolute top-10 right-10 w-48 h-48 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-10 w-60 h-60 bg-gradient-to-br from-purple-200/20 to-pink-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+      <div className="absolute top-10 right-10 w-32 md:w-48 h-32 md:h-48 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-10 left-10 w-40 md:w-60 h-40 md:h-60 bg-gradient-to-br from-purple-200/20 to-pink-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
 
-      <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-2xl max-w-6xl mx-4">
-        <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-t-lg pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-              <Globe className="w-5 h-5" />
+      <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-2xl max-w-6xl mx-2 md:mx-4">
+        <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-t-lg pb-3 md:pb-4">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-8 md:w-10 h-8 md:h-10 bg-white/20 rounded-xl flex items-center justify-center">
+              <Globe className="w-4 md:w-5 h-4 md:h-5" />
             </div>
             <div>
-              <CardTitle className="text-xl font-bold">
+              <CardTitle className="text-lg md:text-xl font-bold">
                 Digital Intelligence Hub 🇰🇪
               </CardTitle>
-              <p className="text-blue-100 text-xs">
+              <p className="text-blue-100 text-xs md:text-sm leading-tight">
                 Research competitors, trends, and opportunities in web development & digital services
               </p>
             </div>
           </div>
         </CardHeader>
         
-        <CardContent className="p-4">
+        <CardContent className="p-3 md:p-4">
           {/* Search Configuration */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-gray-700 flex items-center gap-2">
-                <Code2 className="w-3 h-3" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 mb-3 md:mb-4">
+            <div className="space-y-1 md:space-y-2">
+              <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2">
+                <Code2 className="w-3 h-3 md:w-4 md:h-4" />
                 Service Type
               </label>
               <Select value={serviceType} onValueChange={setServiceType}>
-                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-8">
+                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm">
                   <SelectValue placeholder="Select service type" />
                 </SelectTrigger>
                 <SelectContent>
                   {serviceTypes.map((service) => (
-                    <SelectItem key={service} value={service}>{service}</SelectItem>
+                    <SelectItem key={service} value={service} className="text-sm">{service}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-gray-700 flex items-center gap-2">
-                <Target className="w-3 h-3" />
+            <div className="space-y-1 md:space-y-2">
+              <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2">
+                <Target className="w-3 h-3 md:w-4 md:h-4" />
                 Location
               </label>
               <Select value={location} onValueChange={setLocation}>
-                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-8">
+                <SelectTrigger className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
                   {locations.map((loc) => (
-                    <SelectItem key={loc} value={loc}>{loc}</SelectItem>
+                    <SelectItem key={loc} value={loc} className="text-sm">{loc}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -215,52 +215,52 @@ const CompetitiveAnalysis = () => {
           </div>
 
           {/* Search Categories */}
-          <Tabs value={activeCategory} onValueChange={handleCategoryChange} className="mb-4">
-            <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-blue-50 to-purple-50 p-1">
+          <Tabs value={activeCategory} onValueChange={handleCategoryChange} className="mb-3 md:mb-4">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-gradient-to-r from-blue-50 to-purple-50 p-1 h-auto">
               {searchCategories.map((category) => (
                 <TabsTrigger 
                   key={category.id} 
                   value={category.id}
-                  className="flex flex-col items-center gap-1 p-2 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className="flex flex-col items-center gap-1 p-2 md:p-3 data-[state=active]:bg-white data-[state=active]:shadow-sm min-h-[60px] md:min-h-[70px]"
                 >
-                  <div className={`w-6 h-6 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center`}>
+                  <div className={`w-5 md:w-6 h-5 md:h-6 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center`}>
                     <category.icon className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-xs font-medium">{category.label}</span>
+                  <span className="text-[10px] md:text-xs font-medium text-center leading-tight">{category.label}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
 
             <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200/50">
-              <div className="flex items-center gap-2 mb-1">
-                {currentCategory && <currentCategory.icon className="w-3 h-3 text-blue-600" />}
-                <span className="text-xs font-medium text-blue-800">
+              <div className="flex items-start md:items-center gap-2 mb-1">
+                {currentCategory && <currentCategory.icon className="w-3 h-3 md:w-4 md:h-4 text-blue-600 mt-0.5 md:mt-0" />}
+                <span className="text-xs md:text-sm font-medium text-blue-800 leading-tight">
                   {currentCategory?.description}
                 </span>
               </div>
-              <p className="text-xs text-blue-600">
+              <p className="text-xs text-blue-600 leading-relaxed">
                 Searching: "{generateSearchQuery(activeCategory)}"
               </p>
             </div>
           </Tabs>
 
           {/* Custom Search */}
-          <div className="mb-4">
-            <label className="text-xs font-semibold text-gray-700 flex items-center gap-2 mb-1">
-              <Search className="w-3 h-3" />
+          <div className="mb-3 md:mb-4">
+            <label className="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1 md:gap-2 mb-2">
+              <Search className="w-3 h-3 md:w-4 md:h-4" />
               Custom Search
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Input
                 placeholder="Enter specific search terms..."
                 value={customSearch}
                 onChange={(e) => setCustomSearch(e.target.value)}
-                className="border-gray-300 focus:border-purple-500 h-8 text-sm"
+                className="border-gray-300 focus:border-purple-500 h-9 md:h-10 text-sm flex-1"
               />
               <Button 
                 onClick={() => handleCategoryChange('custom')}
                 disabled={!customSearch.trim()}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 h-8 px-3"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 h-9 md:h-10 px-4 text-sm whitespace-nowrap"
                 size="sm"
               >
                 Search
@@ -271,7 +271,7 @@ const CompetitiveAnalysis = () => {
           <Button 
             onClick={() => handleSearch()}
             disabled={!serviceType.trim() && !customSearch.trim()}
-            className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold py-2 mb-4 h-10"
+            className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold py-2 mb-3 md:mb-4 h-10 md:h-12 text-sm md:text-base"
           >
             <Search className="w-4 h-4 mr-2" />
             {isLoading ? 'Researching...' : 'Start Digital Intelligence Search'}
@@ -280,26 +280,26 @@ const CompetitiveAnalysis = () => {
           {/* Search Results */}
           <Card className="bg-white border border-gray-200">
             <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                  <div className="w-5 md:w-6 h-5 md:h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
                     <BarChart3 className="w-3 h-3 text-white" />
                   </div>
-                  <h3 className="font-bold text-gray-800 text-sm">Live Intelligence Results</h3>
+                  <h3 className="font-bold text-gray-800 text-sm md:text-base">Live Intelligence Results</h3>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full">
+                <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full self-start sm:self-auto">
                   <Globe className="w-3 h-3" />
                   Powered by Telvix AI
                 </div>
               </div>
             </CardHeader>
             <CardContent className="p-3">
-              <div className="h-[200px] overflow-y-auto space-y-2">
+              <div className="h-[180px] md:h-[220px] overflow-y-auto space-y-2">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-3"></div>
-                      <p className="text-gray-600 font-medium text-sm">Analyzing digital landscape...</p>
+                      <div className="animate-spin rounded-full h-6 md:h-8 w-6 md:w-8 border-b-2 border-purple-600 mx-auto mb-2 md:mb-3"></div>
+                      <p className="text-gray-600 font-medium text-xs md:text-sm">Analyzing digital landscape...</p>
                     </div>
                   </div>
                 ) : searchResults.length > 0 ? (
@@ -307,31 +307,31 @@ const CompetitiveAnalysis = () => {
                     <Card key={index} className="border border-gray-100 hover:border-purple-200 transition-all duration-200 hover:shadow-md">
                       <CardContent className="p-3">
                         <div className="space-y-1">
-                          <h4 className="font-semibold text-purple-700 hover:text-purple-800 leading-tight text-sm">
+                          <h4 className="font-semibold text-purple-700 hover:text-purple-800 leading-tight text-sm md:text-base">
                             <a 
                               href={result.link} 
                               target="_blank" 
                               rel="noopener noreferrer"
                               className="flex items-start gap-2 hover:underline"
                             >
-                              {result.title}
+                              <span className="flex-1">{result.title}</span>
                               <ExternalLink className="w-3 h-3 mt-0.5 flex-shrink-0" />
                             </a>
                           </h4>
-                          <p className="text-xs text-green-600 font-medium">{result.displayLink}</p>
-                          <p className="text-xs text-gray-600 leading-relaxed">{result.snippet}</p>
+                          <p className="text-xs text-green-600 font-medium break-all">{result.displayLink}</p>
+                          <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-3">{result.snippet}</p>
                         </div>
                       </CardContent>
                     </Card>
                   ))
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-500">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Search className="w-6 h-6 text-gray-400" />
+                    <div className="text-center px-4">
+                      <div className="w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
+                        <Search className="w-5 md:w-6 h-5 md:h-6 text-gray-400" />
                       </div>
-                      <p className="font-medium text-sm">Ready to explore the digital landscape?</p>
-                      <p className="text-xs mt-1">Select a service type and start your research</p>
+                      <p className="font-medium text-sm md:text-base">Ready to explore the digital landscape?</p>
+                      <p className="text-xs md:text-sm mt-1">Select a service type and start your research</p>
                     </div>
                   </div>
                 )}
@@ -340,19 +340,19 @@ const CompetitiveAnalysis = () => {
           </Card>
 
           {/* Action Section */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 text-center mt-4">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-3 md:p-4 text-center mt-3 md:mt-4">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Palette className="w-5 h-5 text-green-600" />
-              <h3 className="font-bold text-green-800">Ready to Build Something Amazing? 🚀</h3>
+              <Palette className="w-4 md:w-5 h-4 md:h-5 text-green-600" />
+              <h3 className="font-bold text-green-800 text-sm md:text-base">Ready to Build Something Amazing? 🚀</h3>
             </div>
-            <p className="text-green-700 mb-3 max-w-2xl mx-auto text-sm">
+            <p className="text-green-700 mb-3 max-w-2xl mx-auto text-xs md:text-sm leading-relaxed">
               Now that you've researched the competition, let's create a digital solution that stands out. 
               From websites to mobile apps, we've got you covered!
             </p>
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <Button 
                 onClick={() => navigate('/quote')}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold px-4 py-2 h-9"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold px-4 py-2 h-9 md:h-10 text-sm"
                 size="sm"
               >
                 Start Your Project
@@ -361,7 +361,7 @@ const CompetitiveAnalysis = () => {
               <Button 
                 variant="outline"
                 onClick={() => navigate('/portfolio')}
-                className="border-green-600 text-green-600 hover:bg-green-50 px-4 py-2 h-9"
+                className="border-green-600 text-green-600 hover:bg-green-50 px-4 py-2 h-9 md:h-10 text-sm"
                 size="sm"
               >
                 <Smartphone className="w-3 h-3 mr-2" />
