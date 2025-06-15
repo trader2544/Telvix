@@ -4,9 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Globe, MapPin, TrendingUp, ArrowRight, ExternalLink, Settings, Eye, EyeOff, BarChart3, Target, Zap, Star } from 'lucide-react';
+import { Search, Globe, MapPin, TrendingUp, ArrowRight, ExternalLink, Eye, EyeOff, BarChart3, Target, Zap, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -41,9 +40,7 @@ const CompetitiveAnalysis = () => {
   const [trends, setTrends] = useState<TrendData[]>([]);
   const [seoMetrics, setSeoMetrics] = useState<SEOMetrics[]>([]);
   const [apiKey] = useState('AIzaSyDkV_n8U04bIBvC7febed0Uzljosz1h-38');
-  const [searchEngineId, setSearchEngineId] = useState('');
-  const [showApiKey, setShowApiKey] = useState(false);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [searchEngineId] = useState('7423a42fe367a43c8');
   const [activeTab, setActiveTab] = useState<'competitors' | 'trends' | 'seo'>('competitors');
 
   const locations = [
@@ -56,16 +53,6 @@ const CompetitiveAnalysis = () => {
     'Thika',
     'Malindi'
   ];
-
-  useEffect(() => {
-    const savedSearchEngineId = localStorage.getItem('google_search_engine_id');
-    if (savedSearchEngineId) setSearchEngineId(savedSearchEngineId);
-  }, []);
-
-  const saveApiCredentials = () => {
-    localStorage.setItem('google_search_engine_id', searchEngineId);
-    setIsConfigOpen(false);
-  };
 
   const generateMockTrends = (niche: string): TrendData[] => {
     const keywords = [
@@ -98,12 +85,6 @@ const CompetitiveAnalysis = () => {
   };
 
   const searchCompetitors = async () => {
-    if (!searchEngineId) {
-      alert('Please configure your Google Custom Search Engine ID first.');
-      setIsConfigOpen(true);
-      return;
-    }
-
     if (!niche.trim()) return;
 
     setIsLoading(true);
@@ -136,7 +117,7 @@ const CompetitiveAnalysis = () => {
       }
     } catch (error) {
       console.error('Search error:', error);
-      alert('Error searching for competitors. Please check your API credentials and try again.');
+      alert('Error searching for competitors. Please try again.');
       setResults([]);
       setTrends([]);
       setSeoMetrics([]);
@@ -180,35 +161,11 @@ const CompetitiveAnalysis = () => {
               Discover competitors, trends, and SEO insights powered by Google AI!
             </p>
           </div>
-          <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-blue-700">
-                <Settings className="w-4 h-4" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Configure Google Custom Search</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium">Search Engine ID</label>
-                  <Input
-                    placeholder="Enter your Custom Search Engine ID"
-                    value={searchEngineId}
-                    onChange={(e) => setSearchEngineId(e.target.value)}
-                  />
-                </div>
-                <div className="text-xs text-gray-600">
-                  <p>API Key: Already configured ✅</p>
-                  <p>Get Search Engine ID from: cse.google.com</p>
-                </div>
-                <Button onClick={saveApiCredentials} className="w-full">
-                  Save Configuration
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <div className="text-right">
+            <div className="text-xs text-blue-200 opacity-80">
+              Powered by Telvix
+            </div>
+          </div>
         </div>
       </CardHeader>
       
@@ -463,25 +420,17 @@ const CompetitiveAnalysis = () => {
           </div>
         )}
 
-        {!searchEngineId ? (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
-            <p className="text-sm text-yellow-800 mb-2">
-              📋 Search Engine Configuration Required
-            </p>
-            <p className="text-xs text-yellow-700 mb-3">
-              Configure your Google Custom Search Engine ID to unlock market intelligence.
-            </p>
-            <Button 
-              onClick={() => setIsConfigOpen(true)}
-              variant="outline"
-              size="sm"
-              className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Configure Search Engine
-            </Button>
+        {results.length === 0 && (
+          <div className="text-center py-8">
+            <div className="text-gray-500 mb-4">
+              <Search className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p className="text-sm">Enter your niche to discover competitors and market insights</p>
+            </div>
+            <div className="text-xs text-gray-400 mt-4">
+              Powered by Telvix • Market Intelligence Engine
+            </div>
           </div>
-        ) : null}
+        )}
       </CardContent>
     </Card>
   );
