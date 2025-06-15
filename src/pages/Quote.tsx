@@ -26,7 +26,7 @@ const Quote = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userCurrency, setUserCurrency] = useState('USD');
+  const [userCurrency, setUserCurrency] = useState('KSh');
   
   const [formData, setFormData] = useState({
     service: '',
@@ -36,32 +36,9 @@ const Quote = () => {
     projectDetails: ''
   });
 
-  // Get user's location and set currency
+  // Set currency to Kenyan Shillings by default
   useEffect(() => {
-    const getUserLocation = async () => {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        
-        // Set currency based on country
-        if (data.country_code === 'KE') {
-          setUserCurrency('KSh');
-        } else if (data.country_code === 'NG') {
-          setUserCurrency('₦');
-        } else if (data.country_code === 'UG') {
-          setUserCurrency('UGX');
-        } else if (data.country_code === 'TZ') {
-          setUserCurrency('TZS');
-        } else {
-          setUserCurrency('USD');
-        }
-      } catch (error) {
-        console.log('Could not detect location, using USD as default');
-        setUserCurrency('USD');
-      }
-    };
-
-    getUserLocation();
+    setUserCurrency('KSh');
   }, []);
 
   // Get service from URL params
@@ -206,26 +183,26 @@ const Quote = () => {
             </div>
 
             <Tabs defaultValue="quote" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-white/80 backdrop-blur-sm">
-                <TabsTrigger value="quote" className="flex items-center gap-1">
-                  <Send className="w-4 h-4" />
-                  <span className="hidden sm:inline">Quote</span>
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-white/80 backdrop-blur-sm p-1">
+                <TabsTrigger value="quote" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
+                  <Send className="w-3 h-3 md:w-4 md:h-4" />
+                  <span>Quote</span>
                 </TabsTrigger>
-                <TabsTrigger value="calculator" className="flex items-center gap-1">
-                  <Calculator className="w-4 h-4" />
-                  <span className="hidden sm:inline">Calculator</span>
+                <TabsTrigger value="calculator" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
+                  <Calculator className="w-3 h-3 md:w-4 md:h-4" />
+                  <span>Cost</span>
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  <span className="hidden sm:inline">Timeline</span>
+                <TabsTrigger value="timeline" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
+                  <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                  <span>Time</span>
                 </TabsTrigger>
-                <TabsTrigger value="quiz" className="flex items-center gap-1">
-                  <HelpCircle className="w-4 h-4" />
-                  <span className="hidden sm:inline">Quiz</span>
+                <TabsTrigger value="quiz" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
+                  <HelpCircle className="w-3 h-3 md:w-4 md:h-4" />
+                  <span>Quiz</span>
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex items-center gap-1">
-                  <Star className="w-4 h-4" />
-                  <span className="hidden sm:inline">Premium</span>
+                <TabsTrigger value="premium" className="flex items-center gap-1 px-2 py-2 text-xs md:text-sm">
+                  <Star className="w-3 h-3 md:w-4 md:h-4" />
+                  <span>Pro</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -259,12 +236,12 @@ const Quote = () => {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Budget Range ({userCurrency}) *
+                          Budget Range (KSh) *
                         </label>
                         <Input
                           type="text"
                           name="priceRange"
-                          placeholder={`Enter your budget in ${userCurrency}`}
+                          placeholder="Enter your budget in KSh"
                           value={formData.priceRange}
                           onChange={handleChange}
                           required
@@ -347,7 +324,7 @@ const Quote = () => {
               </TabsContent>
 
               <TabsContent value="calculator">
-                <InteractiveCostCalculator userCurrency={userCurrency} />
+                <InteractiveCostCalculator userCurrency="KSh" />
               </TabsContent>
 
               <TabsContent value="timeline">
