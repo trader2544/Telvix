@@ -6,7 +6,7 @@ const GoogleAnalytics = () => {
     // Google Analytics 4 configuration
     const script1 = document.createElement('script');
     script1.async = true;
-    script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-358770458';
+    script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-E657G2CEE6';
     document.head.appendChild(script1);
 
     const script2 = document.createElement('script');
@@ -14,7 +14,7 @@ const GoogleAnalytics = () => {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-358770458', {
+      gtag('config', 'G-E657G2CEE6', {
         page_title: document.title,
         page_location: window.location.href,
         send_page_view: true
