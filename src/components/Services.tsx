@@ -2,7 +2,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette, Calendar } from 'lucide-react';
+import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette, Calendar, ArrowRight } from 'lucide-react';
 
 const Services = () => {
   const navigate = useNavigate();
@@ -127,18 +127,19 @@ const Services = () => {
         <div className="text-center">
           <Button 
             size="sm" 
-            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-6 py-3 text-sm mr-3 shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => navigate('/portfolio')}
+            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-6 py-3 text-sm mr-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
+            onClick={() => navigate('/services')}
           >
-            View Our Portfolio
+            View All Services
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
           <Button 
             size="sm" 
             variant="outline" 
             className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 text-sm shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => scrollToSection('contact')}
+            onClick={() => navigate('/portfolio')}
           >
-            Get Started Today
+            View Portfolio
           </Button>
         </div>
       </div>
