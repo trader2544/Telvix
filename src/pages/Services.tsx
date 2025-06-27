@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -7,19 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, 
-  Code2, Palette, Calendar, MapPin, Clock, Star,
-  CheckCircle, ArrowRight, Users, Target, Award
+  Code2, Palette, Calendar, MapPin, Star,
+  CheckCircle, ArrowRight, Users, Target, Award, Bitcoin
 } from 'lucide-react';
-import { detectUserCurrency, formatCurrency } from '@/utils/currency';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const Services = () => {
   const navigate = useNavigate();
-  const [userCurrency, setUserCurrency] = useState('USD');
-
-  useEffect(() => {
-    setUserCurrency(detectUserCurrency());
-  }, []);
 
   const services = [
     {
@@ -36,8 +31,6 @@ const Services = () => {
         "CMS integration",
         "E-commerce functionality"
       ],
-      basePrice: 1500,
-      timeline: "2-6 weeks",
       gradient: "from-blue-500 to-cyan-500",
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
       popular: true
@@ -56,8 +49,6 @@ const Services = () => {
         "Integration with existing systems",
         "24/7 automated support"
       ],
-      basePrice: 2500,
-      timeline: "3-8 weeks",
       gradient: "from-purple-500 to-pink-500",
       image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
     },
@@ -75,8 +66,6 @@ const Services = () => {
         "API development",
         "Analytics & reporting"
       ],
-      basePrice: 5000,
-      timeline: "8-16 weeks",
       gradient: "from-orange-500 to-red-500",
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=800&q=80"
     },
@@ -94,8 +83,6 @@ const Services = () => {
         "Marketing automation",
         "Mobile commerce optimization"
       ],
-      basePrice: 2000,
-      timeline: "4-8 weeks",
       gradient: "from-green-500 to-emerald-500",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
     },
@@ -113,8 +100,6 @@ const Services = () => {
         "Email marketing",
         "Analytics & reporting"
       ],
-      basePrice: 800,
-      timeline: "Ongoing",
       gradient: "from-teal-500 to-blue-500",
       image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80"
     },
@@ -132,8 +117,6 @@ const Services = () => {
         "Push notifications",
         "Offline functionality"
       ],
-      basePrice: 3500,
-      timeline: "6-12 weeks",
       gradient: "from-indigo-500 to-purple-500",
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
     },
@@ -151,8 +134,6 @@ const Services = () => {
         "Reporting & analytics",
         "Scalable architecture"
       ],
-      basePrice: 4000,
-      timeline: "8-20 weeks",
       gradient: "from-pink-500 to-rose-500",
       image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=800&q=80"
     },
@@ -170,8 +151,6 @@ const Services = () => {
         "Design system creation",
         "Accessibility compliance"
       ],
-      basePrice: 1200,
-      timeline: "3-6 weeks",
       gradient: "from-amber-500 to-orange-500",
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
     }
@@ -198,7 +177,7 @@ const Services = () => {
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "Telvix Digital Services",
-          "description": "Comprehensive digital solutions including web development, mobile apps, AI automation, and digital marketing services",
+          "description": "Comprehensive digital solutions including web development, mobile apps, AI automation, and digital marketing services with cryptocurrency payment options",
           "provider": {
             "@type": "Organization",
             "name": "Telvix Digital Solutions",
@@ -212,7 +191,8 @@ const Services = () => {
             "@type": "Country",
             "name": "Worldwide"
           },
-          "serviceType": services.map(s => s.title)
+          "serviceType": services.map(s => s.title),
+          "paymentAccepted": ["Credit Card", "Bank Transfer", "Mobile Money", "Cryptocurrency", "Bitcoin", "Ethereum"]
         })}
       </script>
 
@@ -233,7 +213,7 @@ const Services = () => {
             
             <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-6 md:mb-8 animate-fade-in">
               Telvix delivers world-class digital solutions from our headquarters in Nairobi, Kenya. 
-              Serving clients globally with cutting-edge technology and innovative approaches.
+              Serving clients globally with cutting-edge technology and innovative approaches. We accept cryptocurrency payments including Bitcoin and Ethereum.
             </p>
 
             <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-8 md:mb-12 animate-fade-in">
@@ -246,8 +226,8 @@ const Services = () => {
                 Global Services
               </Badge>
               <Badge variant="secondary" className="flex items-center gap-2 text-xs">
-                <Clock className="w-3 h-3 md:w-4 md:h-4" />
-                24/7 Support
+                <Bitcoin className="w-3 h-3 md:w-4 md:h-4" />
+                Crypto Payments
               </Badge>
             </div>
 
@@ -332,22 +312,6 @@ const Services = () => {
                         </div>
                       </div>
 
-                      {/* Pricing and Timeline - Mobile Optimized */}
-                      <div className="flex justify-between items-center mb-3 md:mb-4 text-xs md:text-sm">
-                        <div>
-                          <span className="text-gray-500">Starting from</span>
-                          <div className="text-sm md:text-xl font-bold text-primary">
-                            {formatCurrency(service.basePrice, userCurrency)}
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-gray-500">Timeline</span>
-                          <div className="font-semibold text-gray-900 text-xs md:text-sm">
-                            {service.timeline}
-                          </div>
-                        </div>
-                      </div>
-
                       <Button
                         onClick={() => handleBookService(service.id)}
                         size="sm"
@@ -372,7 +336,7 @@ const Services = () => {
               Ready to Transform Your Business?
             </h2>
             <p className="text-sm md:text-xl text-white/90 mb-6 md:mb-8 max-w-2xl mx-auto animate-fade-in">
-              Join hundreds of satisfied clients worldwide. Let's discuss your project and bring your vision to life.
+              Join hundreds of satisfied clients worldwide. Let's discuss your project and bring your vision to life. We accept traditional and crypto payments.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center animate-fade-in">
               <Button 

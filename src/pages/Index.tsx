@@ -23,6 +23,15 @@ const Index = () => {
       <Header />
       
       <main role="main">
+        {/* Logo Display on Homescreen */}
+        <div className="fixed top-20 left-4 z-30 hidden md:block">
+          <img 
+            src="/lovable-uploads/93789e97-518e-4b25-a28f-bb7947f42d2c.png" 
+            alt="Telvix Logo" 
+            className="w-16 h-16 rounded-xl shadow-lg bg-white/10 backdrop-blur-sm p-2"
+          />
+        </div>
+        
         <Hero />
         
         <Services />

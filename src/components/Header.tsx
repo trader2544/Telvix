@@ -36,6 +36,11 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const navigateToServices = () => {
+    navigate('/services');
+    setIsMenuOpen(false);
+  };
+
   const navigateToQuote = () => {
     navigate('/quote');
     setIsMenuOpen(false);
@@ -68,7 +73,7 @@ const Header = () => {
               <button onClick={navigateToHome} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                 Home
               </button>
-              <button onClick={() => scrollToSection('services')} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
+              <button onClick={navigateToServices} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                 Services
               </button>
               <button onClick={() => scrollToSection('why-choose')} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
@@ -107,7 +112,7 @@ const Header = () => {
                 <button onClick={navigateToHome} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                   Home
                 </button>
-                <button onClick={() => scrollToSection('services')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
+                <button onClick={navigateToServices} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                   Services
                 </button>
                 <button onClick={() => scrollToSection('why-choose')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
