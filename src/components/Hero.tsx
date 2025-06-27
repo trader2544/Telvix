@@ -23,8 +23,17 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden pt-16">
-      <div className="absolute inset-0 bg-black/5"></div>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Modern Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80" 
+          alt="Digital Innovation Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-accent/95"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
+      </div>
       
       {/* Enhanced Animated Background Elements */}
       <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
@@ -33,8 +42,8 @@ const Hero = () => {
       
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div className="text-center lg:text-left animate-fade-in">
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4">
+          <div className="text-center lg:text-left animate-fade-in text-white">
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 border border-white/20">
               <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
               <span className="text-xs font-medium">Available for New Projects</span>
             </div>
@@ -54,7 +63,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6">
               <Button 
                 size="sm" 
-                className="bg-accent hover:bg-accent/90 text-white font-semibold px-6 py-3 text-sm group"
+                className="bg-accent hover:bg-accent/90 text-white font-semibold px-6 py-3 text-sm group shadow-lg hover:shadow-xl transition-all duration-300"
                 onClick={navigateToQuote}
               >
                 Get Free Quote
@@ -63,7 +72,7 @@ const Hero = () => {
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-6 py-3 text-sm backdrop-blur-sm bg-white/10"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-6 py-3 text-sm backdrop-blur-sm bg-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
                 onClick={navigateToPortfolio}
               >
                 <Play className="mr-2 w-4 h-4" />
@@ -72,7 +81,7 @@ const Hero = () => {
             </div>
 
             {/* Enhanced Interactive Tools Section */}
-            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-lg">
               <div className="flex items-center mb-2 md:mb-3">
                 <span className="text-accent font-semibold text-sm md:text-base">🚀 Free Interactive Tools</span>
               </div>
@@ -85,7 +94,7 @@ const Hero = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
                   onClick={navigateToQuote}
                 >
                   <Calculator className="w-3 h-3" />
@@ -95,7 +104,7 @@ const Hero = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
                   onClick={navigateToQuote}
                 >
                   <Clock className="w-3 h-3" />
@@ -105,7 +114,7 @@ const Hero = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
                   onClick={navigateToQuote}
                 >
                   <HelpCircle className="w-3 h-3" />
@@ -115,7 +124,7 @@ const Hero = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto"
+                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
                   onClick={scrollToCompetitiveAnalysis}
                 >
                   <BarChart3 className="w-3 h-3" />
@@ -126,7 +135,7 @@ const Hero = () => {
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs w-full"
+                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs w-full transition-all duration-300 hover:scale-105"
                 onClick={navigateToQuote}
               >
                 Explore All Tools
@@ -135,15 +144,15 @@ const Hero = () => {
 
             {/* Trust Indicators */}
             <div className="grid grid-cols-3 gap-4 text-center lg:text-left">
-              <div>
+              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 <div className="text-lg md:text-xl font-bold text-accent">50+</div>
                 <div className="text-xs text-white/80">Projects</div>
               </div>
-              <div>
+              <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <div className="text-lg md:text-xl font-bold text-accent">95%</div>
                 <div className="text-xs text-white/80">Satisfaction</div>
               </div>
-              <div>
+              <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
                 <div className="text-lg md:text-xl font-bold text-accent">24/7</div>
                 <div className="text-xs text-white/80">Support</div>
               </div>

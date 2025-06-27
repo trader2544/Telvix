@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -220,51 +219,51 @@ const Services = () => {
       <Header />
       
       <main>
-        {/* Hero Section */}
-        <section className="pt-20 pb-16 px-4">
+        {/* Mobile-Optimized Header Section */}
+        <section className="mobile-spacing px-3 sm:px-4 lg:px-6 pt-20">
           <div className="container mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-6 shadow-lg animate-bounce-gentle">
-              <Code2 className="w-8 h-8 text-white" />
+            <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-4 md:mb-6 shadow-lg animate-bounce-gentle">
+              <Code2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
             </div>
             
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 animate-fade-in">
+            <h1 className="mobile-text-4xl text-gray-900 mb-4 md:mb-6 animate-fade-in">
               Complete Digital Services
               <span className="block text-primary mt-2">From Nairobi to the World</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 animate-fade-in">
+            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-6 md:mb-8 animate-fade-in">
               Telvix delivers world-class digital solutions from our headquarters in Nairobi, Kenya. 
               Serving clients globally with cutting-edge technology and innovative approaches.
             </p>
 
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-12 animate-fade-in">
-              <Badge variant="secondary" className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
+            <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-8 md:mb-12 animate-fade-in">
+              <Badge variant="secondary" className="flex items-center gap-2 text-xs">
+                <MapPin className="w-3 h-3 md:w-4 md:h-4" />
                 Nairobi, Kenya HQ
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
+              <Badge variant="secondary" className="flex items-center gap-2 text-xs">
+                <Globe className="w-3 h-3 md:w-4 md:h-4" />
                 Global Services
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+              <Badge variant="secondary" className="flex items-center gap-2 text-xs">
+                <Clock className="w-3 h-3 md:w-4 md:h-4" />
                 24/7 Support
               </Badge>
             </div>
 
-            {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+            {/* Mobile-Optimized Stats Section */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-16">
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
                   <div key={index} className="text-center animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-3">
-                      <IconComponent className="w-6 h-6 text-primary" />
+                    <div className="inline-flex items-center justify-center w-8 h-8 md:w-12 md:h-12 bg-primary/10 rounded-xl mb-2 md:mb-3">
+                      <IconComponent className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                     </div>
-                    <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
+                    <div className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-xs md:text-sm text-gray-600">
                       {stat.label}
                     </div>
                   </div>
@@ -274,29 +273,29 @@ const Services = () => {
           </div>
         </section>
 
-        {/* Services Grid */}
-        <section className="py-16 px-4">
+        {/* Mobile-Optimized Services Grid */}
+        <section className="mobile-spacing px-3 sm:px-4 lg:px-6">
           <div className="container mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
               {services.map((service, index) => {
                 const IconComponent = service.icon;
                 return (
                   <Card 
                     key={service.id}
-                    className="group relative bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-3xl overflow-hidden animate-slide-up"
+                    className="group relative bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 md:hover:-translate-y-2 rounded-xl md:rounded-3xl overflow-hidden animate-slide-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {service.popular && (
-                      <div className="absolute top-4 right-4 z-10">
-                        <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
-                          <Star className="w-3 h-3 mr-1" />
+                      <div className="absolute top-3 md:top-4 right-3 md:right-4 z-10">
+                        <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs">
+                          <Star className="w-2 h-2 md:w-3 md:h-3 mr-1" />
                           Popular
                         </Badge>
                       </div>
                     )}
 
                     {/* Service Image */}
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-32 md:h-48 overflow-hidden">
                       <img 
                         src={service.image} 
                         alt={service.title}
@@ -305,24 +304,24 @@ const Services = () => {
                       <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
                       
                       {/* Service Icon */}
-                      <div className="absolute top-4 left-4">
-                        <div className={`w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                          <IconComponent className="w-6 h-6 text-white" />
+                      <div className="absolute top-2 md:top-4 left-2 md:left-4">
+                        <div className={`w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br ${service.gradient} rounded-lg md:rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          <IconComponent className="w-4 h-4 md:w-6 md:h-6 text-white" />
                         </div>
                       </div>
                     </div>
 
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                    <CardContent className="p-3 md:p-6">
+                      <h3 className="text-sm md:text-xl font-bold text-gray-900 mb-2 md:mb-3 group-hover:text-primary transition-colors leading-tight">
                         {service.title}
                       </h3>
                       
-                      <p className="text-gray-600 mb-4 leading-relaxed text-sm">
+                      <p className="text-gray-600 mb-3 md:mb-4 leading-relaxed text-xs md:text-sm line-clamp-3">
                         {service.description}
                       </p>
 
-                      {/* Key Features */}
-                      <div className="mb-4">
+                      {/* Key Features - Mobile Optimized */}
+                      <div className="mb-3 md:mb-4 hidden md:block">
                         <div className="flex flex-wrap gap-2">
                           {service.features.slice(0, 3).map((feature, idx) => (
                             <div key={idx} className="flex items-center text-xs text-gray-600">
@@ -333,17 +332,17 @@ const Services = () => {
                         </div>
                       </div>
 
-                      {/* Pricing and Timeline */}
-                      <div className="flex justify-between items-center mb-4 text-sm">
+                      {/* Pricing and Timeline - Mobile Optimized */}
+                      <div className="flex justify-between items-center mb-3 md:mb-4 text-xs md:text-sm">
                         <div>
                           <span className="text-gray-500">Starting from</span>
-                          <div className="text-xl font-bold text-primary">
+                          <div className="text-sm md:text-xl font-bold text-primary">
                             {formatCurrency(service.basePrice, userCurrency)}
                           </div>
                         </div>
                         <div className="text-right">
                           <span className="text-gray-500">Timeline</span>
-                          <div className="font-semibold text-gray-900">
+                          <div className="font-semibold text-gray-900 text-xs md:text-sm">
                             {service.timeline}
                           </div>
                         </div>
@@ -351,11 +350,12 @@ const Services = () => {
 
                       <Button
                         onClick={() => handleBookService(service.id)}
-                        className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white shadow-lg hover:shadow-xl transition-all duration-300 group`}
+                        size="sm"
+                        className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white shadow-lg hover:shadow-xl transition-all duration-300 group text-xs md:text-sm py-2 md:py-3`}
                       >
-                        <Calendar className="w-4 h-4 mr-2" />
+                        <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-2" />
                         Get Quote
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </CardContent>
                   </Card>
@@ -365,28 +365,28 @@ const Services = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 px-4 bg-gradient-to-r from-primary to-accent">
+        {/* Mobile-Optimized CTA Section */}
+        <section className="mobile-spacing px-3 sm:px-4 lg:px-6 bg-gradient-to-r from-primary to-accent">
           <div className="container mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in">
+            <h2 className="mobile-text-3xl text-white mb-4 md:mb-6 animate-fade-in">
               Ready to Transform Your Business?
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto animate-fade-in">
+            <p className="text-sm md:text-xl text-white/90 mb-6 md:mb-8 max-w-2xl mx-auto animate-fade-in">
               Join hundreds of satisfied clients worldwide. Let's discuss your project and bring your vision to life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center animate-fade-in">
               <Button 
-                size="lg" 
+                size="sm"
                 variant="secondary"
-                className="bg-white text-primary hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white text-primary hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 text-sm"
                 onClick={() => navigate('/quote')}
               >
                 Get Free Quote
               </Button>
               <Button 
-                size="lg" 
+                size="sm"
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary shadow-lg hover:shadow-xl transition-all duration-300"
+                className="border-white text-white hover:bg-white hover:text-primary shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 text-sm"
                 onClick={() => navigate('/portfolio')}
               >
                 View Portfolio

@@ -58,10 +58,6 @@ const Services = () => {
     }
   ];
 
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const handleBookService = (serviceName: string) => {
     navigate(`/quote?service=${encodeURIComponent(serviceName)}`);
   };
@@ -73,20 +69,20 @@ const Services = () => {
       <div className="absolute bottom-20 left-20 w-32 h-32 md:w-80 md:h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
 
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
-        <div className="text-center mb-8 md:mb-12 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-4 shadow-lg">
+        <div className="text-center mb-6 md:mb-12 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 md:mb-4 shadow-lg">
             <Code2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
           </div>
-          <h2 className="mobile-text-4xl text-gray-900 mb-4">
+          <h2 className="mobile-text-4xl text-gray-900 mb-3 md:mb-4">
             All Digital Services <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Under One Roof</span>
           </h2>
-          <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xs md:text-lg text-gray-600 max-w-3xl mx-auto">
             From concept to launch, we provide comprehensive digital solutions that drive growth and innovation for your business.
           </p>
         </div>
 
-        {/* Service Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
+        {/* Service Cards Grid - Mobile Optimized */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-12">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -127,16 +123,16 @@ const Services = () => {
         <div className="text-center">
           <Button 
             size="sm" 
-            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-6 py-3 text-sm mr-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
+            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-4 md:px-6 py-2 md:py-3 text-xs md:text-sm mr-2 md:mr-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
             onClick={() => navigate('/services')}
           >
             View All Services
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
           <Button 
             size="sm" 
             variant="outline" 
-            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 text-sm shadow-lg hover:shadow-xl transition-all duration-300"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-4 md:px-6 py-2 md:py-3 text-xs md:text-sm shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={() => navigate('/portfolio')}
           >
             View Portfolio
