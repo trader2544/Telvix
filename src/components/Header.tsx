@@ -2,12 +2,14 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle, Settings, User } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, profile } = useAuth();
 
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
@@ -43,6 +45,26 @@ const Header = () => {
 
   const navigateToQuote = () => {
     navigate('/quote');
+    setIsMenuOpen(false);
+  };
+
+  const navigateToAuth = () => {
+    navigate('/auth');
+    setIsMenuOpen(false);
+  };
+
+  const navigateToProfile = () => {
+    navigate('/profile');
+    setIsMenuOpen(false);
+  };
+
+  const navigateToAdmin = () => {
+    navigate('/admin');
+    setIsMenuOpen(false);
+  };
+
+  const navigateToBlog = () => {
+    navigate('/blog');
     setIsMenuOpen(false);
   };
 
@@ -82,6 +104,9 @@ const Header = () => {
               <button onClick={navigateToPortfolio} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                 Portfolio
               </button>
+              <button onClick={navigateToBlog} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
+                Blog
+              </button>
               <button onClick={navigateToCareers} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                 Careers
               </button>
@@ -90,7 +115,23 @@ const Header = () => {
               </button>
             </nav>
 
-            <div className="hidden md:flex">
+            <div className="hidden md:flex items-center space-x-2">
+              {profile?.role === 'admin' && (
+                <Button onClick={navigateToAdmin} variant="outline" size="sm" className="text-xs">
+                  <Settings className="w-4 h-4 mr-1" />
+                  Admin
+                </Button>
+              )}
+              {user ? (
+                <Button onClick={navigateToProfile} variant="outline" size="sm" className="text-xs">
+                  <User className="w-4 h-4 mr-1" />
+                  Profile
+                </Button>
+              ) : (
+                <Button onClick={navigateToAuth} variant="outline" size="sm" className="text-xs">
+                  Login
+                </Button>
+              )}
               <Button onClick={navigateToQuote} size="sm" className="bg-accent hover:bg-accent/90 text-white font-semibold text-xs px-4 py-2">
                 Get Free Quote
               </Button>
@@ -121,12 +162,31 @@ const Header = () => {
                 <button onClick={navigateToPortfolio} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                   Portfolio
                 </button>
+                <button onClick={navigateToBlog} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
+                  Blog
+                </button>
                 <button onClick={navigateToCareers} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                   Careers
                 </button>
                 <button onClick={() => scrollToSection('contact')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
                   Contact
                 </button>
+                {profile?.role === 'admin' && (
+                  <Button onClick={navigateToAdmin} variant="outline" size="sm" className="w-full text-xs">
+                    <Settings className="w-4 h-4 mr-1" />
+                    Admin
+                  </Button>
+                )}
+                {user ? (
+                  <Button onClick={navigateToProfile} variant="outline" size="sm" className="w-full text-xs">
+                    <User className="w-4 h-4 mr-1" />
+                    Profile
+                  </Button>
+                ) : (
+                  <Button onClick={navigateToAuth} variant="outline" size="sm" className="w-full text-xs">
+                    Login
+                  </Button>
+                )}
                 <Button onClick={navigateToQuote} size="sm" className="bg-accent hover:bg-accent/90 w-full text-white font-semibold text-xs">
                   Get Free Quote
                 </Button>

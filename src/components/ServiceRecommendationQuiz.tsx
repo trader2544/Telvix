@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { HelpCircle, CheckCircle, ArrowRight, Target } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (service: string) => void }) => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [recommendation, setRecommendation] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const questions = [
     {
@@ -99,6 +101,36 @@ const ServiceRecommendationQuiz = ({ onServiceSelect }: { onServiceSelect: (serv
       navigate(`/quote?service=${encodedService}`);
     }
   };
+
+  if (!user) {
+    return (
+      <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 shadow-xl">
+        <CardHeader className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
+          <CardTitle className="flex items-center gap-2">
+            <HelpCircle className="w-5 h-5" />
+            Find Your Perfect Service 🇰🇪
+          </CardTitle>
+          <p className="text-purple-100 text-sm">Answer 4 quick questions to get personalized recommendations</p>
+        </CardHeader>
+        <CardContent className="p-4 md:p-6 text-center">
+          <div className="bg-white rounded-xl p-6 shadow-inner">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              Login Required 🔐
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Please sign in to take our service recommendation quiz and get personalized suggestions for your business needs.
+            </p>
+            <Button 
+              onClick={() => navigate('/auth')} 
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-6"
+            >
+              Sign In to Take Quiz 🧭
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (recommendation) {
     return (

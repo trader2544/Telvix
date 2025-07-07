@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Calculator, DollarSign, CheckCircle, Banknote } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const InteractiveCostCalculator = ({ userCurrency = 'KSh' }: { userCurrency?: string }) => {
   const [selectedService, setSelectedService] = useState('');
@@ -11,6 +13,8 @@ const InteractiveCostCalculator = ({ userCurrency = 'KSh' }: { userCurrency?: st
   const [complexity, setComplexity] = useState(1);
   const [timeline, setTimeline] = useState(1);
   const [estimate, setEstimate] = useState<any>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const services = [
     { name: 'Web Design & Development', basePrice: 15000, icon: '🌐' },
@@ -81,6 +85,36 @@ const InteractiveCostCalculator = ({ userCurrency = 'KSh' }: { userCurrency?: st
   const formatPrice = (price: number) => {
     return `KSh ${price.toLocaleString()}`;
   };
+
+  if (!user) {
+    return (
+      <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 shadow-xl">
+        <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-lg">
+          <CardTitle className="flex items-center gap-2">
+            <Calculator className="w-5 h-5" />
+            Kenyan Project Cost Calculator
+          </CardTitle>
+          <p className="text-blue-100 text-sm">Get instant estimates in Kenyan Shillings (KSh)</p>
+        </CardHeader>
+        <CardContent className="p-4 md:p-6 text-center">
+          <div className="bg-white rounded-xl p-6 shadow-inner">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              Login Required 🔐
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Please sign in to access our interactive cost calculator and get personalized estimates for your project.
+            </p>
+            <Button 
+              onClick={() => navigate('/auth')} 
+              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-3 px-6"
+            >
+              Sign In to Calculate Costs 💰
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (estimate) {
     return (

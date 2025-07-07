@@ -3,11 +3,15 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Clock, Calendar, CheckCircle, Zap } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectTimelineEstimator = () => {
   const [selectedService, setSelectedService] = useState('');
   const [projectSize, setProjectSize] = useState('');
   const [timeline, setTimeline] = useState<any>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const services = [
     'Web Design & Development',
@@ -68,6 +72,35 @@ const ProjectTimelineEstimator = () => {
     setProjectSize('');
     setTimeline(null);
   };
+
+  if (!user) {
+    return (
+      <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-primary">
+            <Clock className="w-5 h-5" />
+            Project Timeline Estimator
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-center">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 className="text-xl font-bold text-blue-800 mb-4">
+              Login Required 🔐
+            </h3>
+            <p className="text-blue-600 mb-6">
+              Please sign in to access our project timeline estimator and get realistic timelines for your projects.
+            </p>
+            <Button 
+              onClick={() => navigate('/auth')} 
+              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-3 px-6"
+            >
+              Sign In to Estimate Timeline ⏰
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (timeline) {
     return (
