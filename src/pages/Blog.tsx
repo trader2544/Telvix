@@ -13,6 +13,8 @@ interface BlogPost {
   published: boolean;
   created_at: string;
   author_id: string;
+  thumbnail_url: string | null;
+  featured_image_url: string | null;
 }
 
 const Blog = () => {
@@ -65,31 +67,48 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="grid gap-8 md:gap-12">
+          <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
             {blogPosts.map((post) => (
-              <Card key={post.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-2xl mb-2">{post.title}</CardTitle>
-                      {post.excerpt && (
-                        <CardDescription className="text-lg">
-                          {post.excerpt}
-                        </CardDescription>
-                      )}
-                    </div>
-                    <Badge variant="secondary">
-                      {new Date(post.created_at).toLocaleDateString()}
+              <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                {post.thumbnail_url && (
+                  <div className="aspect-video overflow-hidden">
+                    <img 
+                      src={post.thumbnail_url} 
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <CardTitle className="text-xl leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                      {post.title}
+                    </CardTitle>
+                    <Badge variant="secondary" className="shrink-0 text-xs">
+                      {new Date(post.created_at).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
                     </Badge>
                   </div>
+                  {post.excerpt && (
+                    <CardDescription className="text-sm line-clamp-3 mt-2">
+                      {post.excerpt}
+                    </CardDescription>
+                  )}
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   <div 
-                    className="prose prose-gray max-w-none"
+                    className="prose prose-sm prose-gray max-w-none line-clamp-4 text-muted-foreground"
                     dangerouslySetInnerHTML={{ 
-                      __html: post.content.replace(/\n/g, '<br />') 
+                      __html: post.content.replace(/\n/g, '<br />').substring(0, 200) + '...'
                     }}
                   />
+                  <div className="mt-4 pt-4 border-t">
+                    <span className="text-xs text-muted-foreground">
+                      {Math.ceil(post.content.length / 1000)} min read
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             ))}

@@ -22,6 +22,8 @@ interface BlogPost {
   published: boolean;
   created_at: string;
   author_id: string;
+  thumbnail_url: string | null;
+  featured_image_url: string | null;
 }
 
 const Admin = () => {
@@ -33,6 +35,9 @@ const Admin = () => {
   const [isPublished, setIsPublished] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [featuredImageFile, setFeaturedImageFile] = useState<File | null>(null);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,19 +66,51 @@ const Admin = () => {
     }
   };
 
+  const uploadImage = async (file: File, path: string) => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${path}-${Math.random()}.${fileExt}`;
+    const { data, error } = await supabase.storage
+      .from('blog-images')
+      .upload(fileName, file);
+    
+    if (error) throw error;
+    
+    const { data: { publicUrl } } = supabase.storage
+      .from('blog-images')
+      .getPublicUrl(fileName);
+    
+    return publicUrl;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
     
     setSubmitting(true);
+    setUploadingImages(true);
     
     try {
+      let thumbnailUrl = editingPost?.thumbnail_url || null;
+      let featuredImageUrl = editingPost?.featured_image_url || null;
+
+      // Upload thumbnail if provided
+      if (thumbnailFile) {
+        thumbnailUrl = await uploadImage(thumbnailFile, 'thumbnail');
+      }
+
+      // Upload featured image if provided
+      if (featuredImageFile) {
+        featuredImageUrl = await uploadImage(featuredImageFile, 'featured');
+      }
+
       const postData = {
         title,
         content,
         excerpt: excerpt || null,
         published: isPublished,
         author_id: user.id,
+        thumbnail_url: thumbnailUrl,
+        featured_image_url: featuredImageUrl,
       };
 
       let error;
@@ -97,6 +134,7 @@ const Admin = () => {
       toast.error(error.message);
     } finally {
       setSubmitting(false);
+      setUploadingImages(false);
     }
   };
 
@@ -106,6 +144,8 @@ const Admin = () => {
     setExcerpt('');
     setIsPublished(false);
     setEditingPost(null);
+    setThumbnailFile(null);
+    setFeaturedImageFile(null);
   };
 
   const handleEdit = (post: BlogPost) => {
@@ -114,6 +154,8 @@ const Admin = () => {
     setContent(post.content);
     setExcerpt(post.excerpt || '');
     setIsPublished(post.published);
+    setThumbnailFile(null);
+    setFeaturedImageFile(null);
   };
 
   const handleDelete = async (postId: string) => {
@@ -202,6 +244,40 @@ const Admin = () => {
                         onChange={(e) => setExcerpt(e.target.value)}
                       />
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="thumbnail">Thumbnail Image</Label>
+                        <Input
+                          id="thumbnail"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+                          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
+                        />
+                        {editingPost?.thumbnail_url && (
+                          <div className="mt-2">
+                            <img src={editingPost.thumbnail_url} alt="Current thumbnail" className="w-20 h-20 object-cover rounded" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="featured">Featured Image</Label>
+                        <Input
+                          id="featured"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setFeaturedImageFile(e.target.files?.[0] || null)}
+                          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
+                        />
+                        {editingPost?.featured_image_url && (
+                          <div className="mt-2">
+                            <img src={editingPost.featured_image_url} alt="Current featured image" className="w-20 h-20 object-cover rounded" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     
                     <div className="space-y-2">
                       <Label htmlFor="content">Content</Label>
@@ -227,8 +303,8 @@ const Admin = () => {
                     </div>
                     
                     <div className="flex space-x-2">
-                      <Button type="submit" disabled={submitting}>
-                        {submitting ? 'Saving...' : editingPost ? 'Update Post' : 'Create Post'}
+                      <Button type="submit" disabled={submitting || uploadingImages}>
+                        {uploadingImages ? 'Uploading Images...' : submitting ? 'Saving...' : editingPost ? 'Update Post' : 'Create Post'}
                       </Button>
                       {editingPost && (
                         <Button type="button" variant="outline" onClick={resetForm}>
@@ -251,19 +327,33 @@ const Admin = () => {
                   <div className="space-y-4">
                     {blogPosts.map((post) => (
                       <div key={post.id} className="border rounded-lg p-4">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg">{post.title}</h3>
-                            {post.excerpt && (
-                              <p className="text-gray-600 text-sm mt-1">{post.excerpt}</p>
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex gap-4 flex-1">
+                            {post.thumbnail_url && (
+                              <img 
+                                src={post.thumbnail_url} 
+                                alt={post.title}
+                                className="w-16 h-16 object-cover rounded"
+                              />
                             )}
-                            <div className="flex items-center space-x-2 mt-2">
-                              <Badge variant={post.published ? 'default' : 'secondary'}>
-                                {post.published ? 'Published' : 'Draft'}
-                              </Badge>
-                              <span className="text-xs text-gray-500">
-                                {new Date(post.created_at).toLocaleDateString()}
-                              </span>
+                            <div className="flex-1">
+                              <h3 className="font-semibold text-lg">{post.title}</h3>
+                              {post.excerpt && (
+                                <p className="text-gray-600 text-sm mt-1">{post.excerpt}</p>
+                              )}
+                              <div className="flex items-center space-x-2 mt-2">
+                                <Badge variant={post.published ? 'default' : 'secondary'}>
+                                  {post.published ? 'Published' : 'Draft'}
+                                </Badge>
+                                <span className="text-xs text-gray-500">
+                                  {new Date(post.created_at).toLocaleDateString()}
+                                </span>
+                                {post.featured_image_url && (
+                                  <Badge variant="outline" className="text-xs">
+                                    Has Featured Image
+                                  </Badge>
+                                )}
+                              </div>
                             </div>
                           </div>
                           <div className="flex space-x-2">
