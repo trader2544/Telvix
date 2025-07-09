@@ -1,9 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 interface BlogPost {
   id: string;
@@ -20,6 +23,7 @@ interface BlogPost {
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchBlogPosts();
@@ -42,6 +46,10 @@ const Blog = () => {
     }
   };
 
+  const handlePostClick = (postId: string) => {
+    navigate(`/blog/${postId}`);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -56,6 +64,19 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      <Helmet>
+        <title>Blog - Telvix | Web Development Insights & Tips</title>
+        <meta name="description" content="Discover the latest insights, tips, and updates from the Telvix team. Stay updated with web development trends, best practices, and industry news." />
+        <meta property="og:title" content="Blog - Telvix | Web Development Insights & Tips" />
+        <meta property="og:description" content="Discover the latest insights, tips, and updates from the Telvix team. Stay updated with web development trends, best practices, and industry news." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://telvix.app/blog" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Blog - Telvix | Web Development Insights & Tips" />
+        <meta name="twitter:description" content="Discover the latest insights, tips, and updates from the Telvix team. Stay updated with web development trends, best practices, and industry news." />
+        <link rel="canonical" href="https://telvix.app/blog" />
+      </Helmet>
+      
       <Header />
       
       <main className="container mx-auto px-4 pt-20 pb-8">
@@ -69,7 +90,11 @@ const Blog = () => {
 
           <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
             {blogPosts.map((post) => (
-              <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card 
+                key={post.id} 
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer"
+                onClick={() => handlePostClick(post.id)}
+              >
                 {post.thumbnail_url && (
                   <div className="aspect-video overflow-hidden">
                     <img 
@@ -114,7 +139,7 @@ const Blog = () => {
             ))}
             
             {blogPosts.length === 0 && (
-              <div className="text-center py-12">
+              <div className="text-center py-12 col-span-full">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   No posts yet
                 </h2>

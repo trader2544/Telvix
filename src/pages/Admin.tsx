@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import RichTextEditor from '@/components/RichTextEditor';
 import { Trash2, Edit, Eye } from 'lucide-react';
 
 interface BlogPost {
@@ -281,13 +281,10 @@ const Admin = () => {
                     
                     <div className="space-y-2">
                       <Label htmlFor="content">Content</Label>
-                      <Textarea
-                        id="content"
-                        placeholder="Write your blog post content here..."
+                      <RichTextEditor
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        className="min-h-[300px]"
-                        required
+                        onChange={setContent}
+                        placeholder="Write your blog post content here... Use the toolbar to format text, add images, and create links."
                       />
                     </div>
                     
