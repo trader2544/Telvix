@@ -227,7 +227,6 @@ const RichTextEditor = ({ value, onChange, placeholder }: RichTextEditorProps) =
                 placeholder="Link text"
                 value={linkText}
                 onChange={(e) => setLinkText(e.target.value)}
-                size="sm"
               />
             </div>
             <div>
@@ -237,7 +236,6 @@ const RichTextEditor = ({ value, onChange, placeholder }: RichTextEditorProps) =
                 placeholder="https://example.com"
                 value={linkUrl}
                 onChange={(e) => setLinkUrl(e.target.value)}
-                size="sm"
               />
             </div>
           </div>
@@ -261,7 +259,6 @@ const RichTextEditor = ({ value, onChange, placeholder }: RichTextEditorProps) =
             type="file"
             accept="image/*"
             onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-            size="sm"
           />
           <div className="flex gap-2">
             <Button 

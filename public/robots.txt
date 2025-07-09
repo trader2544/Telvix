@@ -1,24 +1,64 @@
 
+# Robots.txt for Telvix.app
+# Updated for enhanced SEO and blog visibility
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: facebookexternalhit
 Allow: /
 
 User-agent: Twitterbot
 Allow: /
 
-User-agent: facebookexternalhit
+User-agent: LinkedInBot
 Allow: /
 
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# Allow all other crawlers
 User-agent: *
 Allow: /
 
+# Block access to admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Sitemap location
 Sitemap: https://telvix.app/sitemap.xml
 
-# SEO optimization
+# Additional SEO directives
+# Priority crawling for blog content
+Allow: /blog/
+Allow: /blog/*
+
+# Cache policy
+# Crawl-delay helps manage server load while ensuring good indexing
 Crawl-delay: 1
 
-# Block access to admin areas if any exist in the future
-Disallow: /admin/
-Disallow: /private/
+# Host directive (optional, for primary domain)
+Host: https://telvix.app
