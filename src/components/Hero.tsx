@@ -1,7 +1,8 @@
 
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Play, Calculator, Clock, HelpCircle, BarChart3 } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
+import { useEffect } from 'react';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -10,29 +11,56 @@ const Hero = () => {
     navigate('/portfolio');
   };
 
-  const navigateToCareers = () => {
-    navigate('/careers');
-  };
-
   const navigateToQuote = () => {
     navigate('/quote');
   };
 
-  const scrollToCompetitiveAnalysis = () => {
-    document.getElementById('competitive-analysis')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  useEffect(() => {
+    // Load Wistia script
+    const script = document.createElement('script');
+    script.src = 'https://fast.wistia.com/assets/external/E-v1.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Modern Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img 
-          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80" 
-          alt="Digital Innovation Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-accent/95"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Wistia Video Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <div 
+          className="wistia_responsive_padding" 
+          style={{ padding: '0% 0 0 0', position: 'relative' }}
+        >
+          <div 
+            className="wistia_responsive_wrapper" 
+            style={{ height: '100vh', left: 0, position: 'absolute', top: 0, width: '100%' }}
+          >
+            <iframe
+              src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=false&fullscreenButton=false&muted=true&playButton=false&playbar=false&settingsControl=false&smallPlayButton=false&volumeControl=false&playerColor=14b8a6&loop=true"
+              title="Telvix Hero Video"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              frameBorder="0"
+              scrolling="no"
+              className="wistia_embed absolute inset-0 w-full h-full object-cover"
+              name="wistia_embed"
+              style={{ 
+                width: '100%', 
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'brightness(0.4)'
+              }}
+            />
+          </div>
+        </div>
+        
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/80"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
       
       {/* Enhanced Animated Background Elements */}
@@ -77,68 +105,6 @@ const Hero = () => {
               >
                 <Play className="mr-2 w-4 h-4" />
                 View Portfolio
-              </Button>
-            </div>
-
-            {/* Enhanced Interactive Tools Section */}
-            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-lg">
-              <div className="flex items-center mb-2 md:mb-3">
-                <span className="text-accent font-semibold text-sm md:text-base">🚀 Free Interactive Tools</span>
-              </div>
-              <p className="text-xs md:text-sm text-white/80 mb-3 md:mb-4">
-                Try our powerful business tools: cost calculator, timeline estimator, service quiz & SEO intelligence!
-              </p>
-              
-              {/* Tools Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
-                  onClick={navigateToQuote}
-                >
-                  <Calculator className="w-3 h-3" />
-                  <span>Cost Calculator</span>
-                </Button>
-                
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
-                  onClick={navigateToQuote}
-                >
-                  <Clock className="w-3 h-3" />
-                  <span>Timeline Tool</span>
-                </Button>
-                
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
-                  onClick={navigateToQuote}
-                >
-                  <HelpCircle className="w-3 h-3" />
-                  <span>Service Quiz</span>
-                </Button>
-                
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="border-accent/50 text-accent hover:bg-accent hover:text-white font-medium px-2 py-2 text-xs flex flex-col items-center gap-1 h-auto transition-all duration-300 hover:scale-105"
-                  onClick={scrollToCompetitiveAnalysis}
-                >
-                  <BarChart3 className="w-3 h-3" />
-                  <span>SEO Intelligence</span>
-                </Button>
-              </div>
-              
-              <Button 
-                size="sm" 
-                variant="outline" 
-                className="border-accent text-accent hover:bg-accent hover:text-white font-medium px-3 py-1 text-xs w-full transition-all duration-300 hover:scale-105"
-                onClick={navigateToQuote}
-              >
-                Explore All Tools
               </Button>
             </div>
 
