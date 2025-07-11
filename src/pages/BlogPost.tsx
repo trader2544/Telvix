@@ -1,64 +1,39 @@
 
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, User, Share2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin, Clock } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOEnhancements from '@/components/SEOEnhancements';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string | null;
-  published: boolean;
-  created_at: string;
-  author_id: string;
-  thumbnail_url: string | null;
-  featured_image_url: string | null;
-}
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { sampleBlogPosts } from '@/utils/sampleBlogPosts';
 
 const BlogPost = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const { slug } = useParams();
+  const post = sampleBlogPosts.find(p => p.slug === slug);
 
-  useEffect(() => {
-    if (id) {
-      fetchBlogPost(id);
-    }
-  }, [id]);
-
-  const fetchBlogPost = async (postId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('id', postId)
-        .eq('published', true)
-        .single();
-      
-      if (error) {
-        if (error.code === 'PGRST116') {
-          setNotFound(true);
-        } else {
-          console.error('Error fetching blog post:', error);
-        }
-        return;
-      }
-      
-      setBlogPost(data);
-    } catch (error) {
-      console.error('Error fetching blog post:', error);
-      setNotFound(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="pt-20 pb-16">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
+            <p className="text-muted-foreground mb-8">The blog post you're looking for doesn't exist.</p>
+            <Link to="/blog">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Blog
+              </Button>
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -68,225 +43,197 @@ const BlogPost = () => {
     });
   };
 
-  const calculateReadTime = (content: string) => {
-    const wordsPerMinute = 200;
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    const textContent = tempDiv.textContent || tempDiv.innerText || '';
-    const wordCount = textContent.split(/\s+/).length;
-    return Math.ceil(wordCount / wordsPerMinute);
-  };
+  const shareUrl = window.location.href;
+  const shareText = `Check out this article: ${post.title}`;
 
-  const sharePost = async () => {
-    if (navigator.share && blogPost) {
-      try {
-        await navigator.share({
-          title: blogPost.title,
-          text: blogPost.excerpt || '',
-          url: window.location.href
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-      }
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+  const handleShare = (platform: string) => {
+    const urls = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
+    };
+    
+    if (urls[platform as keyof typeof urls]) {
+      window.open(urls[platform as keyof typeof urls], '_blank', 'width=600,height=400');
     }
   };
 
-  const processContent = (content: string) => {
-    // Convert markdown-style formatting to HTML
-    return content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-      .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-lg shadow-md my-4 max-w-full h-auto" loading="lazy">')
-      .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">$1</h3>')
-      .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold text-gray-900 mt-10 mb-6">$1</h2>')
-      .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold text-gray-900 mt-12 mb-8">$1</h1>')
-      .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-primary pl-4 italic text-gray-700 my-4">$1</blockquote>')
-      .replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4"><code>$1</code></pre>')
-      .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm">$1</code>')
-      .replace(/^- (.*$)/gm, '<li class="mb-2">$1</li>')
-      .replace(/(<li class="mb-2">.*<\/li>)/s, '<ul class="list-disc list-inside my-4 space-y-2">$1</ul>')
-      .replace(/^\d+\. (.*$)/gm, '<li class="mb-2">$1</li>')
-      .replace(/\n/g, '<br />');
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-        <Header />
-        <main className="container mx-auto px-4 pt-20 pb-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="animate-pulse">
-              <div className="h-8 bg-gray-300 rounded w-1/4 mb-6"></div>
-              <div className="h-12 bg-gray-300 rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-8"></div>
-              <div className="aspect-video bg-gray-300 rounded-lg mb-8"></div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (notFound || !blogPost) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-        <SEOEnhancements 
-          title="Post Not Found - Telvix Blog"
-          description="The blog post you're looking for doesn't exist or has been removed."
-        />
-        <Header />
-        <main className="container mx-auto px-4 pt-20 pb-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
-            <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-            <Button onClick={() => navigate('/blog')}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Blog
-            </Button>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  const extractTextFromContent = (htmlContent: string) => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    return tempDiv.textContent || tempDiv.innerText || '';
-  };
-
-  const metaDescription = blogPost.excerpt || extractTextFromContent(blogPost.content).substring(0, 160);
-  const keywords = [
-    'web development',
-    'programming',
-    'tutorial',
-    'guide',
-    blogPost.title.toLowerCase().split(' ').slice(0, 3)
-  ].flat().filter(Boolean);
+  // Related posts (excluding current post)
+  const relatedPosts = sampleBlogPosts
+    .filter(p => p.id !== post.id && p.category === post.category)
+    .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <SEOEnhancements 
-        title={`${blogPost.title} - Telvix Blog`}
-        description={metaDescription}
-        keywords={keywords}
-        image={blogPost.featured_image_url || blogPost.thumbnail_url || 'https://telvix.app/og-image.jpg'}
-        url={`https://telvix.app/blog/${blogPost.id}`}
+    <div className="min-h-screen bg-background">
+      <SEOEnhancements
+        title={`${post.title} | Telvix Blog`}
+        description={post.excerpt}
+        keywords={`${post.category.toLowerCase()}, digital agency, web development, AI automation`}
+        image={post.image}
         type="article"
-        publishedTime={blogPost.created_at}
-        modifiedTime={blogPost.created_at}
-        author="Telvix Team"
+        author={post.author}
+        publishedTime={post.date}
+        section={post.category}
+        tags={post.category}
       />
       
       <Header />
       
-      <main className="container mx-auto px-4 pt-20 pb-8">
-        <div className="max-w-4xl mx-auto">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/blog')}
-            className="mb-6"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Blog
-          </Button>
+      <main className="pt-20">
+        {/* Back Button */}
+        <div className="container mx-auto px-4 py-6">
+          <Link to="/blog">
+            <Button variant="ghost" className="mb-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Blog
+            </Button>
+          </Link>
+        </div>
 
-          <article>
-            {blogPost.featured_image_url && (
-              <div className="aspect-video overflow-hidden rounded-lg mb-8 shadow-lg">
-                <img 
-                  src={blogPost.featured_image_url} 
-                  alt={blogPost.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+        {/* Hero Image */}
+        <div className="relative h-[60vh] overflow-hidden">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        </div>
 
+        {/* Article Content */}
+        <article className="container mx-auto px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            {/* Article Header */}
             <header className="mb-8">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-                {blogPost.title}
+              <Badge variant="secondary" className="mb-4">
+                {post.category}
+              </Badge>
+              
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                {post.title}
               </h1>
               
-              {blogPost.excerpt && (
-                <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                  {blogPost.excerpt}
-                </p>
-              )}
+              <div className="flex flex-wrap items-center gap-6 text-muted-foreground mb-6">
+                <div className="flex items-center">
+                  <User className="w-4 h-4 mr-2" />
+                  {post.author}
+                </div>
+                <div className="flex items-center">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  {formatDate(post.date)}
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2" />
+                  {post.readTime} min read
+                </div>
+              </div>
 
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-6">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <time dateTime={blogPost.created_at}>
-                    {formatDate(blogPost.created_at)}
-                  </time>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  {calculateReadTime(blogPost.content)} min read
-                </div>
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  Telvix Team
-                </div>
+              {/* Share Buttons */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground mr-2">Share:</span>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
-                  onClick={sharePost}
-                  className="flex items-center gap-2"
+                  onClick={() => handleShare('facebook')}
+                  className="text-blue-600 hover:bg-blue-50"
                 >
-                  <Share2 className="w-4 h-4" />
-                  Share
+                  <Facebook className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleShare('twitter')}
+                  className="text-blue-400 hover:bg-blue-50"
+                >
+                  <Twitter className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleShare('linkedin')}
+                  className="text-blue-700 hover:bg-blue-50"
+                >
+                  <Linkedin className="w-4 h-4" />
                 </Button>
               </div>
             </header>
 
-            <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-              <div 
-                className="prose prose-lg prose-gray max-w-none
-                  prose-headings:text-gray-900 prose-headings:font-bold 
-                  prose-p:text-gray-700 prose-p:leading-relaxed 
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline 
-                  prose-strong:text-gray-900 
-                  prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
-                  prose-pre:bg-gray-100 prose-pre:border
-                  prose-img:rounded-lg prose-img:shadow-md
-                  prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
-                  prose-ul:list-disc prose-ol:list-decimal
-                  prose-li:mb-2"
-                dangerouslySetInnerHTML={{ 
-                  __html: processContent(blogPost.content)
-                }}
-              />
+            <Separator className="mb-8" />
+
+            {/* Article Body */}
+            <div className="prose prose-lg max-w-none">
+              <p className="text-xl text-muted-foreground mb-8 font-medium">
+                {post.excerpt}
+              </p>
+              
+              <div className="space-y-6 text-foreground leading-relaxed">
+                {post.content.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="text-base leading-7">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
 
-            {/* Call to action */}
-            <div className="border-t pt-8 bg-white rounded-lg p-8 shadow-sm">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Ready to start your project?
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Get in touch with our team to discuss how we can help bring your ideas to life.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button onClick={() => navigate('/quote')}>
-                    Get a Quote
-                  </Button>
-                  <Button variant="outline" onClick={() => navigate('/blog')}>
-                    Read More Articles
-                  </Button>
+            {/* Author Bio */}
+            <Card className="mt-12 bg-muted/30">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
+                    {post.author.charAt(0)}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">{post.author}</h3>
+                    <p className="text-muted-foreground">
+                      Expert in digital transformation and web development with over 5 years of experience 
+                      helping businesses grow through innovative technology solutions.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </article>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <section className="bg-muted/30 py-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl font-bold mb-8 text-center">Related Articles</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {relatedPosts.map((relatedPost) => (
+                    <Card key={relatedPost.id} className="group hover:shadow-lg transition-all duration-300">
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
+                        <img
+                          src={relatedPost.image}
+                          alt={relatedPost.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <Badge variant="secondary" className="text-xs mb-2">
+                          {relatedPost.category}
+                        </Badge>
+                        <h3 className="font-semibold mb-2 line-clamp-2 group-hover:text-accent transition-colors">
+                          {relatedPost.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                          {relatedPost.excerpt}
+                        </p>
+                        <Link to={`/blog/${relatedPost.slug}`}>
+                          <Button variant="ghost" size="sm" className="p-0 h-auto">
+                            Read More →
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               </div>
             </div>
-          </article>
-        </div>
+          </section>
+        )}
       </main>
       
       <Footer />

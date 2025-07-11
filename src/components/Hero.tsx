@@ -129,7 +129,7 @@ const Hero = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               
-              {/* Wistia Video Player instead of image */}
+              {/* Wistia Video Player with controls */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
                 <div 
                   className="wistia_responsive_padding" 
@@ -140,7 +140,7 @@ const Hero = () => {
                     style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}
                   >
                     <iframe
-                      src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=true&fullscreenButton=true&muted=false&playButton=true&playbar=true&settingsControl=true&smallPlayButton=true&volumeControl=true&playerColor=14b8a6&loop=false"
+                      src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=true&fullscreenButton=true&muted=false&playButton=true&playbar=true&settingsControl=true&smallPlayButton=true&volumeControl=true&playerColor=14b8a6&loop=true"
                       title="Telvix Showcase Video"
                       allow="autoplay; fullscreen"
                       allowFullScreen

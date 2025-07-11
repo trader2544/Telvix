@@ -1,193 +1,129 @@
-
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { supabase } from '@/integrations/supabase/client';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOEnhancements from '@/components/SEOEnhancements';
-import { useNavigate } from 'react-router-dom';
-import { initializeSampleBlogPosts } from '@/utils/initializeBlogPosts';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string | null;
-  published: boolean;
-  created_at: string;
-  author_id: string;
-  thumbnail_url: string | null;
-  featured_image_url: string | null;
-}
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, Calendar, User, ArrowRight } from 'lucide-react';
+import { sampleBlogPosts } from '@/utils/sampleBlogPosts';
 
 const Blog = () => {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState(sampleBlogPosts);
 
   useEffect(() => {
-    const initializeAndFetchPosts = async () => {
-      // Initialize sample posts if none exist
-      await initializeSampleBlogPosts();
-      // Then fetch all posts
-      await fetchBlogPosts();
-    };
-
-    initializeAndFetchPosts();
-  }, []);
-
-  const fetchBlogPosts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('published', true)
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      setBlogPosts(data || []);
-    } catch (error) {
-      console.error('Error fetching blog posts:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handlePostClick = (postId: string) => {
-    navigate(`/blog/${postId}`);
-  };
-
-  const extractTextFromContent = (htmlContent: string) => {
-    // Remove HTML tags and get plain text
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    return tempDiv.textContent || tempDiv.innerText || '';
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-        <SEOEnhancements 
-          title="Blog - Telvix | Loading..."
-          description="Loading the latest insights and updates from Telvix team"
-        />
-        <Header />
-        <main className="container mx-auto px-4 pt-20 pb-8">
-          <div className="text-center">
-            <div className="animate-pulse">
-              <div className="h-8 bg-gray-300 rounded w-1/3 mx-auto mb-4"></div>
-              <div className="h-4 bg-gray-300 rounded w-2/3 mx-auto"></div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
+    const filtered = sampleBlogPosts.filter(post =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }
+    setFilteredPosts(filtered);
+  }, [searchTerm]);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <SEOEnhancements 
-        title="Blog - Telvix | Web Development Insights & Tips"
-        description="Discover the latest insights, tips, and updates from the Telvix team. Stay updated with web development trends, best practices, and industry news."
-        keywords={['web development blog', 'React tutorials', 'JavaScript tips', 'Node.js guides', 'TypeScript best practices', 'web design trends']}
-        url="https://telvix.app/blog"
-        type="website"
+    <div className="min-h-screen bg-background">
+      <SEOEnhancements
+        title="Telvix Blog - Digital Insights & Industry Expertise"
+        description="Stay updated with the latest trends in web development, AI automation, and digital transformation. Expert insights from Telvix's team of professionals."
+        keywords="digital agency blog, web development insights, AI automation trends, digital transformation tips"
       />
       
       <Header />
       
-      <main className="container mx-auto px-4 pt-20 pb-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Our Blog
+      <main className="pt-20">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 py-16">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Telvix Blog
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Insights, tips, and updates from the Telvix team. Stay ahead with the latest in web development, design trends, and technology innovations.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              Discover the latest insights, trends, and expert advice in digital transformation, 
+              web development, and AI automation.
             </p>
+            
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-background/50 backdrop-blur-sm"
+              />
+            </div>
           </div>
+        </section>
 
-          {blogPosts.length > 0 ? (
-            <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-              {blogPosts.map((post) => (
-                <article key={post.id}>
-                  <Card 
-                    className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer h-full flex flex-col"
-                    onClick={() => handlePostClick(post.id)}
-                  >
-                    {post.thumbnail_url && (
-                      <div className="aspect-video overflow-hidden">
-                        <img 
-                          src={post.thumbnail_url} 
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
+        {/* Blog Posts Grid */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
+                <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 hover-lift">
+                  <div className="aspect-video overflow-hidden rounded-t-lg">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {post.category}
+                      </Badge>
+                      <div className="flex items-center text-xs text-muted-foreground">
+                        <Calendar className="w-3 h-3 mr-1" />
+                        {formatDate(post.date)}
                       </div>
-                    )}
-                    <CardHeader className="pb-3 flex-1">
-                      <div className="flex items-start justify-between gap-4 mb-2">
-                        <CardTitle className="text-xl leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                          {post.title}
-                        </CardTitle>
-                        <Badge variant="secondary" className="shrink-0 text-xs">
-                          {new Date(post.created_at).toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric',
-                            year: 'numeric'
-                          })}
-                        </Badge>
+                    </div>
+                    <CardTitle className="text-xl group-hover:text-accent transition-colors">
+                      {post.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <User className="w-3 h-3 mr-1" />
+                        {post.author}
                       </div>
-                      {post.excerpt && (
-                        <CardDescription className="text-sm line-clamp-3 mt-2">
-                          {post.excerpt}
-                        </CardDescription>
-                      )}
-                    </CardHeader>
-                    <CardContent className="pt-0 mt-auto">
-                      <div className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                        {extractTextFromContent(post.content).substring(0, 150)}...
-                      </div>
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <span className="text-xs text-muted-foreground">
-                          {Math.ceil(extractTextFromContent(post.content).length / 200)} min read
-                        </span>
-                        <span className="text-xs text-primary font-medium group-hover:underline">
-                          Read more →
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </article>
+                      <Link to={`/blog/${post.slug}`}>
+                        <Button variant="ghost" size="sm" className="group/btn">
+                          Read More
+                          <ArrowRight className="w-3 h-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                No posts yet
-              </h2>
-              <p className="text-gray-600">
-                Check back soon for our latest insights and updates!
-              </p>
-            </div>
-          )}
 
-          {/* Additional SEO content */}
-          <section className="mt-16 bg-white rounded-lg p-8 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              About Our Blog
-            </h2>
-            <p className="text-gray-600 leading-relaxed">
-              Welcome to the Telvix blog, where we share our expertise in web development, mobile applications, 
-              and digital transformation. Our team of experienced developers and designers regularly publish 
-              articles covering the latest trends in React, Node.js, TypeScript, and modern web technologies. 
-              Whether you're a beginner looking to learn the basics or an experienced developer seeking advanced 
-              techniques, our blog provides valuable insights to help you build better digital experiences.
-            </p>
-          </section>
-        </div>
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground text-lg">
+                  No articles found matching your search.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
       
       <Footer />
