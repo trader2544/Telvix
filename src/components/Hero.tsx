@@ -128,11 +128,37 @@ const Hero = () => {
           <div className="relative animate-slide-up">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80" 
-                alt="Digital Innovation" 
-                className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full transform group-hover:scale-105 transition-transform duration-500"
-              />
+              
+              {/* Wistia Video Player instead of image */}
+              <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
+                <div 
+                  className="wistia_responsive_padding" 
+                  style={{ padding: '56.25% 0 0 0', position: 'relative' }}
+                >
+                  <div 
+                    className="wistia_responsive_wrapper" 
+                    style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}
+                  >
+                    <iframe
+                      src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=true&fullscreenButton=true&muted=false&playButton=true&playbar=true&settingsControl=true&smallPlayButton=true&volumeControl=true&playerColor=14b8a6&loop=false"
+                      title="Telvix Showcase Video"
+                      allow="autoplay; fullscreen"
+                      allowFullScreen
+                      frameBorder="0"
+                      scrolling="no"
+                      className="wistia_embed"
+                      name="wistia_embed"
+                      style={{ 
+                        height: '100%', 
+                        left: 0, 
+                        position: 'absolute', 
+                        top: 0, 
+                        width: '100%' 
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
               
               {/* Floating Cards */}
               <div className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl animate-bounce-gentle">
