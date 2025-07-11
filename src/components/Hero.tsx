@@ -16,14 +16,58 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    // Load Wistia script
-    const script = document.createElement('script');
-    script.src = 'https://fast.wistia.com/assets/external/E-v1.js';
-    script.async = true;
-    document.head.appendChild(script);
+    // Load Wistia scripts
+    const playerScript = document.createElement('script');
+    playerScript.src = 'https://fast.wistia.com/player.js';
+    playerScript.async = true;
+    document.head.appendChild(playerScript);
+
+    const embedScript = document.createElement('script');
+    embedScript.src = 'https://fast.wistia.com/embed/fx86as02vk.js';
+    embedScript.async = true;
+    embedScript.type = 'module';
+    document.head.appendChild(embedScript);
+
+    // Add Wistia styles
+    const style = document.createElement('style');
+    style.textContent = `
+      wistia-player[media-id='fx86as02vk']:not(:defined) { 
+        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/fx86as02vk/swatch'); 
+        display: block; 
+        filter: blur(5px); 
+        padding-top: 56.04%; 
+      }
+      
+      /* Hide all Wistia controls and branding */
+      wistia-player[media-id='fx86as02vk'] {
+        --wistia-control-bar-display: none !important;
+        --wistia-play-button-display: none !important;
+        --wistia-settings-control-display: none !important;
+        --wistia-fullscreen-button-display: none !important;
+        --wistia-volume-control-display: none !important;
+        --wistia-playbar-display: none !important;
+      }
+      
+      wistia-player[media-id='fx86as02vk'] .w-chrome {
+        display: none !important;
+      }
+      
+      wistia-player[media-id='fx86as02vk'] .w-control-bar {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
 
     return () => {
-      document.head.removeChild(script);
+      if (document.head.contains(playerScript)) {
+        document.head.removeChild(playerScript);
+      }
+      if (document.head.contains(embedScript)) {
+        document.head.removeChild(embedScript);
+      }
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
     };
   }, []);
 
@@ -31,44 +75,42 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Wistia Video Background */}
       <div className="absolute inset-0 w-full h-full">
-        <div 
-          className="wistia_responsive_padding" 
-          style={{ padding: '0% 0 0 0', position: 'relative' }}
-        >
-          <div 
-            className="wistia_responsive_wrapper" 
-            style={{ height: '100vh', left: 0, position: 'absolute', top: 0, width: '100%' }}
-          >
-            <iframe
-              src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=false&fullscreenButton=false&muted=true&playButton=false&playbar=false&settingsControl=false&smallPlayButton=false&volumeControl=false&playerColor=14b8a6&loop=true"
-              title="Telvix Hero Video"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              frameBorder="0"
-              scrolling="no"
-              className="wistia_embed absolute inset-0 w-full h-full object-cover"
-              name="wistia_embed"
-              style={{ 
-                width: '100%', 
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(0.4)'
-              }}
-            />
-          </div>
+        <div className="relative w-full h-full">
+          <wistia-player 
+            media-id="fx86as02vk" 
+            aspect="1.7843866171003717"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '100vw',
+              height: '100vh',
+              minWidth: '100%',
+              minHeight: '100%',
+              objectFit: 'cover',
+              filter: 'brightness(0.4)',
+              zIndex: 1
+            }}
+            autoplay="true"
+            loop="true"
+            muted="true"
+            controls="false"
+            playsinline="true"
+          />
         </div>
         
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/80"></div>
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/80 z-10"></div>
+        <div className="absolute inset-0 bg-black/30 z-10"></div>
       </div>
       
       {/* Enhanced Animated Background Elements */}
-      <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-48 h-48 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-accent/20 rounded-full blur-3xl animate-float z-20"></div>
+      <div className="absolute bottom-20 left-20 w-48 h-48 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl animate-float z-20" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 bg-accent/10 rounded-full blur-3xl animate-pulse z-20"></div>
       
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-30">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div className="text-center lg:text-left animate-fade-in text-white">
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 border border-white/20">
@@ -129,35 +171,21 @@ const Hero = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               
-              {/* Wistia Video Player with controls */}
+              {/* Wistia Video Player with same video but with controls for demonstration */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                <div 
-                  className="wistia_responsive_padding" 
-                  style={{ padding: '56.25% 0 0 0', position: 'relative' }}
-                >
-                  <div 
-                    className="wistia_responsive_wrapper" 
-                    style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}
-                  >
-                    <iframe
-                      src="https://fast.wistia.net/embed/iframe/fx86as02vk?autoPlay=true&controlsVisibleOnLoad=true&fullscreenButton=true&muted=false&playButton=true&playbar=true&settingsControl=true&smallPlayButton=true&volumeControl=true&playerColor=14b8a6&loop=true"
-                      title="Telvix Showcase Video"
-                      allow="autoplay; fullscreen"
-                      allowFullScreen
-                      frameBorder="0"
-                      scrolling="no"
-                      className="wistia_embed"
-                      name="wistia_embed"
-                      style={{ 
-                        height: '100%', 
-                        left: 0, 
-                        position: 'absolute', 
-                        top: 0, 
-                        width: '100%' 
-                      }}
-                    />
-                  </div>
-                </div>
+                <wistia-player 
+                  media-id="fx86as02vk" 
+                  aspect="1.7843866171003717"
+                  style={{
+                    width: '100%',
+                    height: 'auto'
+                  }}
+                  autoplay="true"
+                  loop="true"
+                  muted="false"
+                  controls="true"
+                  playsinline="true"
+                />
               </div>
               
               {/* Floating Cards */}
