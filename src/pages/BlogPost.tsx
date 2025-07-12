@@ -68,8 +68,6 @@ const BlogPost = () => {
     day: 'numeric'
   });
 
-  const tags = Array.isArray(post.tags) ? post.tags : [];
-
   return (
     <div className="min-h-screen">
       <SEOEnhancements
@@ -122,21 +120,6 @@ const BlogPost = () => {
           className="prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
-        
-        {tags.length > 0 && (
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag: string, index: number) => (
-                <span
-                  key={index}
-                  className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
       </article>
       
       <Footer />

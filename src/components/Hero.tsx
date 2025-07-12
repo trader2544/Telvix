@@ -19,20 +19,17 @@ const Hero = () => {
       {/* Background Video */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover brightness-[0.3] z-[1]"
-            style={{
-              minWidth: '100%',
-              minHeight: '100%'
-            }}
-          >
-            <source src="https://cdn-cf-east.streamable.com/video/mp4/lmifak.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <div style={{position:'relative', width:'100%', height:'100%', paddingBottom:'56.250%'}} className="absolute inset-0">
+            <iframe 
+              allow="fullscreen;autoplay" 
+              allowFullScreen 
+              height="100%" 
+              src="https://streamable.com/e/lmifak?autoplay=1&muted=1" 
+              width="100%" 
+              style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.3)'}}
+              className="z-[1]"
+            />
+          </div>
         </div>
         
         {/* Dark overlay for better text readability */}
