@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
-import { useEffect } from 'react';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -15,89 +14,25 @@ const Hero = () => {
     navigate('/quote');
   };
 
-  useEffect(() => {
-    // Load Wistia scripts
-    const playerScript = document.createElement('script');
-    playerScript.src = 'https://fast.wistia.com/player.js';
-    playerScript.async = true;
-    document.head.appendChild(playerScript);
-
-    const embedScript = document.createElement('script');
-    embedScript.src = 'https://fast.wistia.com/embed/fx86as02vk.js';
-    embedScript.async = true;
-    embedScript.type = 'module';
-    document.head.appendChild(embedScript);
-
-    // Add Wistia styles
-    const style = document.createElement('style');
-    style.textContent = `
-      wistia-player[media-id='fx86as02vk']:not(:defined) { 
-        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/fx86as02vk/swatch'); 
-        display: block; 
-        filter: blur(5px); 
-        padding-top: 56.04%; 
-      }
-      
-      /* Hide all Wistia controls and branding */
-      wistia-player[media-id='fx86as02vk'] {
-        --wistia-control-bar-display: none !important;
-        --wistia-play-button-display: none !important;
-        --wistia-settings-control-display: none !important;
-        --wistia-fullscreen-button-display: none !important;
-        --wistia-volume-control-display: none !important;
-        --wistia-playbar-display: none !important;
-      }
-      
-      wistia-player[media-id='fx86as02vk'] .w-chrome {
-        display: none !important;
-      }
-      
-      wistia-player[media-id='fx86as02vk'] .w-control-bar {
-        display: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    return () => {
-      if (document.head.contains(playerScript)) {
-        document.head.removeChild(playerScript);
-      }
-      if (document.head.contains(embedScript)) {
-        document.head.removeChild(embedScript);
-      }
-      if (document.head.contains(style)) {
-        document.head.removeChild(style);
-      }
-    };
-  }, []);
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Wistia Video Background */}
+      {/* Streamable Video Background */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full">
-          <wistia-player 
-            media-id="fx86as02vk" 
-            aspect="1.7843866171003717"
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover brightness-[0.4] z-[1]"
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '100vw',
-              height: '100vh',
               minWidth: '100%',
-              minHeight: '100%',
-              objectFit: 'cover',
-              filter: 'brightness(0.4)',
-              zIndex: 1
+              minHeight: '100%'
             }}
-            autoplay="true"
-            loop="true"
-            muted="true"
-            controls="false"
-            playsinline="true"
-          />
+          >
+            <source src="https://cdn-cf-east.streamable.com/video/mp4/kuoc9r.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
         
         {/* Dark overlay for better text readability */}
@@ -171,21 +106,19 @@ const Hero = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               
-              {/* Wistia Video Player with same video but with controls for demonstration */}
+              {/* Streamable Video Player for demonstration */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                <wistia-player 
-                  media-id="fx86as02vk" 
-                  aspect="1.7843866171003717"
-                  style={{
-                    width: '100%',
-                    height: 'auto'
-                  }}
-                  autoplay="true"
-                  loop="true"
-                  muted="false"
-                  controls="true"
-                  playsinline="true"
-                />
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  className="w-full h-auto"
+                >
+                  <source src="https://cdn-cf-east.streamable.com/video/mp4/kuoc9r.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
               
               {/* Floating Cards */}

@@ -1,241 +1,164 @@
-
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabaseClient';
+import { format } from 'date-fns';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOEnhancements from '@/components/SEOEnhancements';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { sampleBlogPosts } from '@/utils/sampleBlogPosts';
 
 const BlogPost = () => {
-  const { slug } = useParams();
-  const post = sampleBlogPosts.find(p => p.slug === slug);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!post) {
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select(`
+            *,
+            profiles (
+              full_name,
+              avatar_url
+            )
+          `)
+          .eq('id', id)
+          .eq('published', true)
+          .single();
+
+        if (error) throw error;
+        setPost(data);
+      } catch (err) {
+        console.error('Error fetching blog post:', err);
+        setError('Failed to load blog post');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchPost();
+    }
+  }, [id]);
+
+  if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gray-50">
         <Header />
-        <main className="pt-20 pb-16">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
-            <p className="text-muted-foreground mb-8">The blog post you're looking for doesn't exist.</p>
-            <Link to="/blog">
-              <Button>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Blog
-              </Button>
-            </Link>
+        <div className="container mx-auto px-4 py-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="animate-pulse">
+              <div className="h-12 bg-gray-200 rounded mb-6"></div>
+              <div className="h-4 bg-gray-200 rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded mb-4"></div>
+              <div className="h-96 bg-gray-200 rounded"></div>
+            </div>
           </div>
-        </main>
+        </div>
         <Footer />
       </div>
     );
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const shareUrl = window.location.href;
-  const shareText = `Check out this article: ${post.title}`;
-
-  const handleShare = (platform: string) => {
-    const urls = {
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
-    };
-    
-    if (urls[platform as keyof typeof urls]) {
-      window.open(urls[platform as keyof typeof urls], '_blank', 'width=600,height=400');
-    }
-  };
-
-  // Related posts (excluding current post)
-  const relatedPosts = sampleBlogPosts
-    .filter(p => p.id !== post.id && p.category === post.category)
-    .slice(0, 3);
-
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOEnhancements
-        title={`${post.title} | Telvix Blog`}
-        description={post.excerpt}
-        keywords={`${post.category.toLowerCase()}, digital agency, web development, AI automation`}
-        image={post.image}
-        type="article"
-        author={post.author}
-        publishedTime={post.date}
-        section={post.category}
-        tags={post.category}
-      />
-      
-      <Header />
-      
-      <main className="pt-20">
-        {/* Back Button */}
-        <div className="container mx-auto px-4 py-6">
-          <Link to="/blog">
-            <Button variant="ghost" className="mb-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
+  if (error || !post) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">Post Not Found</h1>
+            <p className="text-gray-600 mb-8">{error || 'The requested blog post could not be found.'}</p>
+            <Button onClick={() => navigate('/blog')}>
               Back to Blog
             </Button>
-          </Link>
-        </div>
-
-        {/* Hero Image */}
-        <div className="relative h-[60vh] overflow-hidden">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        </div>
-
-        {/* Article Content */}
-        <article className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            {/* Article Header */}
-            <header className="mb-8">
-              <Badge variant="secondary" className="mb-4">
-                {post.category}
-              </Badge>
-              
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                {post.title}
-              </h1>
-              
-              <div className="flex flex-wrap items-center gap-6 text-muted-foreground mb-6">
-                <div className="flex items-center">
-                  <User className="w-4 h-4 mr-2" />
-                  {post.author}
-                </div>
-                <div className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {formatDate(post.date)}
-                </div>
-                <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2" />
-                  {post.readTime} min read
-                </div>
-              </div>
-
-              {/* Share Buttons */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground mr-2">Share:</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleShare('facebook')}
-                  className="text-blue-600 hover:bg-blue-50"
-                >
-                  <Facebook className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleShare('twitter')}
-                  className="text-blue-400 hover:bg-blue-50"
-                >
-                  <Twitter className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleShare('linkedin')}
-                  className="text-blue-700 hover:bg-blue-50"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </Button>
-              </div>
-            </header>
-
-            <Separator className="mb-8" />
-
-            {/* Article Body */}
-            <div className="prose prose-lg max-w-none">
-              <p className="text-xl text-muted-foreground mb-8 font-medium">
-                {post.excerpt}
-              </p>
-              
-              <div className="space-y-6 text-foreground leading-relaxed">
-                {post.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-base leading-7">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            {/* Author Bio */}
-            <Card className="mt-12 bg-muted/30">
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
-                    {post.author.charAt(0)}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{post.author}</h3>
-                    <p className="text-muted-foreground">
-                      Expert in digital transformation and web development with over 5 years of experience 
-                      helping businesses grow through innovative technology solutions.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
-        </article>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
-        {/* Related Posts */}
-        {relatedPosts.length > 0 && (
-          <section className="bg-muted/30 py-16">
-            <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl font-bold mb-8 text-center">Related Articles</h2>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {relatedPosts.map((relatedPost) => (
-                    <Card key={relatedPost.id} className="group hover:shadow-lg transition-all duration-300">
-                      <div className="aspect-video overflow-hidden rounded-t-lg">
-                        <img
-                          src={relatedPost.image}
-                          alt={relatedPost.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <Badge variant="secondary" className="text-xs mb-2">
-                          {relatedPost.category}
-                        </Badge>
-                        <h3 className="font-semibold mb-2 line-clamp-2 group-hover:text-accent transition-colors">
-                          {relatedPost.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                          {relatedPost.excerpt}
-                        </p>
-                        <Link to={`/blog/${relatedPost.slug}`}>
-                          <Button variant="ghost" size="sm" className="p-0 h-auto">
-                            Read More →
-                          </Button>
-                        </Link>
-                      </CardContent>
-                    </Card>
+  // Convert tags from string to array for rendering
+  const tagsArray = typeof post.tags === 'string' ? post.tags.split(',').map((tag: string) => tag.trim()) : [];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <SEOEnhancements 
+        title={post.title}
+        description={post.excerpt || post.title}
+        keywords="blog, telvix, technology, web development"
+        ogImage={post.featured_image_url || "/lovable-uploads/93789e97-518e-4b25-a28f-bb7947f42d2c.png"}
+      />
+      <Header />
+      
+      <main className="container mx-auto px-4 py-24">
+        <div className="max-w-4xl mx-auto">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/blog')}
+            className="mb-8 hover:bg-primary/10"
+          >
+            <ArrowLeft className="mr-2 w-4 h-4" />
+            Back to Blog
+          </Button>
+
+          <article className="bg-white rounded-lg shadow-lg overflow-hidden">
+            {post.featured_image_url && (
+              <div className="aspect-video w-full">
+                <img 
+                  src={post.featured_image_url} 
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            
+            <div className="p-8">
+              <div className="flex items-center gap-4 mb-6">
+                {post.profiles?.avatar_url && (
+                  <img 
+                    src={post.profiles.avatar_url} 
+                    alt={post.profiles.full_name || 'Author'}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                )}
+                <div>
+                  <p className="font-semibold text-gray-800">
+                    {post.profiles?.full_name || 'Anonymous'}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {format(new Date(post.created_at), 'MMM dd, yyyy')}
+                  </p>
+                </div>
+              </div>
+
+              <h1 className="text-4xl font-bold text-gray-800 mb-6">{post.title}</h1>
+              
+              {tagsArray.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {tagsArray.map((tag: string, index: number) => (
+                    <Badge key={index} variant="secondary">
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
-              </div>
+              )}
+
+              <div 
+                className="prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
             </div>
-          </section>
-        )}
+          </article>
+        </div>
       </main>
-      
+
       <Footer />
     </div>
   );
