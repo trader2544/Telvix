@@ -2,9 +2,64 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [backgroundVideoUrl, setBackgroundVideoUrl] = useState<string>('');
+  const [heroVideoUrl, setHeroVideoUrl] = useState<string>('');
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const { data: files, error } = await supabase.storage
+          .from('videos')
+          .list('', {
+            limit: 100,
+            offset: 0,
+          });
+
+        if (error) {
+          console.error('Error fetching videos:', error);
+          return;
+        }
+
+        if (files) {
+          // Find background and hero videos based on their names
+          const backgroundVideo = files.find(file => 
+            file.name.toLowerCase().includes('background') || 
+            file.name.toLowerCase().includes('lmifak')
+          );
+          
+          const heroVideo = files.find(file => 
+            file.name.toLowerCase().includes('hero') || 
+            file.name.toLowerCase().includes('kuoc9r') ||
+            file.name.toLowerCase().includes('demo')
+          );
+
+          // Get public URLs for the videos
+          if (backgroundVideo) {
+            const { data } = supabase.storage
+              .from('videos')
+              .getPublicUrl(backgroundVideo.name);
+            setBackgroundVideoUrl(data.publicUrl);
+          }
+
+          if (heroVideo) {
+            const { data } = supabase.storage
+              .from('videos')
+              .getPublicUrl(heroVideo.name);
+            setHeroVideoUrl(data.publicUrl);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    };
+
+    fetchVideos();
+  }, []);
 
   const navigateToPortfolio = () => {
     navigate('/portfolio');
@@ -19,17 +74,31 @@ const Hero = () => {
       {/* Background Video */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full">
-          <div style={{position:'relative', width:'100%', height:'100%', paddingBottom:'56.250%'}} className="absolute inset-0">
-            <iframe 
-              allow="fullscreen;autoplay" 
-              allowFullScreen 
-              height="100%" 
-              src="https://streamable.com/e/lmifak?autoplay=1&muted=1" 
-              width="100%" 
-              style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.3)'}}
-              className="z-[1]"
-            />
-          </div>
+          {backgroundVideoUrl ? (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ filter: 'brightness(0.3)' }}
+            >
+              <source src={backgroundVideoUrl} type="video/mp4" />
+            </video>
+          ) : (
+            // Fallback to original streamable embed if no video found
+            <div style={{position:'relative', width:'100%', height:'100%', paddingBottom:'56.250%'}} className="absolute inset-0">
+              <iframe 
+                allow="fullscreen;autoplay" 
+                allowFullScreen 
+                height="100%" 
+                src="https://streamable.com/e/lmifak?autoplay=1&muted=1" 
+                width="100%" 
+                style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.3)'}}
+                className="z-[1]"
+              />
+            </div>
+          )}
         </div>
         
         {/* Dark overlay for better text readability */}
@@ -105,16 +174,33 @@ const Hero = () => {
               
               {/* Video Player for demonstration */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                <div style={{position:'relative', width:'100%', height:'0px', paddingBottom:'56.250%'}}>
-                  <iframe 
-                    allow="fullscreen;autoplay" 
-                    allowFullScreen 
-                    height="100%" 
-                    src="https://streamable.com/e/kuoc9r?autoplay=1&muted=1" 
-                    width="100%" 
-                    style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden'}}
-                  />
-                </div>
+                {heroVideoUrl ? (
+                  <div className="relative" style={{paddingBottom:'56.25%'}}>
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      controls
+                      className="absolute inset-0 w-full h-full object-cover"
+                    >
+                      <source src={heroVideoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                ) : (
+                  // Fallback to original streamable embed
+                  <div style={{position:'relative', width:'100%', height:'0px', paddingBottom:'56.250%'}}>
+                    <iframe 
+                      allow="fullscreen;autoplay" 
+                      allowFullScreen 
+                      height="100%" 
+                      src="https://streamable.com/e/kuoc9r?autoplay=1&muted=1" 
+                      width="100%" 
+                      style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden'}}
+                    />
+                  </div>
+                )}
               </div>
               
               {/* Floating Cards */}
