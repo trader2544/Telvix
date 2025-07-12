@@ -105,17 +105,16 @@ const Hero = () => {
               
               {/* Video Player for demonstration */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  className="w-full h-auto"
-                >
-                  <source src="https://cdn-cf-east.streamable.com/video/mp4/kuoc9r.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <div style={{position:'relative', width:'100%', height:'0px', paddingBottom:'56.250%'}}>
+                  <iframe 
+                    allow="fullscreen;autoplay" 
+                    allowFullScreen 
+                    height="100%" 
+                    src="https://streamable.com/e/kuoc9r?autoplay=1&muted=1" 
+                    width="100%" 
+                    style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden'}}
+                  />
+                </div>
               </div>
               
               {/* Floating Cards */}
