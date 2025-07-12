@@ -16,7 +16,7 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Streamable Video Background */}
+      {/* Background Video */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full">
           <video
@@ -24,20 +24,20 @@ const Hero = () => {
             loop
             muted
             playsInline
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover brightness-[0.4] z-[1]"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover brightness-[0.3] z-[1]"
             style={{
               minWidth: '100%',
               minHeight: '100%'
             }}
           >
-            <source src="https://cdn-cf-east.streamable.com/video/mp4/kuoc9r.mp4" type="video/mp4" />
+            <source src="https://cdn-cf-east.streamable.com/video/mp4/lmifak.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
         
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/80 z-10"></div>
-        <div className="absolute inset-0 bg-black/30 z-10"></div>
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
       </div>
       
       {/* Enhanced Animated Background Elements */}
@@ -106,7 +106,7 @@ const Hero = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               
-              {/* Streamable Video Player for demonstration */}
+              {/* Video Player for demonstration */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
                 <video
                   autoPlay
