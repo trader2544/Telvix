@@ -6,20 +6,36 @@ import { MessageCircle, ExternalLink } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "NuchoBlackHatey",
-      role: "VPN Platform",
-      company: "Security & Privacy",
-      content: "A secure, high-speed VPN platform delivering optimized configuration files for private internet access across all devices.",
-      logo: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png",
-      link: "http://nuchoblackhatey.ct.ws"
-    },
-    {
       name: "Elso Boutique",
       role: "E-commerce Platform", 
       company: "Kenyan Craftsmanship",
       content: "Modern e-commerce platform celebrating Kenyan craftsmanship, connecting global shoppers with authentic local artisans.",
       logo: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png",
       link: "https://elso-atelier.com"
+    },
+    {
+      name: "Rabbit Hole Fitness Lab",
+      role: "Fitness & Education Platform",
+      company: "Health & Wellness",
+      content: "Interactive platform exploring fitness science, calisthenics, and nutrition with evidence-based guides and tracking tools.",
+      logo: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png",
+      link: "https://rabbithole.fitness"
+    },
+    {
+      name: "MJS Products Limited",
+      role: "Construction & Design",
+      company: "Architecture Firm",
+      content: "Top-tier architectural and construction firm website reflecting professionalism in residential and commercial projects.",
+      logo: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png",
+      link: "https://mjsprods.co.ke"
+    },
+    {
+      name: "PharmaSync Pro AI",
+      role: "Healthcare Management",
+      company: "SaaS Platform",
+      content: "Comprehensive pharmacy and clinic management platform streamlining inventory, billing, and patient records for healthcare providers.",
+      logo: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png",
+      link: "https://pharma-sync.netlify.app"
     },
     {
       name: "Kwa Kamande Space",
@@ -36,6 +52,22 @@ const Testimonials = () => {
       content: "Exclusive platform for luxury car and property rentals in Nairobi, providing VIP service for distinguished clients.",
       logo: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png",
       link: "https://paulrentals.netlify.app"
+    },
+    {
+      name: "Telvix Digital Solutions",
+      role: "Digital Agency",
+      company: "Technology Solutions",
+      content: "Full-service digital agency website showcasing expertise in web development, AI automation, and digital marketing services.",
+      logo: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png",
+      link: "https://telvix.tech"
+    },
+    {
+      name: "NuchoBlackHatey",
+      role: "VPN Platform",
+      company: "Security & Privacy",
+      content: "A secure, high-speed VPN platform delivering optimized configuration files for private internet access across all devices.",
+      logo: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png",
+      link: "http://nuchoblackhatey.ct.ws"
     }
   ];
 

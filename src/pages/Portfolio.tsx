@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap, Shield, Car, TrendingUp, Leaf, Newspaper } from 'lucide-react';
+import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap, Shield, Car, TrendingUp, Leaf, Newspaper, Building2, Dumbbell, Pill, User } from 'lucide-react';
 
 interface Repository {
   id: number;
@@ -57,31 +57,10 @@ const Portfolio = () => {
     enabled: !!githubUsername,
   });
 
-  // Real portfolio projects with uploaded images
+  // Real portfolio projects with uploaded images - reordered as requested
   const portfolioProjects: ProjectDetails[] = [
     {
       id: 1,
-      name: "NuchoBlackHatey",
-      description: "A web platform delivering secure, high-speed VPN configuration files for private and region-unlocked internet access, supporting OpenVPN and WireGuard protocols.",
-      fullDescription: "NuchoBlackHatey is a comprehensive VPN platform that provides users with secure, high-speed internet access through carefully optimized configuration files. The platform supports both OpenVPN and WireGuard protocols, ensuring compatibility across all major devices and operating systems.",
-      keyFeatures: [
-        "Pre-configured .ovpn and .conf files for seamless setup",
-        "Cross-platform compatibility (Windows, macOS, Linux, iOS, Android)",
-        "Optimized for apps like HTTP Custom, HTTP Injector, and Dark Tunnel",
-        "Free and premium plans with 24/7 support and setup guides"
-      ],
-      techStack: "HTML, CSS, JavaScript (static site)",
-      html_url: "https://github.com/trader2544/nucho_blackhatey.site.git",
-      homepage: "http://nuchoblackhatey.ct.ws",
-      stargazers_count: 245,
-      forks_count: 78,
-      language: "JavaScript",
-      topics: ["vpn", "security", "privacy", "networking"],
-      icon: Shield,
-      image: "/lovable-uploads/3c7281a2-ebad-4c8a-b44b-77093874a604.png"
-    },
-    {
-      id: 2,
       name: "Elso Boutique",
       description: "A modern e-commerce platform celebrating Kenyan craftsmanship, connecting shoppers with unique, high-quality local products while empowering artisans with robust seller tools.",
       fullDescription: "Elso Boutique is a sophisticated e-commerce platform that showcases the finest Kenyan craftsmanship. From handwoven baskets to contemporary fashion and specialty foods, the platform connects global shoppers with authentic local artisans while providing comprehensive seller management tools.",
@@ -102,7 +81,71 @@ const Portfolio = () => {
       image: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png"
     },
     {
+      id: 2,
+      name: "Rabbit Hole Fitness Lab",
+      description: "An interactive platform exploring fitness science, calisthenics, and nutrition. Features evidence-based guides, step-by-step tutorials, and tools for tracking training and recovery.",
+      fullDescription: "Rabbit Hole Fitness Lab is a comprehensive fitness and education platform that combines scientific research with practical application. The platform offers evidence-based guides, progressive calisthenics programs, and interactive tools for fitness enthusiasts and professionals.",
+      keyFeatures: [
+        "Educational content on fitness and nutrition",
+        "Calisthenics progressions and strength programs",
+        "Interactive tracking tools",
+        "Premium course support"
+      ],
+      techStack: "Vite, TypeScript, React, shadcn-ui, Tailwind CSS, Supabase",
+      html_url: "https://github.com/trader2544/rabbit-hole-fitness-lab",
+      homepage: "https://rabbithole.fitness",
+      stargazers_count: 275,
+      forks_count: 84,
+      language: "TypeScript",
+      topics: ["fitness", "education", "calisthenics", "health"],
+      icon: Dumbbell,
+      image: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png"
+    },
+    {
       id: 3,
+      name: "MJS Products Limited",
+      description: "MJS Products Limited is a top-tier architectural and construction firm in Nairobi, Kenya. This site reflects their values, portfolio, and professionalism in residential and commercial projects.",
+      fullDescription: "MJS Products Limited represents excellence in architectural design and construction services across Kenya. The website showcases their comprehensive portfolio of residential and commercial projects, highlighting their commitment to quality craftsmanship and innovative design solutions.",
+      keyFeatures: [
+        "Project showcase and service pages",
+        "Company vision, mission, and values",
+        "Clean, responsive design",
+        "Client-focused structure"
+      ],
+      techStack: "Vite, TypeScript, React, shadcn-ui, Tailwind CSS",
+      html_url: "https://github.com/trader2544/mjs-prods",
+      homepage: "https://mjsprods.co.ke",
+      stargazers_count: 156,
+      forks_count: 43,
+      language: "TypeScript",
+      topics: ["construction", "architecture", "kenya", "design"],
+      icon: Building2,
+      image: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png"
+    },
+    {
+      id: 4,
+      name: "PharmaSync Pro AI",
+      description: "A pharmacy and clinic management platform for Kenyan healthcare providers. Streamlines inventory, billing, patient records, and analytics—all in a single web dashboard.",
+      fullDescription: "PharmaSync Pro AI is a comprehensive healthcare management platform designed specifically for Kenyan healthcare providers. It combines pharmacy management, clinic operations, and patient care into a unified system with advanced analytics and AI-powered insights.",
+      keyFeatures: [
+        "Inventory and sales tracking",
+        "Patient medical records & prescriptions",
+        "User roles with branch control",
+        "Switchable Clinic/Pharmacy modes",
+        "Analytics dashboard"
+      ],
+      techStack: "Vite, TypeScript, React, shadcn-ui, Tailwind CSS",
+      html_url: "https://github.com/trader2544/pharma-sync-pro-ai",
+      homepage: "https://pharma-sync.netlify.app",
+      stargazers_count: 198,
+      forks_count: 67,
+      language: "TypeScript",
+      topics: ["healthcare", "pharmacy", "saas", "kenya"],
+      icon: Pill,
+      image: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png"
+    },
+    {
+      id: 5,
       name: "Kwa Kamande Space",
       description: "A web application for managing rental spaces, offering tools for landlords and tenants to handle rent payments, maintenance requests, and property announcements.",
       fullDescription: "Kwa Kamande Space is a comprehensive rental management platform designed to streamline property management for both landlords and tenants. The platform offers intuitive dashboards, automated payment tracking, and efficient communication tools.",
@@ -123,7 +166,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png"
     },
     {
-      id: 4,
+      id: 6,
       name: "Paul Rentals",
       description: "A platform for managing and automating luxury car and property rentals in Nairobi, Kenya, with a focus on premium service for high-profile clients.",
       fullDescription: "Paul Rentals is an exclusive platform designed for luxury car and property rentals in Nairobi. The platform caters to high-profile clients seeking premium vehicles and properties with seamless booking experiences and VIP service.",
@@ -144,7 +187,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png"
     },
     {
-      id: 5,
+      id: 7,
       name: "AfriGrowth",
       description: "A personalized investment advisory platform for African markets, offering tools for wealth management, market analysis, and financial education.",
       fullDescription: "AfriGrowth is a cutting-edge investment advisory platform specifically designed for African markets. It provides comprehensive tools for wealth management, detailed market analysis, and extensive financial education resources to empower investors across the continent.",
@@ -165,7 +208,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/c84b6d6c-0b8c-42af-a8b5-4779c3c0f1f2.png"
     },
     {
-      id: 6,
+      id: 8,
       name: "Eco Track",
       description: "A private web application for tracking and managing environmental and sustainability activities in Kenya, designed for researchers, conservationists, and policymakers.",
       fullDescription: "Eco Track is a sophisticated environmental monitoring platform designed for researchers, conservationists, and policymakers in Kenya. The application provides real-time environmental data tracking and analysis tools to support conservation efforts and policy-making.",
@@ -186,7 +229,49 @@ const Portfolio = () => {
       image: "/lovable-uploads/f7b6da4f-1260-4f3e-8c2f-2510fe076664.png"
     },
     {
-      id: 7,
+      id: 9,
+      name: "Portfolio Template",
+      description: "A customizable, responsive personal portfolio designed to showcase your projects, experience, and contact info in a polished format.",
+      fullDescription: "Portfolio Template is a modern, fully responsive personal portfolio solution designed for developers, designers, and creative professionals. The template offers clean aesthetics, smooth animations, and easy customization options to help professionals showcase their work effectively.",
+      keyFeatures: [
+        "Project gallery with links and images",
+        "'About Me' storytelling section",
+        "Contact and social media integration",
+        "Easy to modify layout and content"
+      ],
+      techStack: "Vite, TypeScript, React, shadcn-ui, Tailwind CSS",
+      html_url: "https://github.com/trader2544/portfolio-",
+      homepage: "https://patrick1portfolio.netlify.app",
+      stargazers_count: 89,
+      forks_count: 23,
+      language: "TypeScript",
+      topics: ["portfolio", "template", "responsive", "developer"],
+      icon: User,
+      image: "/lovable-uploads/0083ef7e-4274-4cdf-86ac-ddf6b59accd5.png"
+    },
+    {
+      id: 10,
+      name: "Telvix Digital Solutions",
+      description: "Website for a full-service digital agency providing solutions in web/mobile development, AI automation, SaaS, and digital marketing.",
+      fullDescription: "Telvix Digital Solutions represents a comprehensive digital agency offering end-to-end technology solutions. The platform showcases their expertise in web and mobile development, AI automation, SaaS solutions, and comprehensive digital marketing services for businesses of all sizes.",
+      keyFeatures: [
+        "Web & app development services",
+        "AI and automation workflows",
+        "SaaS solutions and branding",
+        "SEO and digital marketing packages"
+      ],
+      techStack: "Vite, TypeScript, React, shadcn-ui, Tailwind CSS",
+      html_url: "https://github.com/trader2544/Telvix",
+      homepage: "https://telvix.tech",
+      stargazers_count: 234,
+      forks_count: 78,
+      language: "TypeScript",
+      topics: ["digital-agency", "web-development", "ai", "saas"],
+      icon: Zap,
+      image: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png"
+    },
+    {
+      id: 11,
       name: "SkyNet",
       description: "A modern platform combining news aggregation with VPN sales and management, offering secure browsing and real-time updates.",
       fullDescription: "SkyNet is an innovative platform that combines comprehensive news aggregation with VPN services. It offers users real-time news updates while providing secure browsing capabilities through integrated VPN services, creating a complete digital information and security solution.",
@@ -205,6 +290,27 @@ const Portfolio = () => {
       topics: ["news", "vpn", "aggregation", "security"],
       icon: Newspaper,
       image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
+    },
+    {
+      id: 12,
+      name: "NuchoBlackHatey",
+      description: "A web platform delivering secure, high-speed VPN configuration files for private and region-unlocked internet access, supporting OpenVPN and WireGuard protocols.",
+      fullDescription: "NuchoBlackHatey is a comprehensive VPN platform that provides users with secure, high-speed internet access through carefully optimized configuration files. The platform supports both OpenVPN and WireGuard protocols, ensuring compatibility across all major devices and operating systems.",
+      keyFeatures: [
+        "Pre-configured .ovpn and .conf files for seamless setup",
+        "Cross-platform compatibility (Windows, macOS, Linux, iOS, Android)",
+        "Optimized for apps like HTTP Custom, HTTP Injector, and Dark Tunnel",
+        "Free and premium plans with 24/7 support and setup guides"
+      ],
+      techStack: "HTML, CSS, JavaScript (static site)",
+      html_url: "https://github.com/trader2544/nucho_blackhatey.site.git",
+      homepage: "http://nuchoblackhatey.ct.ws",
+      stargazers_count: 245,
+      forks_count: 78,
+      language: "JavaScript",
+      topics: ["vpn", "security", "privacy", "networking"],
+      icon: Shield,
+      image: "/lovable-uploads/3c7281a2-ebad-4c8a-b44b-77093874a604.png"
     }
   ];
 
