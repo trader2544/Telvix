@@ -57,7 +57,7 @@ const Hero = () => {
               muted
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ filter: 'brightness(0.3)' }}
+              style={{ filter: 'brightness(0.5)' }}
             >
               <source src={backgroundVideoUrl} type="video/mp4" />
             </video>
@@ -70,7 +70,7 @@ const Hero = () => {
                 height="100%" 
                 src="https://streamable.com/e/lmifak?autoplay=1&muted=1" 
                 width="100%" 
-                style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.3)'}}
+                style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.5)'}}
                 className="z-[1]"
               />
             </div>
@@ -78,8 +78,8 @@ const Hero = () => {
         </div>
         
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/80 z-10"></div>
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/50 to-accent/60 z-10"></div>
+        <div className="absolute inset-0 bg-black/20 z-10"></div>
       </div>
       
       {/* Enhanced Animated Background Elements */}
