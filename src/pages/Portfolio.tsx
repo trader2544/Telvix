@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
@@ -6,7 +5,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap, Shield, Car, TrendingUp, Leaf, Newspaper, Building2, Dumbbell, Pill, User } from 'lucide-react';
+import { ExternalLink, Github, Star, GitFork, Globe, Code2, Smartphone, ShoppingBag, Bot, Zap, Shield, Car, TrendingUp, Leaf, Newspaper, Building2, Dumbbell, Pill, User, Badge } from 'lucide-react';
 
 interface Repository {
   id: number;
@@ -36,6 +35,7 @@ interface ProjectDetails {
   topics: string[];
   icon: any;
   image: string;
+  status?: 'completed' | 'in-progress';
 }
 
 const Portfolio = () => {
@@ -78,7 +78,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["ecommerce", "kenya", "craftsmanship", "marketplace"],
       icon: ShoppingBag,
-      image: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png"
+      image: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png",
+      status: "completed"
     },
     {
       id: 2,
@@ -99,7 +100,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["fitness", "education", "calisthenics", "health"],
       icon: Dumbbell,
-      image: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png"
+      image: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png",
+      status: "in-progress"
     },
     {
       id: 3,
@@ -120,7 +122,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["construction", "architecture", "kenya", "design"],
       icon: Building2,
-      image: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png"
+      image: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png",
+      status: "completed"
     },
     {
       id: 4,
@@ -142,7 +145,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["healthcare", "pharmacy", "saas", "kenya"],
       icon: Pill,
-      image: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png"
+      image: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png",
+      status: "in-progress"
     },
     {
       id: 5,
@@ -163,7 +167,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["property-management", "rental", "dashboard", "supabase"],
       icon: Globe,
-      image: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png"
+      image: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png",
+      status: "completed"
     },
     {
       id: 6,
@@ -184,7 +189,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["luxury-rentals", "vehicles", "properties", "nairobi"],
       icon: Car,
-      image: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png"
+      image: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png",
+      status: "completed"
     },
     {
       id: 7,
@@ -205,7 +211,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["fintech", "investment", "africa", "wealth-management"],
       icon: TrendingUp,
-      image: "/lovable-uploads/c84b6d6c-0b8c-42af-a8b5-4779c3c0f1f2.png"
+      image: "/lovable-uploads/c84b6d6c-0b8c-42af-a8b5-4779c3c0f1f2.png",
+      status: "completed"
     },
     {
       id: 8,
@@ -226,7 +233,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["environment", "conservation", "kenya", "sustainability"],
       icon: Leaf,
-      image: "/lovable-uploads/f7b6da4f-1260-4f3e-8c2f-2510fe076664.png"
+      image: "/lovable-uploads/f7b6da4f-1260-4f3e-8c2f-2510fe076664.png",
+      status: "completed"
     },
     {
       id: 9,
@@ -247,7 +255,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["portfolio", "template", "responsive", "developer"],
       icon: User,
-      image: "/lovable-uploads/0083ef7e-4274-4cdf-86ac-ddf6b59accd5.png"
+      image: "/lovable-uploads/0083ef7e-4274-4cdf-86ac-ddf6b59accd5.png",
+      status: "completed"
     },
     {
       id: 10,
@@ -268,7 +277,8 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["digital-agency", "web-development", "ai", "saas"],
       icon: Zap,
-      image: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png"
+      image: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png",
+      status: "completed"
     },
     {
       id: 11,
@@ -289,7 +299,8 @@ const Portfolio = () => {
       language: "JavaScript",
       topics: ["news", "vpn", "aggregation", "security"],
       icon: Newspaper,
-      image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
+      image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png",
+      status: "completed"
     },
     {
       id: 12,
@@ -310,7 +321,8 @@ const Portfolio = () => {
       language: "JavaScript",
       topics: ["vpn", "security", "privacy", "networking"],
       icon: Shield,
-      image: "/lovable-uploads/3c7281a2-ebad-4c8a-b44b-77093874a604.png"
+      image: "/lovable-uploads/3c7281a2-ebad-4c8a-b44b-77093874a604.png",
+      status: "completed"
     }
   ];
 
@@ -399,6 +411,19 @@ const Portfolio = () => {
                           <span className="text-white text-xs">{project.forks_count}</span>
                         </div>
                       </div>
+                      
+                      {/* Status Badge */}
+                      {project.status && (
+                        <div className="absolute bottom-2 left-2">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                            project.status === 'in-progress' 
+                              ? 'bg-yellow-500/90 text-yellow-100' 
+                              : 'bg-green-500/90 text-green-100'
+                          }`}>
+                            {project.status === 'in-progress' ? 'In Progress' : 'Completed'}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <CardContent className="p-4">
@@ -466,6 +491,11 @@ const Portfolio = () => {
                             <DialogTitle className="text-2xl font-bold text-primary flex items-center gap-3">
                               <IconComponent className="w-8 h-8" />
                               {project.name}
+                              {project.status === 'in-progress' && (
+                                <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+                                  In Progress
+                                </Badge>
+                              )}
                             </DialogTitle>
                           </DialogHeader>
                           
