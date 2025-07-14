@@ -13,45 +13,21 @@ const Hero = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const { data: files, error } = await supabase.storage
+        // Get the specific videos by their exact names
+        const { data: backgroundVideoData } = supabase.storage
           .from('videos')
-          .list('', {
-            limit: 100,
-            offset: 0,
-          });
+          .getPublicUrl('hero background.mp4');
+        
+        const { data: heroVideoData } = supabase.storage
+          .from('videos')
+          .getPublicUrl('hero video.mp4');
 
-        if (error) {
-          console.error('Error fetching videos:', error);
-          return;
+        if (backgroundVideoData) {
+          setBackgroundVideoUrl(backgroundVideoData.publicUrl);
         }
 
-        if (files) {
-          // Find background and hero videos based on their names
-          const backgroundVideo = files.find(file => 
-            file.name.toLowerCase().includes('background') || 
-            file.name.toLowerCase().includes('lmifak')
-          );
-          
-          const heroVideo = files.find(file => 
-            file.name.toLowerCase().includes('hero') || 
-            file.name.toLowerCase().includes('kuoc9r') ||
-            file.name.toLowerCase().includes('demo')
-          );
-
-          // Get public URLs for the videos
-          if (backgroundVideo) {
-            const { data } = supabase.storage
-              .from('videos')
-              .getPublicUrl(backgroundVideo.name);
-            setBackgroundVideoUrl(data.publicUrl);
-          }
-
-          if (heroVideo) {
-            const { data } = supabase.storage
-              .from('videos')
-              .getPublicUrl(heroVideo.name);
-            setHeroVideoUrl(data.publicUrl);
-          }
+        if (heroVideoData) {
+          setHeroVideoUrl(heroVideoData.publicUrl);
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -86,7 +62,7 @@ const Hero = () => {
               <source src={backgroundVideoUrl} type="video/mp4" />
             </video>
           ) : (
-            // Fallback to original streamable embed if no video found
+            // Fallback to original streamable embed if video not found
             <div style={{position:'relative', width:'100%', height:'100%', paddingBottom:'56.250%'}} className="absolute inset-0">
               <iframe 
                 allow="fullscreen;autoplay" 
