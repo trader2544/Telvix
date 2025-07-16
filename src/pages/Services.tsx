@@ -1,69 +1,68 @@
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Code, Smartphone, Globe, Zap, Shield, TrendingUp, Users, Star, Clock, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const Services = () => {
-  const [selectedService, setSelectedService] = useState('web-development');
+  const navigate = useNavigate();
 
   const services = [
     {
-      id: 'web-development',
-      title: 'Web Development',
-      icon: Code,
-      description: 'Custom websites and web applications built with modern technologies',
-      features: ['Responsive Design', 'SEO Optimized', 'Fast Loading', 'Mobile First'],
-      price: 'From $2,500',
-      duration: '2-4 weeks'
-    },
-    {
-      id: 'mobile-apps',
-      title: 'Mobile Applications', 
-      icon: Smartphone,
-      description: 'Native and cross-platform mobile apps for iOS and Android',
-      features: ['Cross Platform', 'Native Performance', 'App Store Ready', 'Push Notifications'],
-      price: 'From $5,000',
-      duration: '4-8 weeks'
-    },
-    {
-      id: 'saas-solutions',
-      title: 'SaaS Solutions',
       icon: Globe,
-      description: 'Scalable software-as-a-service platforms and applications',
-      features: ['Cloud Infrastructure', 'User Management', 'Payment Integration', 'Analytics'],
-      price: 'From $10,000',
-      duration: '8-16 weeks'
+      title: "Web Design & Development",
+      description: "Craft responsive, high-performance websites using modern frameworks like React and WordPress for exceptional user experiences.",
+      gradient: "from-blue-500 to-cyan-500"
     },
     {
-      id: 'ai-integration',
-      title: 'AI Integration',
+      icon: Bot,
+      title: "AI & Automation Solutions", 
+      description: "Boost efficiency with custom AI integrations, workflow automation, and intelligent tools that streamline your business processes.",
+      gradient: "from-purple-500 to-pink-500"
+    },
+    {
       icon: Zap,
-      description: 'Artificial intelligence and machine learning solutions',
-      features: ['Custom AI Models', 'API Integration', 'Data Processing', 'Automation'],
-      price: 'From $7,500',
-      duration: '6-12 weeks'
+      title: "SaaS Development",
+      description: "Launch scalable Software-as-a-Service solutions with modern architecture, from rental systems to enterprise platforms.",
+      gradient: "from-orange-500 to-red-500"
+    },
+    {
+      icon: ShoppingBag,
+      title: "E-commerce Solutions",
+      description: "Build powerful online stores with Shopify, WooCommerce, or custom platforms designed to maximize sales and engagement.",
+      gradient: "from-green-500 to-emerald-500"
+    },
+    {
+      icon: TrendingUp,
+      title: "Digital Marketing & SEO",
+      description: "Drive traffic and conversions with data-driven SEO strategies, PPC campaigns, and comprehensive digital marketing.",
+      gradient: "from-teal-500 to-blue-500"
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile App Development",
+      description: "Create stunning iOS and Android apps with cross-platform frameworks like Flutter and React Native for maximum reach.",
+      gradient: "from-indigo-500 to-purple-500"
+    },
+    {
+      icon: Code2,
+      title: "Custom Software Development",
+      description: "Develop bespoke software solutions tailored to your unique business requirements and operational workflows.",
+      gradient: "from-pink-500 to-rose-500"
+    },
+    {
+      icon: Palette,
+      title: "UI/UX Design",
+      description: "Design intuitive, visually stunning interfaces that enhance user satisfaction, engagement, and brand recognition.",
+      gradient: "from-amber-500 to-orange-500"
     }
   ];
 
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      company: "TechStart Inc",
-      rating: 5,
-      comment: "Exceptional work on our web platform. The team delivered beyond expectations."
-    },
-    {
-      name: "Michael Chen",
-      company: "Digital Ventures",
-      rating: 5,
-      comment: "Professional, timely, and innovative. Our mobile app exceeded all our goals."
-    }
-  ];
+  const handleBookService = (serviceName: string) => {
+    navigate(`/quote?service=${encodeURIComponent(serviceName)}`);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
@@ -87,95 +86,60 @@ const Services = () => {
         </section>
 
         {/* Services Section */}
-        <section className="py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Tabs value={selectedService} onValueChange={setSelectedService} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-8">
-                {services.map((service) => {
-                  const IconComponent = service.icon;
-                  return (
-                    <TabsTrigger key={service.id} value={service.id} className="flex items-center gap-2">
-                      <IconComponent className="w-4 h-4" />
-                      <span className="hidden sm:inline">{service.title}</span>
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
+        <section className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/20 to-teal-50/30 relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-gradient-to-br from-blue-200/20 to-teal-200/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 left-20 w-32 h-32 md:w-80 md:h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
 
-              {services.map((service) => {
+          <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+            <div className="text-center mb-6 md:mb-12 animate-fade-in">
+              <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 md:mb-4 shadow-lg">
+                <Code2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
+              </div>
+              <h2 className="text-2xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
+                All Digital Services <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Under One Roof</span>
+              </h2>
+              <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
+                From concept to launch, we provide comprehensive digital solutions that drive growth and innovation for your business.
+              </p>
+            </div>
+
+            {/* Service Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-12">
+              {services.map((service, index) => {
                 const IconComponent = service.icon;
                 return (
-                  <TabsContent key={service.id} value={service.id}>
-                    <Card className="max-w-4xl mx-auto">
-                      <CardHeader className="text-center">
-                        <div className="flex justify-center mb-4">
-                          <div className="p-4 bg-gradient-to-br from-primary to-accent rounded-2xl">
-                            <IconComponent className="w-8 h-8 text-white" />
-                          </div>
+                  <Card 
+                    key={index} 
+                    className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 rounded-3xl overflow-hidden animate-slide-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {/* Gradient Border Effect */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
+                    
+                    <CardContent className="relative p-6">
+                      <div className="mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                        <div className={`w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center shadow-md`}>
+                          <IconComponent className="w-6 h-6 text-white" />
                         </div>
-                        <CardTitle className="text-3xl">{service.title}</CardTitle>
-                        <CardDescription className="text-lg">{service.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid md:grid-cols-2 gap-8">
-                          <div>
-                            <h4 className="text-xl font-semibold mb-4">Key Features</h4>
-                            <ul className="space-y-2">
-                              {service.features.map((feature, index) => (
-                                <li key={index} className="flex items-center gap-2">
-                                  <CheckCircle className="w-5 h-5 text-green-500" />
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-2">
-                              <TrendingUp className="w-5 h-5 text-primary" />
-                              <span className="font-semibold">Starting at: {service.price}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-5 h-5 text-primary" />
-                              <span>Timeline: {service.duration}</span>
-                            </div>
-                            <Button className="w-full mt-4">Get Started</Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors text-center leading-tight">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 leading-relaxed text-center line-clamp-3 mb-4">
+                        {service.description}
+                      </p>
+                      <Button
+                        onClick={() => handleBookService(service.title)}
+                        className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white`}
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Book Service
+                      </Button>
+                    </CardContent>
+                  </Card>
                 );
               })}
-            </Tabs>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-                What Our Clients Say
-              </h2>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {testimonials.map((testimonial, index) => (
-                <Card key={index} className="bg-white">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-gray-600 mb-4">"{testimonial.comment}"</p>
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-gray-500">{testimonial.company}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
             </div>
           </div>
         </section>
