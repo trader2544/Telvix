@@ -78,7 +78,7 @@ const Portfolio = () => {
       language: "TypeScript",
       topics: ["ecommerce", "kenya", "craftsmanship", "marketplace"],
       icon: ShoppingBag,
-      image: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png"
+      image: "/lovable-uploads/800f1963-e15d-431c-93b2-0438d92c9417.png"
     },
     {
       id: 2,
