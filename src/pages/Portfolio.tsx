@@ -325,28 +325,6 @@ const Portfolio = () => {
       <Header />
       
       <main className="pt-16">
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-accent text-white overflow-hidden">
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="absolute top-20 right-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-          
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h1 className="text-4xl md:text-7xl font-bold mb-6 md:mb-8 animate-fade-in">
-              Our <span className="text-accent">Portfolio</span>
-            </h1>
-            <p className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto mb-6 md:mb-8 animate-slide-up">
-              Explore our diverse range of projects showcasing innovative web solutions tailored to client needs
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 text-sm md:text-base">
-              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">Web Development</span>
-              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">Mobile Apps</span>
-              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">SaaS Solutions</span>
-              <span className="bg-white/20 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-sm">AI Integration</span>
-            </div>
-          </div>
-        </section>
-
         {/* Projects Section */}
         <section className="py-12 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -366,7 +344,7 @@ const Portfolio = () => {
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {portfolioProjects.map((project, index) => {
                 const IconComponent = project.icon;
                 
