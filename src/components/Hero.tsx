@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import heroImage from '@/assets/hero-image.jpg';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -148,35 +149,15 @@ const Hero = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               
-              {/* Video Player for demonstration */}
+              {/* Hero Image */}
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                {heroVideoUrl ? (
-                  <div className="relative" style={{paddingBottom:'56.25%'}}>
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      controls
-                      className="absolute inset-0 w-full h-full object-cover"
-                    >
-                      <source src={heroVideoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                ) : (
-                  // Fallback to original streamable embed
-                  <div style={{position:'relative', width:'100%', height:'0px', paddingBottom:'56.250%'}}>
-                    <iframe 
-                      allow="fullscreen;autoplay" 
-                      allowFullScreen 
-                      height="100%" 
-                      src="https://streamable.com/e/kuoc9r?autoplay=1&muted=1" 
-                      width="100%" 
-                      style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden'}}
-                    />
-                  </div>
-                )}
+                <div className="relative" style={{paddingBottom:'56.25%'}}>
+                  <img 
+                    src={heroImage} 
+                    alt="Telvix Digital Agency - Professional web development and digital solutions"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
               </div>
               
               {/* Floating Cards */}

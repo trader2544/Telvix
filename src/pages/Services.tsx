@@ -2,58 +2,66 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Globe, Bot, Zap, ShoppingBag, TrendingUp, Smartphone, Code2, Palette, Calendar } from 'lucide-react';
+import { Code2, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import webDevelopmentImg from '@/assets/web-development.jpg';
+import aiAutomationImg from '@/assets/ai-automation.jpg';
+import saasDevelopmentImg from '@/assets/saas-development.jpg';
+import ecommerceImg from '@/assets/ecommerce.jpg';
+import digitalMarketingImg from '@/assets/digital-marketing.jpg';
+import mobileDevelopmentImg from '@/assets/mobile-development.jpg';
+import customSoftwareImg from '@/assets/custom-software.jpg';
+import uiUxDesignImg from '@/assets/ui-ux-design.jpg';
 
 const Services = () => {
   const navigate = useNavigate();
 
   const services = [
     {
-      icon: Globe,
+      image: webDevelopmentImg,
       title: "Web Design & Development",
       description: "Craft responsive, high-performance websites using modern frameworks like React and WordPress for exceptional user experiences.",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
-      icon: Bot,
+      image: aiAutomationImg,
       title: "AI & Automation Solutions", 
       description: "Boost efficiency with custom AI integrations, workflow automation, and intelligent tools that streamline your business processes.",
       gradient: "from-purple-500 to-pink-500"
     },
     {
-      icon: Zap,
+      image: saasDevelopmentImg,
       title: "SaaS Development",
       description: "Launch scalable Software-as-a-Service solutions with modern architecture, from rental systems to enterprise platforms.",
       gradient: "from-orange-500 to-red-500"
     },
     {
-      icon: ShoppingBag,
+      image: ecommerceImg,
       title: "E-commerce Solutions",
       description: "Build powerful online stores with Shopify, WooCommerce, or custom platforms designed to maximize sales and engagement.",
       gradient: "from-green-500 to-emerald-500"
     },
     {
-      icon: TrendingUp,
+      image: digitalMarketingImg,
       title: "Digital Marketing & SEO",
       description: "Drive traffic and conversions with data-driven SEO strategies, PPC campaigns, and comprehensive digital marketing.",
       gradient: "from-teal-500 to-blue-500"
     },
     {
-      icon: Smartphone,
+      image: mobileDevelopmentImg,
       title: "Mobile App Development",
       description: "Create stunning iOS and Android apps with cross-platform frameworks like Flutter and React Native for maximum reach.",
       gradient: "from-indigo-500 to-purple-500"
     },
     {
-      icon: Code2,
+      image: customSoftwareImg,
       title: "Custom Software Development",
       description: "Develop bespoke software solutions tailored to your unique business requirements and operational workflows.",
       gradient: "from-pink-500 to-rose-500"
     },
     {
-      icon: Palette,
+      image: uiUxDesignImg,
       title: "UI/UX Design",
       description: "Design intuitive, visually stunning interfaces that enhance user satisfaction, engagement, and brand recognition.",
       gradient: "from-amber-500 to-orange-500"
@@ -91,7 +99,6 @@ const Services = () => {
             {/* Service Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-12">
               {services.map((service, index) => {
-                const IconComponent = service.icon;
                 return (
                   <Card 
                     key={index} 
@@ -103,8 +110,12 @@ const Services = () => {
                     
                     <CardContent className="relative p-6">
                       <div className="mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                        <div className={`w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center shadow-md`}>
-                          <IconComponent className="w-6 h-6 text-white" />
+                        <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md">
+                          <img 
+                            src={service.image} 
+                            alt={service.title}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors text-center leading-tight">
