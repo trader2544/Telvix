@@ -72,16 +72,79 @@ const Portfolio = () => {
       ],
       techStack: "Vite, TypeScript, React, Tailwind CSS, shadcn-ui",
       html_url: "https://github.com/trader2544/atelier-rose-commerce-kenya.git",
-      homepage: "https://elso-atelier.com",
+      homepage: "https://elso-boutique.com/",
       stargazers_count: 189,
       forks_count: 52,
       language: "TypeScript",
       topics: ["ecommerce", "kenya", "craftsmanship", "marketplace"],
       icon: ShoppingBag,
-      image: "/lovable-uploads/800f1963-e15d-431c-93b2-0438d92c9417.png"
+      image: "/lovable-uploads/3b10d268-0f01-4ac3-9f1f-5866e799e8ee.png"
     },
     {
       id: 2,
+      name: "LemiStores",
+      description: "Premium Electronics & Home Appliances - An online retail store specializing in premium electronics and home appliances with clean layout, organized categories, and responsive design for Kenyan shoppers.",
+      fullDescription: "LemiStores is an online retail store specializing in premium electronics and home appliances. The platform provides customers with an easy shopping experience through a clean layout, well-organized product categories, and responsive design. It emphasizes convenience, quality, and accessibility for Kenyan shoppers seeking trusted products at their fingertips.",
+      keyFeatures: [
+        "Premium electronics and home appliances catalog",
+        "Clean, organized product categories",
+        "Responsive design for mobile and desktop",
+        "Easy shopping experience with quality focus"
+      ],
+      techStack: "Modern web technologies",
+      html_url: "#",
+      homepage: "https://lemistores.netlify.app",
+      stargazers_count: 145,
+      forks_count: 32,
+      language: "JavaScript",
+      topics: ["ecommerce", "electronics", "appliances", "kenya"],
+      icon: ShoppingBag,
+      image: "/lovable-uploads/fd3a764c-1a6d-4fba-951d-9a35c7a67049.png"
+    },
+    {
+      id: 3,
+      name: "Mustapha Fashion",
+      description: "Kenyan Fashion Designer & Creative Director - Reimagining African style through innovative designs that blend Kenyan heritage with modern aesthetics.",
+      fullDescription: "Mustapha Fashion is a fashion brand reimagining African style through innovative designs that blend Kenyan heritage with modern aesthetics. Highlighting collections like Savanna Dreams (Spring/Summer 2025), Urban Craftsman (Fall/Winter 2024), and Elegant Nairobi, the brand brings culture, craftsmanship, and creative vision to the forefront. It also offers expert services in event styling and fashion judging across Kenya and East Africa.",
+      keyFeatures: [
+        "Collections: Savanna Dreams, Urban Craftsman, Elegant Nairobi",
+        "Event styling and fashion judging services",
+        "Blend of Kenyan heritage with modern aesthetics",
+        "Creative vision showcasing African style"
+      ],
+      techStack: "Modern web design",
+      html_url: "#",
+      homepage: "https://mustaphafashions.co.ke/",
+      stargazers_count: 178,
+      forks_count: 45,
+      language: "TypeScript",
+      topics: ["fashion", "african-style", "kenya", "design"],
+      icon: User,
+      image: "/lovable-uploads/ee0438b5-3260-4b41-bc29-35f0544c7ca8.png"
+    },
+    {
+      id: 4,
+      name: "LeakyLabs",
+      description: "M&E Impact Dashboard - Monitoring & Evaluation impact dashboard with clear visual metrics and insights for data-driven decision-making.",
+      fullDescription: "LeakyLabs features a Monitoring & Evaluation (M&E) impact dashboard designed to present key metrics and insights in a clear, visual format. It highlights data-driven decision-making through intuitive layouts and accessible reporting tools.",
+      keyFeatures: [
+        "Clear visual metrics and insights presentation",
+        "Data-driven decision-making tools",
+        "Intuitive layouts for easy navigation",
+        "Accessible reporting and analytics"
+      ],
+      techStack: "Modern dashboard technologies",
+      html_url: "#",
+      homepage: "https://leakylabs.netlify.app/pages/homepage_m_e_impact_dashboard",
+      stargazers_count: 156,
+      forks_count: 38,
+      language: "TypeScript",
+      topics: ["monitoring", "evaluation", "dashboard", "analytics"],
+      icon: TrendingUp,
+      image: "/lovable-uploads/a5846064-3c15-4737-adc6-ffb8bca82730.png"
+    },
+    {
+      id: 5,
       name: "Rabbit Hole Fitness Lab",
       description: "An interactive platform exploring fitness science, calisthenics, and nutrition. Features evidence-based guides, step-by-step tutorials, and tools for tracking training and recovery.",
       fullDescription: "Rabbit Hole Fitness Lab is a comprehensive fitness and education platform that combines scientific research with practical application. The platform offers evidence-based guides, progressive calisthenics programs, and interactive tools for fitness enthusiasts and professionals.",
@@ -102,7 +165,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png"
     },
     {
-      id: 3,
+      id: 6,
       name: "MJS Products Limited",
       description: "MJS Products Limited is a top-tier architectural and construction firm in Nairobi, Kenya. This site reflects their values, portfolio, and professionalism in residential and commercial projects.",
       fullDescription: "MJS Products Limited represents excellence in architectural design and construction services across Kenya. The website showcases their comprehensive portfolio of residential and commercial projects, highlighting their commitment to quality craftsmanship and innovative design solutions.",
@@ -123,7 +186,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png"
     },
     {
-      id: 4,
+      id: 7,
       name: "PharmaSync Pro AI",
       description: "A pharmacy and clinic management platform for Kenyan healthcare providers. Streamlines inventory, billing, patient records, and analytics—all in a single web dashboard.",
       fullDescription: "PharmaSync Pro AI is a comprehensive healthcare management platform designed specifically for Kenyan healthcare providers. It combines pharmacy management, clinic operations, and patient care into a unified system with advanced analytics and AI-powered insights.",
@@ -145,7 +208,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png"
     },
     {
-      id: 5,
+      id: 8,
       name: "Kwa Kamande Space",
       description: "A web application for managing rental spaces, offering tools for landlords and tenants to handle rent payments, maintenance requests, and property announcements.",
       fullDescription: "Kwa Kamande Space is a comprehensive rental management platform designed to streamline property management for both landlords and tenants. The platform offers intuitive dashboards, automated payment tracking, and efficient communication tools.",
@@ -166,7 +229,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png"
     },
     {
-      id: 6,
+      id: 9,
       name: "Paul Rentals",
       description: "A platform for managing and automating luxury car and property rentals in Nairobi, Kenya, with a focus on premium service for high-profile clients.",
       fullDescription: "Paul Rentals is an exclusive platform designed for luxury car and property rentals in Nairobi. The platform caters to high-profile clients seeking premium vehicles and properties with seamless booking experiences and VIP service.",
@@ -187,7 +250,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png"
     },
     {
-      id: 7,
+      id: 10,
       name: "AfriGrowth",
       description: "A personalized investment advisory platform for African markets, offering tools for wealth management, market analysis, and financial education.",
       fullDescription: "AfriGrowth is a cutting-edge investment advisory platform specifically designed for African markets. It provides comprehensive tools for wealth management, detailed market analysis, and extensive financial education resources to empower investors across the continent.",
@@ -208,7 +271,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/c84b6d6c-0b8c-42af-a8b5-4779c3c0f1f2.png"
     },
     {
-      id: 8,
+      id: 11,
       name: "Eco Track",
       description: "A private web application for tracking and managing environmental and sustainability activities in Kenya, designed for researchers, conservationists, and policymakers.",
       fullDescription: "Eco Track is a sophisticated environmental monitoring platform designed for researchers, conservationists, and policymakers in Kenya. The application provides real-time environmental data tracking and analysis tools to support conservation efforts and policy-making.",
@@ -229,7 +292,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/f7b6da4f-1260-4f3e-8c2f-2510fe076664.png"
     },
     {
-      id: 9,
+      id: 12,
       name: "Portfolio Template",
       description: "A customizable, responsive personal portfolio designed to showcase your projects, experience, and contact info in a polished format.",
       fullDescription: "Portfolio Template is a modern, fully responsive personal portfolio solution designed for developers, designers, and creative professionals. The template offers clean aesthetics, smooth animations, and easy customization options to help professionals showcase their work effectively.",
@@ -250,7 +313,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/0083ef7e-4274-4cdf-86ac-ddf6b59accd5.png"
     },
     {
-      id: 10,
+      id: 13,
       name: "Telvix Digital Solutions",
       description: "Website for a full-service digital agency providing solutions in web/mobile development, AI automation, SaaS, and digital marketing.",
       fullDescription: "Telvix Digital Solutions represents a comprehensive digital agency offering end-to-end technology solutions. The platform showcases their expertise in web and mobile development, AI automation, SaaS solutions, and comprehensive digital marketing services for businesses of all sizes.",
@@ -271,7 +334,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png"
     },
     {
-      id: 11,
+      id: 14,
       name: "SkyNet",
       description: "A modern platform combining news aggregation with VPN sales and management, offering secure browsing and real-time updates.",
       fullDescription: "SkyNet is an innovative platform that combines comprehensive news aggregation with VPN services. It offers users real-time news updates while providing secure browsing capabilities through integrated VPN services, creating a complete digital information and security solution.",
@@ -292,7 +355,7 @@ const Portfolio = () => {
       image: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png"
     },
     {
-      id: 12,
+      id: 15,
       name: "NuchoBlackHatey",
       description: "A web platform delivering secure, high-speed VPN configuration files for private and region-unlocked internet access, supporting OpenVPN and WireGuard protocols.",
       fullDescription: "NuchoBlackHatey is a comprehensive VPN platform that provides users with secure, high-speed internet access through carefully optimized configuration files. The platform supports both OpenVPN and WireGuard protocols, ensuring compatibility across all major devices and operating systems.",
@@ -409,15 +472,7 @@ const Portfolio = () => {
                         </div>
                       )}
                       
-                      <div className="flex space-x-1 mb-2">
-                        <Button 
-                          size="sm" 
-                          className="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-xs py-1.5"
-                          onClick={() => window.open(project.html_url, '_blank')}
-                        >
-                          <Github className="w-3 h-3 mr-1" />
-                          Code
-                        </Button>
+                      <div className="flex mb-2">
                         <Button 
                           size="sm" 
                           variant="outline" 
@@ -425,7 +480,7 @@ const Portfolio = () => {
                           onClick={() => window.open(project.homepage, '_blank')}
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
-                          Live
+                          Visit
                         </Button>
                       </div>
 
