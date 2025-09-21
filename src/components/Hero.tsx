@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import heroImage from '@/assets/hero-image.jpg';
+import heroImage from '@/assets/telvix-hero-office.jpg';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -154,7 +154,7 @@ const Hero = () => {
                 <div className="relative" style={{paddingBottom:'56.25%'}}>
                   <img 
                     src={heroImage} 
-                    alt="Telvix Digital Agency - Professional web development and digital solutions"
+                    alt="Telvix African Home Office - Professional digital workspace showcasing our innovative approach to web development and digital solutions"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 </div>
