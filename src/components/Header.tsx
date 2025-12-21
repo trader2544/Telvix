@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Phone, MessageCircle, Settings, User } from 'lucide-react';
+import { Settings, User } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import FloatingContactButton from './FloatingContactButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,14 +67,6 @@ const Header = () => {
   const navigateToBlog = () => {
     navigate('/blog');
     setIsMenuOpen(false);
-  };
-
-  const handleCall = () => {
-    window.open('tel:+254741947599', '_self');
-  };
-
-  const handleWhatsApp = () => {
-    window.open('https://wa.me/254741947599', '_blank');
   };
 
   return (
@@ -196,27 +189,8 @@ const Header = () => {
         </div>
       </header>
 
-      {/* WhatsApp Icon - positioned on the bottom left */}
-      <div className="fixed bottom-4 left-4 z-50">
-        <button
-          onClick={handleWhatsApp}
-          className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Contact us on WhatsApp"
-        >
-          <MessageCircle className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* Call Icon - positioned on the bottom right */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <button
-          onClick={handleCall}
-          className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Call us"
-        >
-          <Phone className="w-4 h-4" />
-        </button>
-      </div>
+      {/* Modern Floating Contact Button */}
+      <FloatingContactButton />
     </>
   );
 };

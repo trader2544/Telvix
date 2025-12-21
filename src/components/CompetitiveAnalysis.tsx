@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -620,8 +619,8 @@ const CompetitiveAnalysis = () => {
         </div>
       </div>
 
-        {results.length > 0 && (
-          <div className="px-6 lg:px-8 pb-8">
+      {results.length > 0 && (
+        <div className="px-6 lg:px-8 pb-8">
             <div className="max-w-6xl mx-auto">
               {/* Modern Tab Navigation */}
               <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -990,23 +989,23 @@ const CompetitiveAnalysis = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {results.length === 0 && (
-          <div className="text-center py-12">
-            <div className="max-w-md mx-auto">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="w-10 h-10 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Ready to Analyze Your Market?</h3>
-              <p className="text-gray-600 mb-2">Enter your business niche to discover competitors and market insights</p>
-              <p className="text-sm text-gray-500">
-                Real-time data from Google • AI-powered analysis • Live business intelligence
-              </p>
+      {results.length === 0 && (
+        <div className="text-center py-12">
+          <div className="max-w-md mx-auto">
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search className="w-10 h-10 text-purple-600" />
             </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Ready to Analyze Your Market?</h3>
+            <p className="text-gray-600 mb-2">Enter your business niche to discover competitors and market insights</p>
+            <p className="text-sm text-gray-500">
+              Real-time data from Google &bull; AI-powered analysis &bull; Live business intelligence
+            </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
