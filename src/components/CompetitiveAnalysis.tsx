@@ -989,7 +989,6 @@ const CompetitiveAnalysis = () => {
               </div>
             </div>
           </div>
-        </div>
       )}
 
       {results.length === 0 && (
