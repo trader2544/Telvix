@@ -91,12 +91,171 @@ export type Database = {
         }
         Relationships: []
       }
+      project_messages: {
+        Row: {
+          created_at: string
+          id: string
+          is_admin: boolean
+          message: string
+          project_id: string
+          sender_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_admin?: boolean
+          message: string
+          project_id: string
+          sender_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_admin?: boolean
+          message?: string
+          project_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_messages_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_resources: {
+        Row: {
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_resources_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_suggestions: {
+        Row: {
+          admin_response: string | null
+          created_at: string
+          description: string
+          id: string
+          project_id: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_response?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          project_id: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_response?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          project_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_suggestions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          progress: number
+          project_code: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          progress?: number
+          project_code: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          progress?: number
+          project_code?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
