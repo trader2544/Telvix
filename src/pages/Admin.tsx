@@ -12,7 +12,8 @@ import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import RichTextEditor from '@/components/RichTextEditor';
-import { Trash2, Edit, Eye } from 'lucide-react';
+import AdminProjectPanel from '@/components/AdminProjectPanel';
+import { Trash2, Edit, Eye, FolderKanban, FileText } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -208,11 +209,22 @@ const Admin = () => {
             <p className="text-gray-600">Manage your blog posts and content</p>
           </div>
 
-          <Tabs defaultValue="create" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="create">Create Post</TabsTrigger>
+          <Tabs defaultValue="projects" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="projects" className="flex items-center gap-2">
+                <FolderKanban className="w-4 h-4" />
+                Projects
+              </TabsTrigger>
+              <TabsTrigger value="create" className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Create Post
+              </TabsTrigger>
               <TabsTrigger value="manage">Manage Posts</TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="projects">
+              <AdminProjectPanel />
+            </TabsContent>
             
             <TabsContent value="create">
               <Card>
