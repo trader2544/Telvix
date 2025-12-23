@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Settings, User } from 'lucide-react';
+import { Settings, User, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import FloatingContactButton from './FloatingContactButton';
 
@@ -69,6 +69,11 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const navigateToDashboard = () => {
+    navigate('/dashboard');
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
@@ -113,6 +118,12 @@ const Header = () => {
                 <Button onClick={navigateToAdmin} variant="outline" size="sm" className="text-xs">
                   <Settings className="w-4 h-4 mr-1" />
                   Admin
+                </Button>
+              )}
+              {user && profile?.role !== 'admin' && (
+                <Button onClick={navigateToDashboard} variant="outline" size="sm" className="text-xs">
+                  <LayoutDashboard className="w-4 h-4 mr-1" />
+                  Dashboard
                 </Button>
               )}
               {user ? (
@@ -168,6 +179,12 @@ const Header = () => {
                   <Button onClick={navigateToAdmin} variant="outline" size="sm" className="w-full text-xs">
                     <Settings className="w-4 h-4 mr-1" />
                     Admin
+                  </Button>
+                )}
+                {user && profile?.role !== 'admin' && (
+                  <Button onClick={navigateToDashboard} variant="outline" size="sm" className="w-full text-xs">
+                    <LayoutDashboard className="w-4 h-4 mr-1" />
+                    Dashboard
                   </Button>
                 )}
                 {user ? (

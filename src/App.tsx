@@ -14,6 +14,7 @@ import Quote from "./pages/Quote";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
+import Dashboard from "./pages/Dashboard";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
