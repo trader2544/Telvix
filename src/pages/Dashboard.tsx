@@ -24,7 +24,8 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  Loader2
+  Loader2,
+  ExternalLink
 } from 'lucide-react';
 
 interface Project {
@@ -37,6 +38,7 @@ interface Project {
   progress: number;
   admin_notes: string | null;
   created_at: string;
+  website_url: string | null;
 }
 
 interface ProjectMessage {
@@ -387,9 +389,22 @@ const Dashboard = () => {
                       </CardTitle>
                       <CardDescription>Project ID: {project.project_code}</CardDescription>
                     </div>
-                    <Badge className={`${getStatusColor(project.status)} text-white`}>
-                      {project.status.replace('_', ' ').toUpperCase()}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      {project.website_url && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open(project.website_url!, '_blank')}
+                          className="flex items-center gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Site
+                        </Button>
+                      )}
+                      <Badge className={`${getStatusColor(project.status)} text-white`}>
+                        {project.status.replace('_', ' ').toUpperCase()}
+                      </Badge>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
