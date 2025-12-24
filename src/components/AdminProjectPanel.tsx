@@ -34,6 +34,7 @@ interface Project {
   user_id: string | null;
   admin_notes: string | null;
   created_at: string;
+  website_url: string | null;
 }
 
 interface ProjectMessage {
@@ -78,12 +79,14 @@ const AdminProjectPanel = () => {
   const [newProjectCode, setNewProjectCode] = useState('');
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
+  const [newProjectUrl, setNewProjectUrl] = useState('');
 
   // Edit project form
   const [editStatus, setEditStatus] = useState('');
   const [editProgress, setEditProgress] = useState('');
   const [editNotes, setEditNotes] = useState('');
   const [editUserId, setEditUserId] = useState('');
+  const [editWebsiteUrl, setEditWebsiteUrl] = useState('');
 
   useEffect(() => {
     fetchProjects();
@@ -167,7 +170,8 @@ const AdminProjectPanel = () => {
         .insert({
           project_code: newProjectCode.trim(),
           name: newProjectName.trim(),
-          description: newProjectDesc.trim() || null
+          description: newProjectDesc.trim() || null,
+          website_url: newProjectUrl.trim() || null
         });
       
       if (error) throw error;
@@ -176,6 +180,7 @@ const AdminProjectPanel = () => {
       setNewProjectCode('');
       setNewProjectName('');
       setNewProjectDesc('');
+      setNewProjectUrl('');
       setShowCreateDialog(false);
       fetchProjects();
     } catch (error: any) {
@@ -194,7 +199,8 @@ const AdminProjectPanel = () => {
           status: editStatus,
           progress: parseInt(editProgress) || 0,
           admin_notes: editNotes || null,
-          user_id: editUserId || null
+          user_id: editUserId || null,
+          website_url: editWebsiteUrl || null
         })
         .eq('id', projectId);
       
@@ -277,6 +283,7 @@ const AdminProjectPanel = () => {
     setEditProgress(project.progress.toString());
     setEditNotes(project.admin_notes || '');
     setEditUserId(project.user_id || '');
+    setEditWebsiteUrl(project.website_url || '');
   };
 
   const openChat = (project: Project) => {
@@ -356,6 +363,15 @@ const AdminProjectPanel = () => {
                   placeholder="Project description..."
                   value={newProjectDesc}
                   onChange={(e) => setNewProjectDesc(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="projectUrl">Website URL</Label>
+                <Input
+                  id="projectUrl"
+                  placeholder="https://example.com"
+                  value={newProjectUrl}
+                  onChange={(e) => setNewProjectUrl(e.target.value)}
                 />
               </div>
               <Button onClick={createProject} disabled={submitting} className="w-full">
@@ -476,6 +492,14 @@ const AdminProjectPanel = () => {
                 placeholder="Notes visible to the user..."
                 value={editNotes}
                 onChange={(e) => setEditNotes(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Website URL</Label>
+              <Input
+                placeholder="https://example.com"
+                value={editWebsiteUrl}
+                onChange={(e) => setEditWebsiteUrl(e.target.value)}
               />
             </div>
             <Button 
