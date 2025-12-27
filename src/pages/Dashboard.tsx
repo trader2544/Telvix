@@ -25,7 +25,9 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
-  ExternalLink
+  ExternalLink,
+  Globe,
+  ArrowRight
 } from 'lucide-react';
 
 interface Project {
@@ -125,7 +127,7 @@ const Dashboard = () => {
 
   const linkProject = async () => {
     if (!projectCode.trim()) {
-      toast.error('Please enter a project ID');
+      toast.error('Please enter a project code');
       return;
     }
     
@@ -135,18 +137,24 @@ const Dashboard = () => {
       const { data: projectData, error: findError } = await supabase
         .from('projects')
         .select('*')
-        .eq('project_code', projectCode.trim())
+        .eq('project_code', projectCode.trim().toUpperCase())
         .maybeSingle();
       
       if (findError) throw findError;
       
       if (!projectData) {
-        toast.error('Project not found. Please check your project ID.');
+        toast.error('Project not found. Please check your project code.');
         return;
       }
       
       if (projectData.user_id && projectData.user_id !== user?.id) {
-        toast.error('This project is already linked to another user.');
+        toast.error('This project is already linked to another account.');
+        return;
+      }
+
+      if (projectData.user_id === user?.id) {
+        setProject(projectData);
+        toast.info('You are already linked to this project.');
         return;
       }
 
@@ -158,8 +166,8 @@ const Dashboard = () => {
       
       if (updateError) throw updateError;
       
-      toast.success('Project linked successfully!');
-      setProject({ ...projectData });
+      toast.success('Project linked successfully! Welcome to your project dashboard.');
+      setProject({ ...projectData, user_id: user?.id || null });
       setProjectCode('');
     } catch (error: any) {
       toast.error(error.message);
@@ -310,6 +318,24 @@ const Dashboard = () => {
     }
   };
 
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed': return <CheckCircle2 className="w-5 h-5 text-green-500" />;
+      case 'in_progress': return <Clock className="w-5 h-5 text-blue-500 animate-pulse" />;
+      case 'review': return <AlertCircle className="w-5 h-5 text-yellow-500" />;
+      default: return <Clock className="w-5 h-5 text-gray-400" />;
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in_progress': return 'In Progress';
+      case 'review': return 'Under Review';
+      default: return 'Pending';
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-green-500';
@@ -346,85 +372,107 @@ const Dashboard = () => {
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">Project Dashboard</h1>
-            <p className="text-muted-foreground">View your project progress and communicate with our team</p>
+            <p className="text-muted-foreground">Track your project progress and communicate with our team</p>
           </div>
 
           {!project ? (
-            <Card className="max-w-md mx-auto">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <FolderOpen className="w-8 h-8 text-primary" />
+            /* Link Project Card */
+            <Card className="max-w-md mx-auto border-2 border-dashed">
+              <CardHeader className="text-center pb-4">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                  <FolderOpen className="w-10 h-10 text-primary" />
                 </div>
-                <CardTitle>Link Your Project</CardTitle>
-                <CardDescription>
-                  Enter your project ID to access your dashboard
+                <CardTitle className="text-2xl">Link Your Project</CardTitle>
+                <CardDescription className="text-base">
+                  Enter the project code provided by our team to access your project dashboard
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="projectCode">Project ID</Label>
+                  <Label htmlFor="projectCode">Project Code</Label>
                   <Input
                     id="projectCode"
-                    placeholder="Enter your project ID (e.g., PRJ-001)"
+                    placeholder="e.g., WEB-001"
                     value={projectCode}
-                    onChange={(e) => setProjectCode(e.target.value)}
+                    onChange={(e) => setProjectCode(e.target.value.toUpperCase())}
+                    className="text-center font-mono text-lg tracking-wider"
                   />
                 </div>
-                <Button onClick={linkProject} disabled={linking} className="w-full">
-                  {linking ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                <Button onClick={linkProject} disabled={linking} className="w-full gap-2">
+                  {linking ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
                   {linking ? 'Linking...' : 'Link Project'}
                 </Button>
+                <p className="text-xs text-center text-muted-foreground">
+                  Don't have a project code? Contact us to get started.
+                </p>
               </CardContent>
             </Card>
           ) : (
             <>
-              {/* Project Overview */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="flex items-center gap-2">
-                        <FolderOpen className="w-5 h-5" />
-                        {project.name}
-                      </CardTitle>
-                      <CardDescription>Project ID: {project.project_code}</CardDescription>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {project.website_url && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => window.open(project.website_url!, '_blank')}
-                          className="flex items-center gap-2"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          View Site
-                        </Button>
+              {/* Project Overview Card */}
+              <Card className="mb-6 overflow-hidden">
+                <div className="flex">
+                  <div className={`w-2 ${getStatusColor(project.status)}`} />
+                  <div className="flex-1">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <div className="flex items-center gap-3 mb-1">
+                            {getStatusIcon(project.status)}
+                            <CardTitle className="text-2xl">{project.name}</CardTitle>
+                          </div>
+                          <CardDescription className="flex items-center gap-2">
+                            <Badge variant="outline" className="font-mono">{project.project_code}</Badge>
+                            <span>•</span>
+                            <span>{getStatusLabel(project.status)}</span>
+                          </CardDescription>
+                        </div>
+                        {project.website_url && (
+                          <Button
+                            size="lg"
+                            className="gap-2 shrink-0"
+                            onClick={() => window.open(project.website_url!, '_blank')}
+                          >
+                            <Globe className="w-4 h-4" />
+                            View Site
+                            <ExternalLink className="w-3 h-3" />
+                          </Button>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {project.description && (
+                        <p className="text-muted-foreground">{project.description}</p>
                       )}
-                      <Badge className={`${getStatusColor(project.status)} text-white`}>
-                        {project.status.replace('_', ' ').toUpperCase()}
-                      </Badge>
-                    </div>
+                      
+                      {/* Progress Section */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="font-medium">Project Progress</span>
+                          <span className="font-bold text-primary">{project.progress}%</span>
+                        </div>
+                        <Progress value={project.progress} className="h-3" />
+                        <p className="text-xs text-muted-foreground">
+                          {project.progress < 25 && "Just getting started - setting up the foundation"}
+                          {project.progress >= 25 && project.progress < 50 && "Making good progress - core features in development"}
+                          {project.progress >= 50 && project.progress < 75 && "Past halfway - polishing and adding details"}
+                          {project.progress >= 75 && project.progress < 100 && "Almost there - final touches and testing"}
+                          {project.progress === 100 && "Project completed! 🎉"}
+                        </p>
+                      </div>
+                      
+                      {project.admin_notes && (
+                        <div className="p-4 bg-muted/50 rounded-lg border">
+                          <p className="text-sm font-medium mb-1 flex items-center gap-2">
+                            <MessageSquare className="w-4 h-4" />
+                            Team Update
+                          </p>
+                          <p className="text-sm text-muted-foreground">{project.admin_notes}</p>
+                        </div>
+                      )}
+                    </CardContent>
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {project.description && (
-                    <p className="text-muted-foreground">{project.description}</p>
-                  )}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span className="font-medium">{project.progress}%</span>
-                    </div>
-                    <Progress value={project.progress} className="h-3" />
-                  </div>
-                  {project.admin_notes && (
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="text-sm font-medium mb-1">Admin Notes:</p>
-                      <p className="text-sm text-muted-foreground">{project.admin_notes}</p>
-                    </div>
-                  )}
-                </CardContent>
+                </div>
               </Card>
 
               {/* Tabs for different sections */}
@@ -432,7 +480,7 @@ const Dashboard = () => {
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="chat" className="flex items-center gap-2">
                     <MessageSquare className="w-4 h-4" />
-                    Chat
+                    Messages
                   </TabsTrigger>
                   <TabsTrigger value="resources" className="flex items-center gap-2">
                     <Upload className="w-4 h-4" />
@@ -448,8 +496,8 @@ const Dashboard = () => {
                 <TabsContent value="chat">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Project Communication</CardTitle>
-                      <CardDescription>Chat with our team about your project</CardDescription>
+                      <CardTitle>Project Messages</CardTitle>
+                      <CardDescription>Chat with our development team about your project</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ScrollArea className="h-[400px] pr-4 mb-4">
@@ -457,7 +505,8 @@ const Dashboard = () => {
                           {messages.length === 0 ? (
                             <div className="text-center py-12 text-muted-foreground">
                               <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                              <p>No messages yet. Start the conversation!</p>
+                              <p className="font-medium">No messages yet</p>
+                              <p className="text-sm">Start a conversation with our team!</p>
                             </div>
                           ) : (
                             messages.map((msg) => (
@@ -466,15 +515,15 @@ const Dashboard = () => {
                                 className={`flex ${msg.is_admin ? 'justify-start' : 'justify-end'}`}
                               >
                                 <div
-                                  className={`max-w-[80%] p-3 rounded-lg ${
+                                  className={`max-w-[80%] p-3 rounded-2xl ${
                                     msg.is_admin
-                                      ? 'bg-muted text-foreground'
-                                      : 'bg-primary text-primary-foreground'
+                                      ? 'bg-muted text-foreground rounded-bl-md'
+                                      : 'bg-primary text-primary-foreground rounded-br-md'
                                   }`}
                                 >
                                   <p className="text-sm">{msg.message}</p>
                                   <p className={`text-xs mt-1 ${msg.is_admin ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
-                                    {new Date(msg.created_at).toLocaleString()}
+                                    {msg.is_admin ? 'Telvix Team' : 'You'} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                   </p>
                                 </div>
                               </div>
@@ -489,6 +538,7 @@ const Dashboard = () => {
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
+                          className="flex-1"
                         />
                         <Button onClick={sendMessage} disabled={submitting || !newMessage.trim()}>
                           <Send className="w-4 h-4" />
@@ -503,10 +553,10 @@ const Dashboard = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle>Project Resources</CardTitle>
-                      <CardDescription>Upload files and resources for your project</CardDescription>
+                      <CardDescription>Upload files and assets for your project</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      <div className="border-2 border-dashed rounded-lg p-6">
+                      <div className="border-2 border-dashed rounded-lg p-6 bg-muted/30">
                         <div className="space-y-4">
                           <div className="space-y-2">
                             <Label htmlFor="resourceFile">Select File</Label>
@@ -521,27 +571,29 @@ const Dashboard = () => {
                             <Label htmlFor="resourceDesc">Description (Optional)</Label>
                             <Input
                               id="resourceDesc"
-                              placeholder="Brief description of this resource"
+                              placeholder="Brief description of this file"
                               value={resourceDesc}
                               onChange={(e) => setResourceDesc(e.target.value)}
                             />
                           </div>
-                          <Button onClick={uploadResource} disabled={submitting || !resourceFile}>
-                            {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
-                            Upload Resource
+                          <Button onClick={uploadResource} disabled={submitting || !resourceFile} className="gap-2">
+                            {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                            Upload File
                           </Button>
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <h4 className="font-medium">Uploaded Resources</h4>
+                        <h4 className="font-medium">Uploaded Files</h4>
                         {resources.length === 0 ? (
-                          <p className="text-center py-8 text-muted-foreground">No resources uploaded yet</p>
+                          <p className="text-center py-8 text-muted-foreground">No files uploaded yet</p>
                         ) : (
                           resources.map((resource) => (
-                            <div key={resource.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                            <div key={resource.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                               <div className="flex items-center gap-3">
-                                <File className="w-5 h-5 text-muted-foreground" />
+                                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                  <File className="w-5 h-5 text-primary" />
+                                </div>
                                 <div>
                                   <p className="font-medium text-sm">{resource.file_name}</p>
                                   {resource.description && (
@@ -553,7 +605,7 @@ const Dashboard = () => {
                                 <span className="text-xs text-muted-foreground">
                                   {new Date(resource.created_at).toLocaleDateString()}
                                 </span>
-                                <Button variant="ghost" size="sm" asChild>
+                                <Button variant="outline" size="sm" asChild>
                                   <a href={resource.file_url} target="_blank" rel="noopener noreferrer">
                                     View
                                   </a>
@@ -571,11 +623,11 @@ const Dashboard = () => {
                 <TabsContent value="suggestions">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Change Suggestions</CardTitle>
+                      <CardTitle>Feature Suggestions</CardTitle>
                       <CardDescription>Suggest changes or improvements for your project</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      <div className="border rounded-lg p-4 space-y-4">
+                      <div className="border rounded-lg p-4 space-y-4 bg-muted/30">
                         <div className="space-y-2">
                           <Label htmlFor="suggestionTitle">Title</Label>
                           <Input
@@ -598,8 +650,9 @@ const Dashboard = () => {
                         <Button 
                           onClick={submitSuggestion} 
                           disabled={submitting || !newSuggestionTitle.trim() || !newSuggestionDesc.trim()}
+                          className="gap-2"
                         >
-                          {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Lightbulb className="w-4 h-4 mr-2" />}
+                          {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lightbulb className="w-4 h-4" />}
                           Submit Suggestion
                         </Button>
                       </div>
@@ -617,12 +670,12 @@ const Dashboard = () => {
                               </div>
                               <p className="text-sm text-muted-foreground">{suggestion.description}</p>
                               {suggestion.admin_response && (
-                                <div className="mt-2 p-3 bg-muted rounded-lg">
-                                  <p className="text-xs font-medium mb-1">Admin Response:</p>
+                                <div className="mt-3 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                                  <p className="text-xs font-medium mb-1 text-primary">Team Response:</p>
                                   <p className="text-sm">{suggestion.admin_response}</p>
                                 </div>
                               )}
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-muted-foreground pt-2">
                                 Submitted on {new Date(suggestion.created_at).toLocaleDateString()}
                               </p>
                             </div>

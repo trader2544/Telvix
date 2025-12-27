@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,8 +21,11 @@ import {
   Users,
   FolderOpen,
   Loader2,
-  Eye,
-  Lightbulb
+  ExternalLink,
+  Lightbulb,
+  Globe,
+  Copy,
+  CheckCircle2
 } from 'lucide-react';
 
 interface Project {
@@ -73,6 +77,7 @@ const AdminProjectPanel = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showChatDialog, setShowChatDialog] = useState(false);
   const [showSuggestionsDialog, setShowSuggestionsDialog] = useState(false);
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // New project form
@@ -176,7 +181,7 @@ const AdminProjectPanel = () => {
       
       if (error) throw error;
       
-      toast.success('Project created successfully!');
+      toast.success('Project created successfully! Share the project code with your client.');
       setNewProjectCode('');
       setNewProjectName('');
       setNewProjectDesc('');
@@ -277,6 +282,13 @@ const AdminProjectPanel = () => {
     }
   };
 
+  const copyProjectCode = (code: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    toast.success('Project code copied to clipboard!');
+    setTimeout(() => setCopiedCode(null), 2000);
+  };
+
   const openEditProject = (project: Project) => {
     setSelectedProject(project);
     setEditStatus(project.status);
@@ -307,10 +319,19 @@ const AdminProjectPanel = () => {
     }
   };
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in_progress': return 'In Progress';
+      case 'review': return 'Under Review';
+      default: return 'Pending';
+    }
+  };
+
   const getUserName = (userId: string | null) => {
-    if (!userId) return 'Unassigned';
+    if (!userId) return 'Not Linked';
     const userProfile = users.find(u => u.user_id === userId);
-    return userProfile?.full_name || 'Unknown User';
+    return userProfile?.full_name || 'Client';
   };
 
   if (loading) {
@@ -323,59 +344,76 @@ const AdminProjectPanel = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Project Management</h2>
+        <div>
+          <h2 className="text-2xl font-bold">Project Management</h2>
+          <p className="text-muted-foreground">Create and manage client web development projects</p>
+        </div>
         <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
           <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Project
+            <Button className="gap-2">
+              <Plus className="w-4 h-4" />
+              New Project
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="max-w-lg">
             <DialogHeader>
               <DialogTitle>Create New Project</DialogTitle>
-              <DialogDescription>Create a new project for a client</DialogDescription>
+              <DialogDescription>
+                Create a project and share the code with your client to link their account
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 pt-4">
-              <div className="space-y-2">
-                <Label htmlFor="projectCode">Project ID *</Label>
-                <Input
-                  id="projectCode"
-                  placeholder="e.g., PRJ-001"
-                  value={newProjectCode}
-                  onChange={(e) => setNewProjectCode(e.target.value)}
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="projectCode">Project Code *</Label>
+                  <Input
+                    id="projectCode"
+                    placeholder="e.g., WEB-001"
+                    value={newProjectCode}
+                    onChange={(e) => setNewProjectCode(e.target.value.toUpperCase())}
+                  />
+                  <p className="text-xs text-muted-foreground">Client uses this to link their account</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="projectName">Project Name *</Label>
+                  <Input
+                    id="projectName"
+                    placeholder="Client Website"
+                    value={newProjectName}
+                    onChange={(e) => setNewProjectName(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="projectName">Project Name *</Label>
-                <Input
-                  id="projectName"
-                  placeholder="Project name"
-                  value={newProjectName}
-                  onChange={(e) => setNewProjectName(e.target.value)}
-                />
+                <Label htmlFor="projectUrl">Website Preview URL</Label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      id="projectUrl"
+                      placeholder="https://preview.example.com"
+                      value={newProjectUrl}
+                      onChange={(e) => setNewProjectUrl(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">Client can preview the site using this URL</p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="projectDesc">Description</Label>
                 <Textarea
                   id="projectDesc"
-                  placeholder="Project description..."
+                  placeholder="Brief project description..."
                   value={newProjectDesc}
                   onChange={(e) => setNewProjectDesc(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="projectUrl">Website URL</Label>
-                <Input
-                  id="projectUrl"
-                  placeholder="https://example.com"
-                  value={newProjectUrl}
-                  onChange={(e) => setNewProjectUrl(e.target.value)}
+                  rows={3}
                 />
               </div>
               <Button onClick={createProject} disabled={submitting} className="w-full">
-                {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
                 Create Project
               </Button>
             </div>
@@ -383,56 +421,115 @@ const AdminProjectPanel = () => {
         </Dialog>
       </div>
 
+      {/* Projects Grid */}
       <div className="grid gap-4">
         {projects.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <FolderOpen className="w-12 h-12 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">No projects yet. Create your first project!</p>
+          <Card className="border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-16">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <FolderOpen className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">No Projects Yet</h3>
+              <p className="text-muted-foreground text-center max-w-sm mb-4">
+                Create your first project and share the code with your client
+              </p>
+              <Button onClick={() => setShowCreateDialog(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Create First Project
+              </Button>
             </CardContent>
           </Card>
         ) : (
           projects.map((project) => (
-            <Card key={project.id}>
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <FolderOpen className="w-5 h-5" />
-                      {project.name}
-                    </CardTitle>
-                    <CardDescription>ID: {project.project_code}</CardDescription>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge className={`${getStatusColor(project.status)} text-white`}>
-                      {project.status.replace('_', ' ').toUpperCase()}
-                    </Badge>
-                    <Badge variant="outline">{project.progress}%</Badge>
+            <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="flex">
+                {/* Left colored bar */}
+                <div className={`w-1.5 ${getStatusColor(project.status)}`} />
+                
+                <div className="flex-1 p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="font-semibold text-lg truncate">{project.name}</h3>
+                        <Badge variant="outline" className="shrink-0 font-mono text-xs">
+                          {project.project_code}
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 shrink-0"
+                          onClick={() => copyProjectCode(project.project_code)}
+                        >
+                          {copiedCode === project.project_code ? (
+                            <CheckCircle2 className="w-3 h-3 text-green-500" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                        </Button>
+                      </div>
+                      
+                      {project.description && (
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-1">
+                          {project.description}
+                        </p>
+                      )}
+                      
+                      {/* Progress bar */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <Progress value={project.progress} className="h-2 flex-1" />
+                        <span className="text-sm font-medium text-muted-foreground w-12">
+                          {project.progress}%
+                        </span>
+                      </div>
+                      
+                      {/* Status and user info */}
+                      <div className="flex items-center gap-4 text-sm">
+                        <Badge className={`${getStatusColor(project.status)} text-white`}>
+                          {getStatusLabel(project.status)}
+                        </Badge>
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <Users className="w-3.5 h-3.5" />
+                          <span>{getUserName(project.user_id)}</span>
+                          {project.user_id && (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                          )}
+                        </div>
+                        {project.website_url && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 gap-1.5 text-primary"
+                            onClick={() => window.open(project.website_url!, '_blank')}
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                            Preview Site
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Action buttons */}
+                    <div className="flex flex-col gap-1">
+                      <Button variant="outline" size="sm" className="gap-1.5" onClick={() => openChat(project)}>
+                        <MessageSquare className="w-4 h-4" />
+                        Chat
+                      </Button>
+                      <Button variant="outline" size="sm" className="gap-1.5" onClick={() => openSuggestions(project)}>
+                        <Lightbulb className="w-4 h-4" />
+                        Suggestions
+                      </Button>
+                      <Button variant="outline" size="sm" className="gap-1.5" onClick={() => openEditProject(project)}>
+                        <Edit className="w-4 h-4" />
+                        Edit
+                      </Button>
+                      <Button variant="destructive" size="sm" className="gap-1.5" onClick={() => deleteProject(project.id)}>
+                        <Trash2 className="w-4 h-4" />
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Users className="w-4 h-4" />
-                    <span>{getUserName(project.user_id)}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => openChat(project)}>
-                      <MessageSquare className="w-4 h-4" />
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => openSuggestions(project)}>
-                      <Lightbulb className="w-4 h-4" />
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => openEditProject(project)}>
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button variant="destructive" size="sm" onClick={() => deleteProject(project.id)}>
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
+              </div>
             </Card>
           ))
         )}
@@ -440,35 +537,61 @@ const AdminProjectPanel = () => {
 
       {/* Edit Project Dialog */}
       <Dialog open={!!selectedProject && !showChatDialog && !showSuggestionsDialog} onOpenChange={(open) => !open && setSelectedProject(null)}>
-        <DialogContent>
+        <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Edit Project</DialogTitle>
-            <DialogDescription>Update project details and assign to a user</DialogDescription>
+            <DialogTitle>Edit Project: {selectedProject?.name}</DialogTitle>
+            <DialogDescription>Update project details, status, and website URL</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
-            <div className="space-y-2">
-              <Label>Status</Label>
-              <Select value={editStatus} onValueChange={setEditStatus}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="review">Review</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Status</Label>
+                <Select value={editStatus} onValueChange={setEditStatus}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="in_progress">In Progress</SelectItem>
+                    <SelectItem value="review">Under Review</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Progress (%)</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={editProgress}
+                  onChange={(e) => setEditProgress(e.target.value)}
+                />
+              </div>
             </div>
             <div className="space-y-2">
-              <Label>Progress (%)</Label>
-              <Input
-                type="number"
-                min="0"
-                max="100"
-                value={editProgress}
-                onChange={(e) => setEditProgress(e.target.value)}
-              />
+              <Label>Website Preview URL</Label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="https://preview.example.com"
+                    value={editWebsiteUrl}
+                    onChange={(e) => setEditWebsiteUrl(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                {editWebsiteUrl && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => window.open(editWebsiteUrl, '_blank')}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">This URL will be shown to the client as "View Site" button</p>
             </div>
             <div className="space-y-2">
               <Label>Assign to User</Label>
@@ -487,19 +610,12 @@ const AdminProjectPanel = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Admin Notes</Label>
+              <Label>Admin Notes (Visible to Client)</Label>
               <Textarea
-                placeholder="Notes visible to the user..."
+                placeholder="Notes about the project status..."
                 value={editNotes}
                 onChange={(e) => setEditNotes(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Website URL</Label>
-              <Input
-                placeholder="https://example.com"
-                value={editWebsiteUrl}
-                onChange={(e) => setEditWebsiteUrl(e.target.value)}
+                rows={3}
               />
             </div>
             <Button 
@@ -507,8 +623,8 @@ const AdminProjectPanel = () => {
               disabled={submitting} 
               className="w-full"
             >
-              {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-              Update Project
+              {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <CheckCircle2 className="w-4 h-4 mr-2" />}
+              Save Changes
             </Button>
           </div>
         </DialogContent>
@@ -516,17 +632,22 @@ const AdminProjectPanel = () => {
 
       {/* Chat Dialog */}
       <Dialog open={showChatDialog} onOpenChange={(open) => { setShowChatDialog(open); if (!open) setSelectedProject(null); }}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl h-[600px] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Chat - {selectedProject?.name}</DialogTitle>
-            <DialogDescription>Communicate with the client</DialogDescription>
+            <DialogTitle className="flex items-center gap-2">
+              <MessageSquare className="w-5 h-5" />
+              Chat - {selectedProject?.name}
+            </DialogTitle>
+            <DialogDescription>
+              Communicate with {getUserName(selectedProject?.user_id || null)} about this project
+            </DialogDescription>
           </DialogHeader>
-          <ScrollArea className="h-[400px] pr-4">
-            <div className="space-y-4">
+          <ScrollArea className="flex-1 pr-4">
+            <div className="space-y-4 py-4">
               {messages.length === 0 ? (
                 <div className="text-center py-12 text-muted-foreground">
                   <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No messages yet</p>
+                  <p>No messages yet. Start the conversation!</p>
                 </div>
               ) : (
                 messages.map((msg) => (
@@ -535,15 +656,15 @@ const AdminProjectPanel = () => {
                     className={`flex ${msg.is_admin ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] p-3 rounded-lg ${
+                      className={`max-w-[80%] p-3 rounded-2xl ${
                         msg.is_admin
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-foreground'
+                          ? 'bg-primary text-primary-foreground rounded-br-md'
+                          : 'bg-muted text-foreground rounded-bl-md'
                       }`}
                     >
                       <p className="text-sm">{msg.message}</p>
                       <p className={`text-xs mt-1 ${msg.is_admin ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                        {msg.is_admin ? 'Admin' : 'Client'} • {new Date(msg.created_at).toLocaleString()}
+                        {msg.is_admin ? 'You' : 'Client'} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
                   </div>
@@ -552,12 +673,13 @@ const AdminProjectPanel = () => {
               <div ref={messagesEndRef} />
             </div>
           </ScrollArea>
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-2 pt-4 border-t">
             <Input
               placeholder="Type your message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendAdminMessage()}
+              className="flex-1"
             />
             <Button onClick={sendAdminMessage} disabled={submitting || !newMessage.trim()}>
               <Send className="w-4 h-4" />
@@ -570,15 +692,18 @@ const AdminProjectPanel = () => {
       <Dialog open={showSuggestionsDialog} onOpenChange={(open) => { setShowSuggestionsDialog(open); if (!open) setSelectedProject(null); }}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Suggestions - {selectedProject?.name}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Suggestions - {selectedProject?.name}
+            </DialogTitle>
             <DialogDescription>Review and respond to client suggestions</DialogDescription>
           </DialogHeader>
           <ScrollArea className="h-[400px] pr-4">
-            <div className="space-y-4">
+            <div className="space-y-4 py-4">
               {suggestions.length === 0 ? (
                 <div className="text-center py-12 text-muted-foreground">
                   <Lightbulb className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No suggestions yet</p>
+                  <p>No suggestions from client yet</p>
                 </div>
               ) : (
                 suggestions.map((suggestion) => (
@@ -608,21 +733,27 @@ const SuggestionCard = ({
   const [response, setResponse] = useState(suggestion.admin_response || '');
   const [status, setStatus] = useState(suggestion.status);
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'approved': return <Badge className="bg-green-500">Approved</Badge>;
+      case 'rejected': return <Badge variant="destructive">Rejected</Badge>;
+      case 'implemented': return <Badge className="bg-blue-500">Implemented</Badge>;
+      default: return <Badge variant="secondary">Pending</Badge>;
+    }
+  };
+
   return (
     <Card>
       <CardContent className="pt-4 space-y-3">
         <div className="flex items-center justify-between">
           <h4 className="font-medium">{suggestion.title}</h4>
-          <Badge variant={
-            status === 'approved' ? 'default' :
-            status === 'rejected' ? 'destructive' :
-            status === 'implemented' ? 'secondary' : 'outline'
-          }>
-            {status}
-          </Badge>
+          {getStatusBadge(status)}
         </div>
         <p className="text-sm text-muted-foreground">{suggestion.description}</p>
-        <div className="space-y-2">
+        <p className="text-xs text-muted-foreground">
+          Submitted: {new Date(suggestion.created_at).toLocaleDateString()}
+        </p>
+        <div className="space-y-2 pt-2 border-t">
           <Select value={status} onValueChange={setStatus}>
             <SelectTrigger>
               <SelectValue />
@@ -635,7 +766,7 @@ const SuggestionCard = ({
             </SelectContent>
           </Select>
           <Textarea
-            placeholder="Your response..."
+            placeholder="Your response to the client..."
             value={response}
             onChange={(e) => setResponse(e.target.value)}
             rows={2}
@@ -643,8 +774,9 @@ const SuggestionCard = ({
           <Button 
             size="sm" 
             onClick={() => onUpdate(suggestion.id, status, response)}
+            className="w-full"
           >
-            Update
+            Update Suggestion
           </Button>
         </div>
       </CardContent>
