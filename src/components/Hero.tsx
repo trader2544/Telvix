@@ -1,186 +1,113 @@
-
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Play } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import heroImage from '@/assets/telvix-hero-office.jpg';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [backgroundVideoUrl, setBackgroundVideoUrl] = useState<string>('');
-  const [heroVideoUrl, setHeroVideoUrl] = useState<string>('');
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        // Get the specific videos by their exact names
-        const { data: backgroundVideoData } = supabase.storage
-          .from('videos')
-          .getPublicUrl('hero background.mp4');
-        
-        const { data: heroVideoData } = supabase.storage
-          .from('videos')
-          .getPublicUrl('hero video.mp4');
-
-        if (backgroundVideoData) {
-          setBackgroundVideoUrl(backgroundVideoData.publicUrl);
-        }
-
-        if (heroVideoData) {
-          setHeroVideoUrl(heroVideoData.publicUrl);
-        }
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-      }
-    };
-
-    fetchVideos();
-  }, []);
-
-  const navigateToPortfolio = () => {
-    navigate('/portfolio');
-  };
-
-  const navigateToQuote = () => {
-    navigate('/quote');
-  };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Video */}
-      <div className="absolute inset-0 w-full h-full">
-        <div className="relative w-full h-full">
-          {backgroundVideoUrl ? (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ filter: 'brightness(0.5)' }}
-            >
-              <source src={backgroundVideoUrl} type="video/mp4" />
-            </video>
-          ) : (
-            // Fallback to original streamable embed if video not found
-            <div style={{position:'relative', width:'100%', height:'100%', paddingBottom:'56.250%'}} className="absolute inset-0">
-              <iframe 
-                allow="fullscreen;autoplay" 
-                allowFullScreen 
-                height="100%" 
-                src="https://streamable.com/e/lmifak?autoplay=1&muted=1" 
-                width="100%" 
-                style={{border:'none', width:'100%', height:'100%', position:'absolute', left:'0px', top:'0px', overflow:'hidden', filter: 'brightness(0.5)'}}
-                className="z-[1]"
-              />
-            </div>
-          )}
-        </div>
-        
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/50 to-accent/60 z-10"></div>
-        <div className="absolute inset-0 bg-black/20 z-10"></div>
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden pt-20">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
       
-      {/* Enhanced Animated Background Elements */}
-      <div className="absolute top-20 right-20 w-32 h-32 md:w-72 md:h-72 bg-accent/20 rounded-full blur-3xl animate-float z-20"></div>
-      <div className="absolute bottom-20 left-20 w-48 h-48 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl animate-float z-20" style={{animationDelay: '2s'}}></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 bg-accent/10 rounded-full blur-3xl animate-pulse z-20"></div>
-      
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-30">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div className="text-center lg:text-left animate-fade-in text-white">
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 border border-white/20">
-              <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-              <span className="text-xs font-medium">Available for New Projects</span>
-            </div>
-            
-            <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
-              <span className="text-accent">Telvix:</span> Your Gateway to
-              <span className="block bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
-                Digital Excellence
-              </span>
-            </h1>
-            
-            <p className="text-sm md:text-lg mb-6 text-white/90 leading-relaxed max-w-2xl">
-              From stunning websites to AI-powered automation, SaaS solutions, and mobile apps. 
-              We transform your ideas into powerful digital experiences.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6">
-              <Button 
-                size="sm" 
-                className="bg-accent hover:bg-accent/90 text-white font-semibold px-6 py-3 text-sm group shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={navigateToQuote}
-              >
-                Get Free Quote
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                size="sm" 
-                variant="outline" 
-                className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-6 py-3 text-sm backdrop-blur-sm bg-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={navigateToPortfolio}
-              >
-                <Play className="mr-2 w-4 h-4" />
-                View Portfolio
-              </Button>
-            </div>
+      {/* Floating gradient orbs */}
+      <motion.div 
+        className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+        animate={{ 
+          y: [0, -30, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-primary/3 rounded-full blur-3xl"
+        animate={{ 
+          y: [0, 30, 0],
+          scale: [1, 0.95, 1],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-3 gap-4 text-center lg:text-left">
-              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <div className="text-lg md:text-xl font-bold text-accent">50+</div>
-                <div className="text-xs text-white/80">Projects</div>
-              </div>
-              <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                <div className="text-lg md:text-xl font-bold text-accent">95%</div>
-                <div className="text-xs text-white/80">Satisfaction</div>
-              </div>
-              <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                <div className="text-lg md:text-xl font-bold text-accent">24/7</div>
-                <div className="text-xs text-white/80">Support</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="relative animate-slide-up">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-2xl md:rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-              
-              {/* Hero Image */}
-              <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-                <div className="relative" style={{paddingBottom:'56.25%'}}>
-                  <img 
-                    src={heroImage} 
-                    alt="Telvix African Home Office - Professional digital workspace showcasing our innovative approach to web development and digital solutions"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              
-              {/* Floating Cards */}
-              <div className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl animate-bounce-gentle">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <div>
-                    <div className="text-gray-800 font-bold text-sm md:text-base">50+</div>
-                    <div className="text-gray-600 text-xs">Projects Delivered</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-accent to-primary text-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl animate-float">
-                <div className="text-center">
-                  <div className="text-lg md:text-xl font-bold">95%</div>
-                  <div className="text-xs opacity-90">Client Satisfaction</div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Main Headline - Webpoint style */}
+          <motion.h1 
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight leading-[1.05] mb-8"
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            We Build Winning
+            <br />
+            <span className="inline-flex items-center">
+              <motion.span 
+                className="relative inline-flex items-center px-6 py-2 bg-primary text-primary-foreground rounded-full mx-2"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.span 
+                  className="absolute left-4 w-8 h-8 bg-primary-foreground/20 rounded-lg"
+                  animate={{ rotate: [0, 10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+                <span className="relative z-10 ml-6">Solutions</span>
+              </motion.span>
+              for a
+            </span>
+            <br />
+            Better Tomorrow.
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p 
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            From research to execution, we work closely with organizations to create 
+            an intuitive and impactful experience online.
+          </motion.p>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <Button 
+              onClick={() => navigate('/quote')}
+              size="lg"
+              className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 py-6 text-base font-medium group"
+            >
+              Start your project
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      >
+        <motion.div 
+          className="w-6 h-10 border-2 border-foreground/20 rounded-full flex justify-center pt-2"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <motion.div 
+            className="w-1.5 h-3 bg-foreground/40 rounded-full"
+            animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
