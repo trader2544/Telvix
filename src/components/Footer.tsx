@@ -1,11 +1,11 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Linkedin, Twitter, Instagram } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -48,144 +48,160 @@ const Footer = () => {
     }
   };
 
-  const handlePrivacyClick = () => {
-    navigate('/privacy-policy');
+  const footerLinks = {
+    services: [
+      { label: 'Web Development', href: '/services' },
+      { label: 'Mobile Apps', href: '/services' },
+      { label: 'AI Solutions', href: '/services' },
+      { label: 'SaaS Development', href: '/services' },
+      { label: 'E-commerce', href: '/services' },
+    ],
+    company: [
+      { label: 'Portfolio', href: '/portfolio' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Contact', href: '/#contact' },
+    ],
+    legal: [
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms of Service', href: '/terms-of-service' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
+    ]
   };
 
-  const handleTermsClick = () => {
-    navigate('/terms-of-service');
-  };
-
-  const handleCookieClick = () => {
-    navigate('/cookie-policy');
-  };
+  const socialLinks = [
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Instagram, href: '#', label: 'Instagram' },
+  ];
 
   return (
-    <footer className="bg-gray-900 text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-primary/20"></div>
-      <div className="absolute top-0 right-0 w-48 h-48 md:w-96 md:h-96 bg-accent/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-40 h-40 md:w-80 md:h-80 bg-primary/5 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
-        <div className="py-8 md:py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {/* Company Info */}
-            <div className="col-span-2 md:col-span-1">
-              <div className="mb-4">
-                <h3 className="text-lg md:text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                  Telvix
-                </h3>
-                <p className="text-gray-300 mt-2 leading-relaxed text-xs md:text-sm">
-                  Transforming ideas into powerful digital experiences through innovative web solutions and cutting-edge technology.
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Mail className="w-4 h-4 text-accent" />
-                  <span className="text-gray-300 text-xs">telvixhr@outlook.com</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 text-accent" />
-                  <span className="text-gray-300 text-xs">+254741947599</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 text-accent" />
-                  <span className="text-gray-300 text-xs">+254707947594</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-accent" />
-                  <span className="text-gray-300 text-xs">Global Remote Services</span>
-                </div>
-              </div>
-            </div>
+    <footer className="bg-foreground text-background relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
 
-            {/* Services */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="py-16 md:py-24">
+          {/* Top Section */}
+          <div className="grid lg:grid-cols-2 gap-16 mb-16">
+            {/* Left - Brand & Newsletter */}
             <div>
-              <h4 className="text-sm md:text-base font-semibold mb-3 md:mb-4 text-white">Services</h4>
-              <ul className="space-y-2">
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">Web Development</a></li>
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">Mobile Apps</a></li>
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">AI Solutions</a></li>
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">SaaS Development</a></li>
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">E-commerce</a></li>
-                <li><a href="#services" className="text-gray-300 hover:text-accent transition-colors text-xs">Digital Marketing</a></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="text-sm md:text-base font-semibold mb-3 md:mb-4 text-white">Company</h4>
-              <ul className="space-y-2">
-                <li><a href="/portfolio" className="text-gray-300 hover:text-accent transition-colors text-xs">Portfolio</a></li>
-                <li><a href="/careers" className="text-gray-300 hover:text-accent transition-colors text-xs">Careers</a></li>
-                <li><a href="#testimonials" className="text-gray-300 hover:text-accent transition-colors text-xs">Testimonials</a></li>
-                <li><a href="#contact" className="text-gray-300 hover:text-accent transition-colors text-xs">Contact</a></li>
-                <li><button onClick={handlePrivacyClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Privacy Policy</button></li>
-                <li><button onClick={handleTermsClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Terms of Service</button></li>
-                <li><button onClick={handleCookieClick} className="text-gray-300 hover:text-accent transition-colors text-xs text-left">Cookie Policy</button></li>
-              </ul>
-            </div>
-
-            {/* Newsletter */}
-            <div>
-              <h4 className="text-sm md:text-base font-semibold mb-3 md:mb-4 text-white">Stay Updated</h4>
-              <p className="text-gray-300 mb-4 text-xs">
-                Subscribe to our newsletter for the latest updates and digital insights.
+              <h3 className="text-3xl md:text-4xl font-bold mb-6">
+                Let's build something{' '}
+                <span className="text-primary">amazing</span> together.
+              </h3>
+              <p className="text-background/60 mb-8 max-w-md leading-relaxed">
+                Subscribe to our newsletter for the latest updates, insights, and digital trends.
               </p>
               
-              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-3 max-w-md">
                 <Input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-accent text-xs h-8"
+                  className="bg-background/10 border-background/20 text-background placeholder:text-background/40 rounded-full px-6"
                   required
                   disabled={isLoading}
                 />
                 <Button 
                   type="submit" 
-                  size="sm"
-                  className="w-full bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-xs py-2"
+                  className="bg-primary hover:bg-primary/90 rounded-full px-6"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Subscribing...' : 'Subscribe'}
-                  <ArrowRight className="ml-2 w-3 h-3" />
+                  {isLoading ? '...' : <ArrowRight className="w-5 h-5" />}
                 </Button>
               </form>
+            </div>
 
-              {/* Social Links */}
-              <div className="flex space-x-3 mt-4">
-                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                  <Facebook className="w-4 h-4" />
+            {/* Right - Contact Info */}
+            <div className="lg:text-right">
+              <div className="space-y-4">
+                <a href="mailto:telvixhr@outlook.com" className="flex items-center lg:justify-end gap-3 text-background/80 hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5" />
+                  <span>telvixhr@outlook.com</span>
                 </a>
-                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                  <Twitter className="w-4 h-4" />
+                <a href="tel:+254741947599" className="flex items-center lg:justify-end gap-3 text-background/80 hover:text-primary transition-colors">
+                  <Phone className="w-5 h-5" />
+                  <span>+254 741 947 599</span>
                 </a>
-                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                  <Linkedin className="w-4 h-4" />
-                </a>
+                <div className="flex items-center lg:justify-end gap-3 text-background/60">
+                  <MapPin className="w-5 h-5" />
+                  <span>Global Remote Services</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
-            <div className="text-gray-400 text-xs">
-              Powered by Telvix
+          {/* Links Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-t border-background/10">
+            <div>
+              <h4 className="font-semibold text-background mb-4">Services</h4>
+              <ul className="space-y-3">
+                {footerLinks.services.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-background/60 hover:text-primary transition-colors text-sm">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="flex space-x-4 text-xs">
-              <button onClick={handlePrivacyClick} className="text-gray-400 hover:text-accent transition-colors">Privacy</button>
-              <button onClick={handleTermsClick} className="text-gray-400 hover:text-accent transition-colors">Terms</button>
-              <button onClick={handleCookieClick} className="text-gray-400 hover:text-accent transition-colors">Cookies</button>
+            <div>
+              <h4 className="font-semibold text-background mb-4">Company</h4>
+              <ul className="space-y-3">
+                {footerLinks.company.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-background/60 hover:text-primary transition-colors text-sm">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-background mb-4">Legal</h4>
+              <ul className="space-y-3">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-background/60 hover:text-primary transition-colors text-sm">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-background mb-4">Follow Us</h4>
+              <div className="flex gap-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    className="w-10 h-10 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="pt-8 border-t border-background/10">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
+                  alt="Telvix" 
+                  className="h-8 w-auto brightness-0 invert"
+                />
+              </div>
+              <p className="text-background/40 text-sm">
+                © {new Date().getFullYear()} Telvix. All rights reserved.
+              </p>
             </div>
           </div>
         </div>

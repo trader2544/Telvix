@@ -1,186 +1,148 @@
-
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { MessageCircle, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 const Testimonials = () => {
-  const testimonials = [
+  const projects = [
     {
       name: "Elso Boutique",
-      role: "E-commerce Platform", 
-      company: "Kenyan Craftsmanship",
-      content: "Modern e-commerce platform celebrating Kenyan craftsmanship, connecting global shoppers with authentic local artisans.",
+      category: "E-commerce Platform",
+      description: "Modern e-commerce platform celebrating Kenyan craftsmanship.",
       logo: "/lovable-uploads/1ebaad52-dd91-479d-843f-e3352f70739f.png",
       link: "https://elso-atelier.com"
     },
     {
       name: "Rabbit Hole Fitness Lab",
-      role: "Fitness & Education Platform",
-      company: "Health & Wellness",
-      content: "Interactive platform exploring fitness science, calisthenics, and nutrition with evidence-based guides and tracking tools.",
+      category: "Fitness & Education",
+      description: "Interactive platform exploring fitness science and nutrition.",
       logo: "/lovable-uploads/27cca01b-8a73-410d-9248-5b05149fd158.png",
       link: "https://rabbithole.fitness"
     },
     {
       name: "MJS Products Limited",
-      role: "Construction & Design",
-      company: "Architecture Firm",
-      content: "Top-tier architectural and construction firm website reflecting professionalism in residential and commercial projects.",
+      category: "Construction & Design",
+      description: "Top-tier architectural and construction firm website.",
       logo: "/lovable-uploads/18572de8-2218-4d81-8c05-e83cc4169dec.png",
       link: "https://mjsprods.co.ke"
     },
     {
       name: "PharmaSync Pro AI",
-      role: "Healthcare Management",
-      company: "SaaS Platform",
-      content: "Comprehensive pharmacy and clinic management platform streamlining inventory, billing, and patient records for healthcare providers.",
+      category: "Healthcare SaaS",
+      description: "Comprehensive pharmacy and clinic management platform.",
       logo: "/lovable-uploads/78339dfa-9d7b-42f1-8336-5185e1ccc0c6.png",
       link: "https://pharma-sync.netlify.app"
     },
     {
       name: "Kwa Kamande Space",
-      role: "Rental Management",
-      company: "Property Tech",
-      content: "Comprehensive rental management platform streamlining property management for landlords and tenants with automated tools.",
+      category: "Property Tech",
+      description: "Comprehensive rental management platform.",
       logo: "/lovable-uploads/75ecb35e-46da-4797-96de-0c0bd5d64bf8.png",
       link: "https://kwakamande.space"
     },
     {
       name: "Paul Rentals",
-      role: "Luxury Rentals",
-      company: "Premium Service",
-      content: "Exclusive platform for luxury car and property rentals in Nairobi, providing VIP service for distinguished clients.",
+      category: "Premium Service",
+      description: "Exclusive platform for luxury car and property rentals.",
       logo: "/lovable-uploads/4d656ebd-2524-4973-8f90-ca049f965544.png",
       link: "https://paulrentals.netlify.app"
-    },
-    {
-      name: "Telvix Digital Solutions",
-      role: "Digital Agency",
-      company: "Technology Solutions",
-      content: "Full-service digital agency website showcasing expertise in web development, AI automation, and digital marketing services.",
-      logo: "/lovable-uploads/a1750ac5-0b00-4671-b6c9-53a03cbb591a.png",
-      link: "https://telvix.tech"
-    },
-    {
-      name: "NuchoBlackHatey",
-      role: "VPN Platform",
-      company: "Security & Privacy",
-      content: "A secure, high-speed VPN platform delivering optimized configuration files for private internet access across all devices.",
-      logo: "/lovable-uploads/4ec2be6e-7e3b-4e44-b57e-171dc5bd4c10.png",
-      link: "http://nuchoblackhatey.ct.ws"
     }
   ];
 
   return (
-    <section id="testimonials" className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/20 to-teal-200/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-blue-100/10 to-teal-100/10 rounded-full blur-3xl animate-pulse"></div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="testimonials" className="mobile-spacing bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl mb-6 shadow-lg">
-            <MessageCircle className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="mobile-text-4xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-            Our Portfolio Projects
+        <motion.div 
+          className="mb-16 md:mb-24"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">Selected Work</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            Projects that speak for themselves
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-teal-500 mx-auto rounded-full"></div>
-        </div>
+          <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
+            A showcase of our recent work, from e-commerce platforms to SaaS solutions.
+          </p>
+        </motion.div>
 
-        {/* Desktop Testimonials Grid */}
-        <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <Card 
-              key={index} 
-              className="group relative bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-3xl overflow-hidden animate-slide-up"
-              style={{ animationDelay: `${index * 0.15}s` }}
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {projects.map((project, index) => (
+            <motion.a
+              key={project.name}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative bg-card rounded-3xl overflow-hidden hover-lift cursor-pointer"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              {/* Card Gradient Border Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-              
-              <CardContent className="relative p-8 lg:p-10">
-                {/* Company Logo */}
-                <div className="flex justify-center mb-8">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+              {/* Card Content */}
+              <div className="p-8">
+                {/* Logo */}
+                <div className="relative mb-8">
+                  <motion.div 
+                    className="w-20 h-20 rounded-2xl overflow-hidden bg-muted shadow-lg"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <img 
-                      src={testimonial.logo}
-                      alt={`${testimonial.company} logo`}
-                      className="relative w-20 h-20 rounded-2xl object-cover shadow-lg transform group-hover:scale-110 transition-transform duration-500"
+                      src={project.logo} 
+                      alt={project.name}
+                      className="w-full h-full object-cover"
                     />
+                  </motion.div>
+                  
+                  {/* Arrow */}
+                  <div className="absolute -right-2 -top-2 w-10 h-10 bg-foreground text-background rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                    <ArrowUpRight className="w-5 h-5" />
                   </div>
                 </div>
-                
-                {/* Quote */}
-                <blockquote className="text-gray-700 leading-relaxed text-sm md:text-base italic text-center mb-8 relative">
-                  <div className="absolute -top-4 -left-2 text-4xl text-blue-200 font-serif">"</div>
-                  {testimonial.content}
-                  <div className="absolute -bottom-8 -right-2 text-4xl text-teal-200 font-serif">"</div>
-                </blockquote>
-                
-                {/* Client Info */}
-                <div className="text-center mb-6">
-                  <h4 className="font-bold text-gray-900 text-base md:text-lg mb-1">{testimonial.name}</h4>
-                  <p className="text-blue-600 font-semibold mb-1 text-sm md:text-base">{testimonial.role}</p>
-                  <p className="text-gray-500 text-xs md:text-sm">{testimonial.company}</p>
-                </div>
 
-                {/* View Project Button */}
-                <div className="text-center">
-                  <Button
-                    onClick={() => window.open(testimonial.link, '_blank')}
-                    className="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-2 text-sm"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View Project
-                  </Button>
-                </div>
+                {/* Category */}
+                <span className="text-sm text-muted-foreground font-medium">
+                  {project.category}
+                </span>
 
-                {/* Mobile App-like Indicator */}
-                <div className="absolute top-4 right-4 w-3 h-3 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full animate-pulse shadow-lg"></div>
-              </CardContent>
-            </Card>
+                {/* Name */}
+                <h3 className="text-xl font-bold text-foreground mt-2 mb-3 group-hover:text-primary transition-colors">
+                  {project.name}
+                </h3>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Bottom gradient */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+            </motion.a>
           ))}
         </div>
 
-        {/* Mobile Logo Carousel */}
-        <div className="md:hidden relative">
-          <div className="overflow-hidden">
-            <div className="flex animate-scroll-left">
-              {/* First set */}
-              {testimonials.map((testimonial, index) => (
-                <div key={`first-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <img 
-                      src={testimonial.logo}
-                      alt={`${testimonial.company} logo`}
-                      className="relative w-16 h-16 rounded-2xl object-cover shadow-lg transform group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {testimonials.map((testimonial, index) => (
-                <div key={`second-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <img 
-                      src={testimonial.logo}
-                      alt={`${testimonial.company} logo`}
-                      className="relative w-16 h-16 rounded-2xl object-cover shadow-lg transform group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* View All */}
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <a 
+            href="/portfolio"
+            className="inline-flex items-center text-foreground font-medium hover:text-primary transition-colors group"
+          >
+            View all projects
+            <ArrowUpRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

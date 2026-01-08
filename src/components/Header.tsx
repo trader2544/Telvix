@@ -1,10 +1,9 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Settings, User, LayoutDashboard } from 'lucide-react';
+import { Settings, User, LayoutDashboard, Menu, X, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import FloatingContactButton from './FloatingContactButton';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,190 +23,161 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const navigateToPortfolio = () => {
-    navigate('/portfolio');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToCareers = () => {
-    navigate('/careers');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToHome = () => {
-    navigate('/');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToServices = () => {
-    navigate('/services');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToQuote = () => {
-    navigate('/quote');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToAuth = () => {
-    navigate('/auth');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToProfile = () => {
-    navigate('/profile');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToAdmin = () => {
-    navigate('/admin');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToBlog = () => {
-    navigate('/blog');
-    setIsMenuOpen(false);
-  };
-
-  const navigateToDashboard = () => {
-    navigate('/dashboard');
-    setIsMenuOpen(false);
-  };
+  const navItems = [
+    { label: 'Work', action: () => navigate('/portfolio') },
+    { label: 'Company', action: () => scrollToSection('why-choose') },
+    { label: 'What we do', action: () => navigate('/services') },
+    { label: 'Our Insights', action: () => navigate('/blog') },
+    { label: 'Careers', action: () => navigate('/careers') },
+  ];
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
-        <div className="container mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex justify-between items-center h-12 md:h-16">
-            <div className="flex items-center">
-              <button onClick={navigateToHome} className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                <img 
-                  src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
-                  alt="Telvix Logo" 
-                  className="h-10 md:h-14 w-auto"
-                />
-              </button>
-            </div>
+      <motion.header 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 md:h-20">
+            {/* Logo */}
+            <motion.button 
+              onClick={() => navigate('/')}
+              className="flex items-center space-x-2 group"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <img 
+                src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
+                alt="Telvix Logo" 
+                className="h-8 md:h-10 w-auto"
+              />
+            </motion.button>
             
-            <nav className="hidden md:flex space-x-6">
-              <button onClick={navigateToHome} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Home
-              </button>
-              <button onClick={navigateToServices} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Services
-              </button>
-              <button onClick={() => scrollToSection('why-choose')} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Why Us
-              </button>
-              <button onClick={navigateToPortfolio} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Portfolio
-              </button>
-              <button onClick={navigateToBlog} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Blog
-              </button>
-              <button onClick={navigateToCareers} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Careers
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                Contact
-              </button>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.label}
+                  onClick={() => { item.action(); setIsMenuOpen(false); }}
+                  className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative group"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                >
+                  {item.label}
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full group-hover:left-0" />
+                </motion.button>
+              ))}
             </nav>
 
-            <div className="hidden md:flex items-center space-x-2">
+            {/* Right Actions */}
+            <div className="hidden lg:flex items-center space-x-3">
               {profile?.role === 'admin' && (
-                <Button onClick={navigateToAdmin} variant="outline" size="sm" className="text-xs">
-                  <Settings className="w-4 h-4 mr-1" />
+                <Button onClick={() => navigate('/admin')} variant="ghost" size="sm" className="text-sm">
+                  <Settings className="w-4 h-4 mr-2" />
                   Admin
                 </Button>
               )}
               {user && profile?.role !== 'admin' && (
-                <Button onClick={navigateToDashboard} variant="outline" size="sm" className="text-xs">
-                  <LayoutDashboard className="w-4 h-4 mr-1" />
+                <Button onClick={() => navigate('/dashboard')} variant="ghost" size="sm" className="text-sm">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
                   Dashboard
                 </Button>
               )}
               {user ? (
-                <Button onClick={navigateToProfile} variant="outline" size="sm" className="text-xs">
-                  <User className="w-4 h-4 mr-1" />
+                <Button onClick={() => navigate('/profile')} variant="ghost" size="sm" className="text-sm">
+                  <User className="w-4 h-4 mr-2" />
                   Profile
                 </Button>
               ) : (
-                <Button onClick={navigateToAuth} variant="outline" size="sm" className="text-xs">
+                <Button onClick={() => navigate('/auth')} variant="ghost" size="sm" className="text-sm">
                   Login
                 </Button>
               )}
-              <Button onClick={navigateToQuote} size="sm" className="bg-accent hover:bg-accent/90 text-white font-semibold text-xs px-4 py-2">
-                Get Free Quote
+              <Button 
+                onClick={() => navigate('/quote')} 
+                className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-6 font-medium"
+              >
+                Start your project
+                <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
 
-            <button 
-              className="md:hidden text-gray-900"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="flex lg:hidden items-center space-x-2">
+              <span className="text-sm font-medium text-foreground/70">Menu</span>
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 text-foreground"
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
+        </div>
+      </motion.header>
 
-          {isMenuOpen && (
-            <div className="md:hidden py-3 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-lg">
-              <div className="flex flex-col space-y-3 px-3">
-                <button onClick={navigateToHome} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Home
-                </button>
-                <button onClick={navigateToServices} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Services
-                </button>
-                <button onClick={() => scrollToSection('why-choose')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Why Us
-                </button>
-                <button onClick={navigateToPortfolio} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Portfolio
-                </button>
-                <button onClick={navigateToBlog} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Blog
-                </button>
-                <button onClick={navigateToCareers} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Careers
-                </button>
-                <button onClick={() => scrollToSection('contact')} className="text-left text-gray-900 hover:text-primary transition-colors font-medium text-sm">
-                  Contact
-                </button>
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-background pt-20 lg:hidden"
+          >
+            <div className="flex flex-col p-6 space-y-2">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.label}
+                  onClick={() => { item.action(); setIsMenuOpen(false); }}
+                  className="text-left text-2xl font-semibold text-foreground py-4 border-b border-border/30 hover:text-primary transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {item.label}
+                </motion.button>
+              ))}
+              
+              <div className="pt-6 space-y-3">
                 {profile?.role === 'admin' && (
-                  <Button onClick={navigateToAdmin} variant="outline" size="sm" className="w-full text-xs">
-                    <Settings className="w-4 h-4 mr-1" />
+                  <Button onClick={() => { navigate('/admin'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
+                    <Settings className="w-4 h-4 mr-2" />
                     Admin
                   </Button>
                 )}
                 {user && profile?.role !== 'admin' && (
-                  <Button onClick={navigateToDashboard} variant="outline" size="sm" className="w-full text-xs">
-                    <LayoutDashboard className="w-4 h-4 mr-1" />
+                  <Button onClick={() => { navigate('/dashboard'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
+                    <LayoutDashboard className="w-4 h-4 mr-2" />
                     Dashboard
                   </Button>
                 )}
                 {user ? (
-                  <Button onClick={navigateToProfile} variant="outline" size="sm" className="w-full text-xs">
-                    <User className="w-4 h-4 mr-1" />
+                  <Button onClick={() => { navigate('/profile'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
+                    <User className="w-4 h-4 mr-2" />
                     Profile
                   </Button>
                 ) : (
-                  <Button onClick={navigateToAuth} variant="outline" size="sm" className="w-full text-xs">
+                  <Button onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
                     Login
                   </Button>
                 )}
-                <Button onClick={navigateToQuote} size="sm" className="bg-accent hover:bg-accent/90 w-full text-white font-semibold text-xs">
-                  Get Free Quote
+                <Button 
+                  onClick={() => { navigate('/quote'); setIsMenuOpen(false); }}
+                  className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full"
+                >
+                  Start your project
+                  <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </div>
-          )}
-        </div>
-      </header>
-
-      {/* Modern Floating Contact Button */}
-      <FloatingContactButton />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
