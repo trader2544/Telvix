@@ -7,10 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Eye, EyeOff, RefreshCw, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Loader2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Simple math captcha generator
 const generateCaptcha = () => {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
@@ -63,19 +62,16 @@ const Auth = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate passwords match
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
 
-    // Validate password strength
     if (password.length < 6) {
       toast.error('Password must be at least 6 characters');
       return;
     }
 
-    // Validate captcha
     if (parseInt(captchaInput) !== captcha.answer) {
       toast.error('Incorrect captcha answer');
       refreshCaptcha();
@@ -99,12 +95,12 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 px-4 py-8 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/5 to-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/5 to-primary/10 rounded-full blur-3xl" />
       </div>
 
       <motion.div
@@ -113,20 +109,19 @@ const Auth = () => {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className="w-full max-w-md relative z-10"
       >
-        <Card className="border-border/50 bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/10">
+        <Card className="border border-border/50 shadow-xl bg-card/80 backdrop-blur-xl">
           <CardHeader className="text-center pb-2">
-            {/* Logo */}
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
               className="flex justify-center mb-4"
             >
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/30">
-                <span className="text-3xl font-bold text-primary-foreground">T</span>
+              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg">
+                <span className="text-2xl font-bold text-primary-foreground">T</span>
               </div>
             </motion.div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+            <CardTitle className="text-2xl font-bold text-foreground">
               Welcome to Telvix
             </CardTitle>
             <CardDescription className="text-muted-foreground">
@@ -135,16 +130,16 @@ const Auth = () => {
           </CardHeader>
           <CardContent className="pt-4">
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50">
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50 p-1 rounded-xl">
                 <TabsTrigger 
                   value="signin"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all"
                 >
                   Sign Up
                 </TabsTrigger>
@@ -159,7 +154,7 @@ const Auth = () => {
                   className="space-y-4"
                 >
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email" className="text-foreground/90">Email</Label>
+                    <Label htmlFor="signin-email" className="text-foreground">Email</Label>
                     <Input
                       id="signin-email"
                       type="email"
@@ -167,11 +162,11 @@ const Auth = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-background/50 border-border/50 focus:border-primary transition-colors"
+                      className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password" className="text-foreground/90">Password</Label>
+                    <Label htmlFor="signin-password" className="text-foreground">Password</Label>
                     <div className="relative">
                       <Input
                         id="signin-password"
@@ -180,7 +175,7 @@ const Auth = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="bg-background/50 border-border/50 focus:border-primary transition-colors pr-10"
+                        className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors pr-10"
                       />
                       <Button
                         type="button"
@@ -199,7 +194,7 @@ const Auth = () => {
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg shadow-primary/25 transition-all duration-300" 
+                    className="w-full h-12 rounded-xl group" 
                     disabled={loading}
                   >
                     {loading ? (
@@ -208,7 +203,10 @@ const Auth = () => {
                         Signing in...
                       </>
                     ) : (
-                      'Sign In'
+                      <>
+                        Sign In
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>
                     )}
                   </Button>
                 </motion.form>
@@ -223,7 +221,7 @@ const Auth = () => {
                   className="space-y-4"
                 >
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name" className="text-foreground/90">Full Name</Label>
+                    <Label htmlFor="signup-name" className="text-foreground">Full Name</Label>
                     <Input
                       id="signup-name"
                       type="text"
@@ -231,11 +229,11 @@ const Auth = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
-                      className="bg-background/50 border-border/50 focus:border-primary transition-colors"
+                      className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email" className="text-foreground/90">Email</Label>
+                    <Label htmlFor="signup-email" className="text-foreground">Email</Label>
                     <Input
                       id="signup-email"
                       type="email"
@@ -243,11 +241,11 @@ const Auth = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-background/50 border-border/50 focus:border-primary transition-colors"
+                      className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password" className="text-foreground/90">Password</Label>
+                    <Label htmlFor="signup-password" className="text-foreground">Password</Label>
                     <div className="relative">
                       <Input
                         id="signup-password"
@@ -256,7 +254,7 @@ const Auth = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="bg-background/50 border-border/50 focus:border-primary transition-colors pr-10"
+                        className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors pr-10"
                       />
                       <Button
                         type="button"
@@ -274,7 +272,7 @@ const Auth = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-confirm-password" className="text-foreground/90">Confirm Password</Label>
+                    <Label htmlFor="signup-confirm-password" className="text-foreground">Confirm Password</Label>
                     <div className="relative">
                       <Input
                         id="signup-confirm-password"
@@ -283,7 +281,7 @@ const Auth = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        className="bg-background/50 border-border/50 focus:border-primary transition-colors pr-10"
+                        className="h-12 rounded-xl bg-muted/50 border-border focus:border-primary transition-colors pr-10"
                       />
                       <Button
                         type="button"
@@ -302,9 +300,9 @@ const Auth = () => {
                   </div>
 
                   {/* Captcha */}
-                  <div className="space-y-2 p-4 rounded-lg bg-muted/30 border border-border/50">
+                  <div className="space-y-2 p-4 rounded-xl bg-muted/30 border border-border/50">
                     <div className="flex items-center justify-between">
-                      <Label className="text-foreground/90">Security Check</Label>
+                      <Label className="text-foreground">Security Check</Label>
                       <Button
                         type="button"
                         variant="ghost"
@@ -316,7 +314,7 @@ const Auth = () => {
                       </Button>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="px-4 py-2 bg-gradient-to-r from-primary/20 to-blue-600/20 rounded-lg border border-primary/30 font-mono text-lg font-semibold text-foreground select-none">
+                      <div className="px-4 py-2 bg-primary/10 rounded-lg border border-primary/20 font-mono text-lg font-semibold text-foreground select-none">
                         {captcha.question}
                       </div>
                       <Input
@@ -325,14 +323,14 @@ const Auth = () => {
                         value={captchaInput}
                         onChange={(e) => setCaptchaInput(e.target.value)}
                         required
-                        className="w-24 bg-background/50 border-border/50 focus:border-primary transition-colors"
+                        className="w-24 h-10 rounded-lg bg-muted/50 border-border focus:border-primary transition-colors"
                       />
                     </div>
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg shadow-primary/25 transition-all duration-300" 
+                    className="w-full h-12 rounded-xl group" 
                     disabled={loading}
                   >
                     {loading ? (
@@ -341,7 +339,10 @@ const Auth = () => {
                         Creating account...
                       </>
                     ) : (
-                      'Sign Up'
+                      <>
+                        Sign Up
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>
                     )}
                   </Button>
                 </motion.form>

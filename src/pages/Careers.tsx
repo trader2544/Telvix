@@ -1,7 +1,7 @@
-
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap } from 'lucide-react';
+import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -84,112 +84,175 @@ const Careers = () => {
     "Portfolio building projects"
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="pt-20 pb-16">
+      <main className="pt-24 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Freelance <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Opportunities</span>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+              Join Our Network
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
+              Freelance{' '}
+              <span className="text-primary">Opportunities</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Join our network of talented developers from Kenya and Nigeria. Work on exciting projects with competitive rates and flexible schedules.
             </p>
-          </div>
+          </motion.div>
 
           {/* Available Gigs */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Available Gigs</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Available Gigs</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Browse current opportunities and find your next project
+              </p>
+            </motion.div>
+
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
               {gigs.map((gig, index) => {
                 const IconComponent = gig.icon;
                 return (
-                  <Card key={index} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 shadow-lg bg-white/90 backdrop-blur-sm">
-                    <CardContent className="p-6">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center mr-4">
-                          <IconComponent className="w-6 h-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">
-                            {gig.title}
-                          </h3>
-                          <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <MapPin className="w-4 h-4 mr-1" />
-                            {gig.location}
+                  <motion.div key={index} variants={itemVariants}>
+                    <Card className="group h-full bg-card hover:shadow-xl transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden">
+                      <CardContent className="p-6">
+                        <div className="flex items-center mb-4">
+                          <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                            <IconComponent className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                              {gig.title}
+                            </h3>
+                            <div className="flex items-center text-sm text-muted-foreground mt-1">
+                              <MapPin className="w-4 h-4 mr-1" />
+                              {gig.location}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                        {gig.description}
-                      </p>
+                        <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                          {gig.description}
+                        </p>
 
-                      <div className="space-y-3 mb-4">
-                        <div className="flex items-center text-sm">
-                          <Wallet className="w-4 h-4 text-green-600 mr-2" />
-                          <span className="font-semibold text-green-600">{gig.budget}</span>
+                        <div className="space-y-3 mb-4">
+                          <div className="flex items-center text-sm">
+                            <Wallet className="w-4 h-4 text-primary mr-2" />
+                            <span className="font-semibold text-primary">{gig.budget}</span>
+                          </div>
+                          <div className="flex items-center text-sm">
+                            <Clock className="w-4 h-4 text-muted-foreground mr-2" />
+                            <span className="text-muted-foreground">{gig.duration}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center text-sm">
-                          <Clock className="w-4 h-4 text-blue-600 mr-2" />
-                          <span className="text-gray-600">{gig.duration}</span>
-                        </div>
-                      </div>
 
-                      <div className="mb-4">
-                        <p className="text-xs font-semibold text-gray-700 mb-2">Required Skills:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {gig.skills.map((skill, skillIndex) => (
-                            <span key={skillIndex} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                              {skill}
-                            </span>
-                          ))}
+                        <div className="mb-4">
+                          <p className="text-xs font-medium text-foreground mb-2">Required Skills:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {gig.skills.map((skill, skillIndex) => (
+                              <span key={skillIndex} className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      <Button 
-                        className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
-                        onClick={() => window.open('https://wa.me/254741947599', '_blank')}
-                      >
-                        Apply Now
-                      </Button>
-                    </CardContent>
-                  </Card>
+                        <Button 
+                          className="w-full group/btn"
+                          onClick={() => window.open('https://wa.me/254741947599', '_blank')}
+                        >
+                          Apply Now
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 );
               })}
-            </div>
-          </div>
+            </motion.div>
+          </section>
 
           {/* Benefits Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Why Work With Us?</h2>
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-muted/30 rounded-3xl p-8 md:p-12 mb-20"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Why Work With Us?</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-gradient-to-r from-primary to-accent rounded-full"></div>
-                  <span className="text-gray-700">{benefit}</span>
-                </div>
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center space-x-3"
+                >
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-foreground">{benefit}</span>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.section>
 
           {/* Call to Action */}
-          <div className="text-center mt-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Join Our Team?</h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Ready to Join Our Team?</h2>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Send us your portfolio and let's discuss how we can work together on exciting projects.
             </p>
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg"
+              className="text-lg px-8 py-6 rounded-full group"
               onClick={() => window.open('https://wa.me/254741947599', '_blank')}
             >
               Contact Us on WhatsApp
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </div>
+          </motion.section>
         </div>
       </main>
 
