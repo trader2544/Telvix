@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Settings, User, LayoutDashboard, Menu, X, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
+import telvixLogo from '@/assets/telvix-logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,7 +50,7 @@ const Header = () => {
               whileTap={{ scale: 0.98 }}
             >
               <img 
-                src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
+                src={telvixLogo} 
                 alt="Telvix Logo" 
                 className="h-8 md:h-10 w-auto"
               />

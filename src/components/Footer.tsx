@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import telvixLogo from '@/assets/telvix-logo.png';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -194,7 +195,7 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-2">
                 <img 
-                  src="/lovable-uploads/a4c9ee74-f3ca-47b8-8adb-b4933b0b4f8c.png" 
+                  src={telvixLogo} 
                   alt="Telvix" 
                   className="h-8 w-auto brightness-0 invert"
                 />
