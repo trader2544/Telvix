@@ -16,11 +16,11 @@ interface SEOEnhancementsProps {
 }
 
 const SEOEnhancements = ({
-  title = "Telvix - Premier Digital Agency | Web Design, AI & SaaS Solutions",
-  description = "Transform your business with Telvix's cutting-edge web design, AI automation, SaaS development, and mobile app solutions. Get your free consultation today!",
-  keywords = "web design, digital agency, AI automation, SaaS development, mobile apps, digital transformation, web development, UI/UX design",
-  image = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80",
-  url = "https://telvix.com",
+  title = "Telvix - Premier Digital Agency in Kenya | Web Design, AI & SaaS Solutions",
+  description = "Transform your business with Telvix's cutting-edge web design, AI automation, SaaS development, and mobile app solutions. Trusted by businesses in Kenya, Africa & worldwide. Get your free consultation today!",
+  keywords = "web design Kenya, digital agency Nairobi, AI automation Africa, SaaS development Kenya, mobile apps Kenya, digital transformation, web development Nairobi, UI/UX design Kenya, e-commerce solutions Africa, software development Kenya, best web developers Kenya, affordable website design Nairobi",
+  image = "https://telvix.tech/lovable-uploads/93789e97-518e-4b25-a28f-bb7947f42d2c.png",
+  url = "https://telvix.tech",
   type = "website",
   author = "Telvix Team",
   publishedTime,
@@ -35,6 +35,7 @@ const SEOEnhancements = ({
         "@type": "Organization",
         "@id": `${url}/#organization`,
         "name": "Telvix",
+        "alternateName": "Telvix Digital Solutions",
         "url": url,
         "logo": {
           "@type": "ImageObject",
@@ -42,23 +43,43 @@ const SEOEnhancements = ({
           "width": 200,
           "height": 200
         },
-        "description": description,
+        "description": "Premier digital agency in Kenya offering web design, AI automation, SaaS development, and mobile app solutions.",
         "foundingDate": "2020",
+        "areaServed": [
+          {
+            "@type": "Country",
+            "name": "Kenya"
+          },
+          {
+            "@type": "Country", 
+            "name": "Nigeria"
+          },
+          {
+            "@type": "Continent",
+            "name": "Africa"
+          },
+          "Worldwide"
+        ],
         "sameAs": [
           "https://linkedin.com/company/telvix",
           "https://twitter.com/telvix",
-          "https://facebook.com/telvix"
+          "https://facebook.com/telvix",
+          "https://instagram.com/telvix"
         ],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+1-555-0123",
-          "contactType": "customer service",
-          "availableLanguage": "English"
-        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+254741947599",
+            "contactType": "customer service",
+            "email": "telvixhr@outlook.com",
+            "availableLanguage": ["English", "Swahili"],
+            "areaServed": ["KE", "NG", "AF"]
+          }
+        ],
         "address": {
           "@type": "PostalAddress",
-          "addressCountry": "US",
-          "addressRegion": "CA"
+          "addressCountry": "KE",
+          "addressRegion": "Nairobi"
         }
       },
       {
@@ -74,44 +95,55 @@ const SEOEnhancements = ({
           "@type": "SearchAction",
           "target": `${url}/search?q={search_term_string}`,
           "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${url}/#webpage`,
-        "url": url,
-        "name": title,
-        "description": description,
-        "isPartOf": {
-          "@id": `${url}/#website`
-        },
-        "about": {
-          "@id": `${url}/#organization`
-        },
-        "datePublished": publishedTime,
-        "dateModified": modifiedTime || new Date().toISOString(),
-        "breadcrumb": {
-          "@id": `${url}/#breadcrumb`
         },
         "inLanguage": "en-US"
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": `${url}/#localbusiness`,
+        "name": "Telvix Digital Solutions",
+        "image": image,
+        "url": url,
+        "telephone": "+254741947599",
+        "email": "telvixhr@outlook.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "Kenya"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -1.286389,
+          "longitude": 36.817223
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        "priceRange": "$$"
       },
       {
         "@type": "Service",
         "@id": `${url}/#services`,
         "name": "Digital Agency Services",
-        "description": "Comprehensive digital solutions including web design, AI automation, SaaS development, and mobile applications",
+        "description": "Comprehensive digital solutions including web design, AI automation, SaaS development, and mobile applications for businesses in Kenya, Africa, and worldwide.",
         "provider": {
           "@id": `${url}/#organization`
         },
         "serviceType": [
           "Web Design",
+          "Web Development",
           "AI Automation",
           "SaaS Development",
           "Mobile App Development",
-          "Digital Transformation",
+          "E-commerce Solutions",
+          "Digital Marketing",
+          "SEO Services",
           "UI/UX Design"
         ],
-        "areaServed": "Worldwide",
+        "areaServed": ["Kenya", "Nigeria", "Africa", "Worldwide"],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Digital Services",
@@ -120,21 +152,32 @@ const SEOEnhancements = ({
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Web Design & Development"
+                "name": "Web Design & Development",
+                "description": "Custom responsive websites built with React, Next.js, and modern frameworks"
               }
             },
             {
               "@type": "Offer", 
               "itemOffered": {
                 "@type": "Service",
-                "name": "AI Automation Solutions"
+                "name": "AI Automation Solutions",
+                "description": "Custom AI chatbots, workflow automation, and intelligent business solutions"
               }
             },
             {
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service", 
-                "name": "SaaS Development"
+                "name": "SaaS Development",
+                "description": "Scalable Software-as-a-Service platforms with modern architecture"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service", 
+                "name": "Mobile App Development",
+                "description": "iOS and Android apps with React Native and Flutter"
               }
             }
           ]
@@ -143,17 +186,16 @@ const SEOEnhancements = ({
     ]
   };
 
-  // Generate FAQ structured data
   const faqData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What services does Telvix offer?",
+        "name": "What services does Telvix offer in Kenya?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Telvix offers comprehensive digital solutions including web design, AI automation, SaaS development, mobile app development, and digital transformation services."
+          "text": "Telvix offers comprehensive digital solutions including web design, AI automation, SaaS development, mobile app development, e-commerce solutions, and digital marketing services for businesses in Kenya and worldwide."
         }
       },
       {
@@ -161,7 +203,7 @@ const SEOEnhancements = ({
         "name": "How can I get a quote for my project?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can get a free quote by clicking the 'Get Free Quote' button on our website or contacting us directly through our contact form."
+          "text": "You can get a free quote by clicking the 'Get Free Quote' button on our website, using our interactive cost calculator, or contacting us directly at telvixhr@outlook.com or +254741947599."
         }
       },
       {
@@ -169,7 +211,15 @@ const SEOEnhancements = ({
         "name": "Does Telvix work with international clients?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, Telvix serves clients worldwide and provides 24/7 support to ensure seamless collaboration across different time zones."
+          "text": "Yes, Telvix serves clients in Kenya, Nigeria, across Africa, and worldwide. We provide remote services and support to ensure seamless collaboration across different time zones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to build a website?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Project timelines vary based on complexity. A simple website takes 2-4 weeks, while complex web applications or SaaS platforms may take 2-4 months. We provide detailed timelines during our initial consultation."
         }
       }
     ]
@@ -184,6 +234,10 @@ const SEOEnhancements = ({
       <meta name="author" content={author} />
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow" />
+      <meta name="geo.region" content="KE" />
+      <meta name="geo.placename" content="Nairobi" />
+      <meta name="geo.position" content="-1.286389;36.817223" />
+      <meta name="ICBM" content="-1.286389, 36.817223" />
       
       {/* Open Graph Tags */}
       <meta property="og:title" content={title} />
