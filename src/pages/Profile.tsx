@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,10 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { motion } from 'framer-motion';
+import { User, Mail, Shield, LogOut, Loader2, Sparkles, Save } from 'lucide-react';
 
 const Profile = () => {
   const { user, profile, updateProfile, signOut, loading } = useAuth();
@@ -57,7 +58,15 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full"
+        />
+      </div>
+    );
   }
 
   if (!user) {
@@ -65,53 +74,109 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
       <Header />
       
-      <main className="container mx-auto px-4 pt-20 pb-8">
+      <main className="container mx-auto px-4 pt-28 pb-12 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Profile Settings</span>
-                <Badge variant={profile?.role === 'admin' ? 'default' : 'secondary'}>
+          {/* Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 text-center"
+          >
+            <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl mb-4">
+              <Sparkles className="w-8 h-8 text-primary" />
+            </div>
+            <h1 className="text-3xl font-bold text-foreground">Profile Settings</h1>
+            <p className="text-muted-foreground">Manage your account settings and personal information</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card className="backdrop-blur-sm bg-card/80 border-border/50 overflow-hidden">
+              {/* Avatar Section */}
+              <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-8 flex flex-col items-center">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center text-primary-foreground text-3xl font-bold shadow-2xl shadow-primary/30 mb-4">
+                  {fullName ? fullName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
+                </div>
+                <Badge 
+                  variant={profile?.role === 'admin' ? 'default' : 'secondary'}
+                  className="rounded-full px-4 py-1"
+                >
+                  <Shield className="w-3 h-3 mr-1" />
                   {profile?.role || 'user'}
                 </Badge>
-              </CardTitle>
-              <CardDescription>
-                Manage your account settings and personal information
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label>Email</Label>
-                <Input value={user.email || ''} disabled />
               </div>
-              
-              <form onSubmit={handleUpdateProfile} className="space-y-4">
+
+              <CardContent className="p-6 space-y-6">
+                {/* Email (Read-only) */}
                 <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input
-                    id="fullName"
-                    type="text"
-                    placeholder="Enter your full name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                  <Label className="flex items-center gap-2 text-muted-foreground">
+                    <Mail className="w-4 h-4" />
+                    Email Address
+                  </Label>
+                  <Input 
+                    value={user.email || ''} 
+                    disabled 
+                    className="bg-muted/50 border-border/50 rounded-xl"
                   />
+                  <p className="text-xs text-muted-foreground">Your email address cannot be changed</p>
                 </div>
                 
-                <Button type="submit" disabled={updating}>
-                  {updating ? 'Updating...' : 'Update Profile'}
-                </Button>
-              </form>
-              
-              <div className="pt-4 border-t">
-                <Button variant="destructive" onClick={handleSignOut}>
-                  Sign Out
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+                {/* Update Profile Form */}
+                <form onSubmit={handleUpdateProfile} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName" className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      Full Name
+                    </Label>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      placeholder="Enter your full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="rounded-xl"
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    disabled={updating} 
+                    className="w-full rounded-xl h-12 gap-2"
+                  >
+                    {updating ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Save className="w-4 h-4" />
+                    )}
+                    {updating ? 'Updating...' : 'Save Changes'}
+                  </Button>
+                </form>
+                
+                <div className="pt-4 border-t border-border/50">
+                  <Button 
+                    variant="destructive" 
+                    onClick={handleSignOut}
+                    className="w-full rounded-xl h-12 gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </main>
       

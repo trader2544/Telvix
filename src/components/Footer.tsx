@@ -197,7 +197,7 @@ const Footer = () => {
                 <img 
                   src={telvixLogo} 
                   alt="Telvix" 
-                  className="h-8 w-auto brightness-0 invert"
+                  className="h-12 md:h-14 w-auto brightness-0 invert"
                 />
               </div>
               <p className="text-background/40 text-sm">
