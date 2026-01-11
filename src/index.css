@@ -73,6 +73,23 @@
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    overscroll-behavior: none;
+  }
+
+  /* Safe area padding for mobile devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* App-like touch feedback */
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Webpoint-inspired typography */
