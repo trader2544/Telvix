@@ -341,9 +341,7 @@ const Dashboard = () => {
           y: 0
         }} className="mb-8">
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <Sparkles className="w-6 h-6 text-primary" />
-              </div>
+              
               <h1 className="text-3xl font-bold text-foreground">Project Dashboard</h1>
             </div>
             <p className="text-muted-foreground">Track your project progress and communicate with our team</p>
