@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Calendar, User, ArrowRight, Eye } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-
 interface BlogPost {
   id: string;
   title: string;
@@ -27,35 +26,31 @@ interface BlogPost {
     avatar_url: string | null;
   };
 }
-
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
-  const { data: blogPosts = [], isLoading } = useQuery({
+  const {
+    data: blogPosts = [],
+    isLoading
+  } = useQuery({
     queryKey: ['published-blog-posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select(`
+      const {
+        data,
+        error
+      } = await supabase.from('blog_posts').select(`
           *,
           profiles (
             full_name,
             avatar_url
           )
-        `)
-        .eq('published', true)
-        .order('created_at', { ascending: false });
-      
+        `).eq('published', true).order('created_at', {
+        ascending: false
+      });
       if (error) throw error;
       return data as BlogPost[];
     }
   });
-
-  const filteredPosts = blogPosts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
-
+  const filteredPosts = blogPosts.filter(post => post.title.toLowerCase().includes(searchTerm.toLowerCase()) || post.excerpt && post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()));
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -63,7 +58,6 @@ const Blog = () => {
       day: 'numeric'
     });
   };
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -75,27 +69,32 @@ const Blog = () => {
       "name": "Telvix"
     }
   };
-
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: {
+      opacity: 0
+    },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: {
+        staggerChildren: 0.1
+      }
     }
   };
-
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    hidden: {
+      opacity: 0,
+      y: 30
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
   };
-
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOEnhancements
-        title="Telvix Blog - Digital Insights & Industry Expertise | Web Development Kenya"
-        description="Stay updated with the latest trends in web development, AI automation, and digital transformation."
-        keywords="digital agency blog, web development insights, AI automation trends, Kenya tech blog"
-      />
+  return <div className="min-h-screen bg-background">
+      <SEOEnhancements title="Telvix Blog - Digital Insights & Industry Expertise | Web Development Kenya" description="Stay updated with the latest trends in web development, AI automation, and digital transformation." keywords="digital agency blog, web development insights, AI automation trends, Kenya tech blog" />
       
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
@@ -106,15 +105,16 @@ const Blog = () => {
       <main className="pt-24 pb-20">
         {/* Hero Section */}
         <section className="container mx-auto px-4 mb-16">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-              Our Blog
-            </span>
+          <motion.div initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6
+        }} className="text-center mb-12">
+            
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
               Insights &{' '}
               <span className="text-primary">Articles</span>
@@ -126,47 +126,22 @@ const Blog = () => {
             {/* Search Bar */}
             <div className="relative max-w-md mx-auto">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 rounded-xl bg-muted/50"
-                aria-label="Search blog articles"
-              />
+              <Input type="text" placeholder="Search articles..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-12 h-12 rounded-xl bg-muted/50" aria-label="Search blog articles" />
             </div>
           </motion.div>
         </section>
 
         {/* Blog Posts Grid */}
         <section className="container mx-auto px-4">
-          {isLoading ? (
-            <div className="flex justify-center items-center py-20">
+          {isLoading ? <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            </div>
-          ) : filteredPosts.length > 0 ? (
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {filteredPosts.map((post) => (
-                <motion.article key={post.id} variants={itemVariants}>
+            </div> : filteredPosts.length > 0 ? <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map(post => <motion.article key={post.id} variants={itemVariants}>
                   <Card className="group h-full bg-card hover:shadow-xl transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden flex flex-col">
                     <div className="aspect-video overflow-hidden bg-muted">
-                      {post.thumbnail_url || post.featured_image_url ? (
-                        <img
-                          src={post.thumbnail_url || post.featured_image_url || ''}
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                      {post.thumbnail_url || post.featured_image_url ? <img src={post.thumbnail_url || post.featured_image_url || ''} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" /> : <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                           <span className="text-4xl">📝</span>
-                        </div>
-                      )}
+                        </div>}
                     </div>
                     <CardHeader className="flex-1">
                       <div className="flex items-center justify-between mb-3">
@@ -183,22 +158,12 @@ const Blog = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      {post.excerpt && (
-                        <p className="text-muted-foreground mb-4 line-clamp-3 text-sm">
+                      {post.excerpt && <p className="text-muted-foreground mb-4 line-clamp-3 text-sm">
                           {post.excerpt}
-                        </p>
-                      )}
+                        </p>}
                       <div className="flex items-center justify-between mt-auto">
                         <div className="flex items-center text-sm text-muted-foreground">
-                          {post.profiles?.avatar_url ? (
-                            <img 
-                              src={post.profiles.avatar_url} 
-                              alt={post.profiles.full_name || 'Author'} 
-                              className="w-6 h-6 rounded-full mr-2"
-                            />
-                          ) : (
-                            <User className="w-4 h-4 mr-2" />
-                          )}
+                          {post.profiles?.avatar_url ? <img src={post.profiles.avatar_url} alt={post.profiles.full_name || 'Author'} className="w-6 h-6 rounded-full mr-2" /> : <User className="w-4 h-4 mr-2" />}
                           <span>{post.profiles?.full_name || 'Telvix Team'}</span>
                         </div>
                         <Link to={`/blog/${post.id}`} aria-label={`Read more about ${post.title}`}>
@@ -210,33 +175,26 @@ const Blog = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.article>
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-20"
-            >
+                </motion.article>)}
+            </motion.div> : <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} className="text-center py-20">
               <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Eye className="w-12 h-12 text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-4">No Articles Found</h2>
               <p className="text-muted-foreground text-lg max-w-md mx-auto">
-                {searchTerm 
-                  ? "No articles match your search. Try different keywords."
-                  : "Stay tuned! Our team is working on amazing content for you."
-                }
+                {searchTerm ? "No articles match your search. Try different keywords." : "Stay tuned! Our team is working on amazing content for you."}
               </p>
-            </motion.div>
-          )}
+            </motion.div>}
         </section>
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Blog;
