@@ -1,6 +1,5 @@
-
-# Robots.txt for Telvix.app
-# Updated for enhanced SEO and blog visibility
+# Robots.txt for Telvix.tech
+# Optimized for SEO and blog visibility
 
 User-agent: Googlebot
 Allow: /
@@ -42,23 +41,16 @@ User-agent: *
 Allow: /
 
 # Block access to admin and private areas
-Disallow: /admin/
+Disallow: /admin
 Disallow: /api/
 Disallow: /private/
-Disallow: /_next/
-Disallow: /node_modules/
 
-# Sitemap location
-Sitemap: https://telvix.app/sitemap.xml
-
-# Additional SEO directives
 # Priority crawling for blog content
+Allow: /blog
 Allow: /blog/
-Allow: /blog/*
 
-# Cache policy
-# Crawl-delay helps manage server load while ensuring good indexing
-Crawl-delay: 1
+# Sitemap location - IMPORTANT: Must match your domain exactly
+Sitemap: https://telvix.tech/sitemap.xml
 
-# Host directive (optional, for primary domain)
-Host: https://telvix.app
+# Host directive
+Host: https://telvix.tech

@@ -38,21 +38,21 @@ const Header = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/50 safe-top"
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 md:h-20">
-            {/* Logo */}
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20 md:h-24">
+            {/* Logo - MEGA BIG */}
             <motion.button 
               onClick={() => navigate('/')}
-              className="flex items-center space-x-2 group"
+              className="flex items-center group"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <img 
                 src={telvixLogo} 
                 alt="Telvix Logo" 
-                className="h-12 md:h-14 w-auto"
+                className="h-16 md:h-20 lg:h-24 w-auto"
               />
             </motion.button>
             
@@ -106,75 +106,122 @@ const Header = () => {
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="flex lg:hidden items-center space-x-2">
-              <span className="text-sm font-medium text-foreground/70">Menu</span>
+            {/* Mobile Menu Button - App-like */}
+            <div className="flex lg:hidden items-center">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 text-foreground"
+                className="p-3 rounded-2xl bg-muted/50 active:bg-muted text-foreground transition-all"
               >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - App-like Full Screen */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background pt-20 lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-background lg:hidden safe-top"
           >
-            <div className="flex flex-col p-6 space-y-2">
+            {/* Header area padding */}
+            <div className="h-20" />
+            
+            {/* Navigation Items - App-like grid */}
+            <div className="px-4 py-6 space-y-1">
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.label}
                   onClick={() => { item.action(); setIsMenuOpen(false); }}
-                  className="text-left text-2xl font-semibold text-foreground py-4 border-b border-border/30 hover:text-primary transition-colors"
+                  className="w-full text-left px-4 py-4 text-lg font-medium text-foreground rounded-2xl active:bg-muted hover:bg-muted/50 transition-colors flex items-center justify-between"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.05 }}
                 >
                   {item.label}
+                  <ArrowRight className="w-5 h-5 text-muted-foreground" />
                 </motion.button>
               ))}
+            </div>
+            
+            {/* Divider */}
+            <div className="mx-4 h-px bg-border" />
+            
+            {/* Action Buttons - App-like */}
+            <div className="px-4 py-6 space-y-2">
+              {profile?.role === 'admin' && (
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onClick={() => { navigate('/admin'); setIsMenuOpen(false); }} 
+                  className="w-full px-4 py-4 rounded-2xl bg-muted/50 text-foreground font-medium flex items-center gap-3 active:bg-muted"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Settings className="w-5 h-5 text-primary" />
+                  </div>
+                  Admin Panel
+                </motion.button>
+              )}
+              {user && profile?.role !== 'admin' && (
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onClick={() => { navigate('/dashboard'); setIsMenuOpen(false); }} 
+                  className="w-full px-4 py-4 rounded-2xl bg-muted/50 text-foreground font-medium flex items-center gap-3 active:bg-muted"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <LayoutDashboard className="w-5 h-5 text-primary" />
+                  </div>
+                  My Dashboard
+                </motion.button>
+              )}
+              {user ? (
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  onClick={() => { navigate('/profile'); setIsMenuOpen(false); }} 
+                  className="w-full px-4 py-4 rounded-2xl bg-muted/50 text-foreground font-medium flex items-center gap-3 active:bg-muted"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                    <User className="w-5 h-5 text-accent-foreground" />
+                  </div>
+                  My Profile
+                </motion.button>
+              ) : (
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} 
+                  className="w-full px-4 py-4 rounded-2xl bg-muted/50 text-foreground font-medium flex items-center gap-3 active:bg-muted"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
+                    <User className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  Login / Register
+                </motion.button>
+              )}
               
-              <div className="pt-6 space-y-3">
-                {profile?.role === 'admin' && (
-                  <Button onClick={() => { navigate('/admin'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
-                    <Settings className="w-4 h-4 mr-2" />
-                    Admin
-                  </Button>
-                )}
-                {user && profile?.role !== 'admin' && (
-                  <Button onClick={() => { navigate('/dashboard'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
-                    <LayoutDashboard className="w-4 h-4 mr-2" />
-                    Dashboard
-                  </Button>
-                )}
-                {user ? (
-                  <Button onClick={() => { navigate('/profile'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
-                    <User className="w-4 h-4 mr-2" />
-                    Profile
-                  </Button>
-                ) : (
-                  <Button onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} variant="outline" className="w-full justify-start">
-                    Login
-                  </Button>
-                )}
+              {/* Primary CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="pt-4"
+              >
                 <Button 
                   onClick={() => { navigate('/quote'); setIsMenuOpen(false); }}
-                  className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full"
+                  className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-lg font-semibold shadow-lg shadow-primary/30"
                 >
-                  Start your project
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  Start Your Project
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
