@@ -93,9 +93,7 @@ const Profile = () => {
           opacity: 1,
           y: 0
         }} className="mb-8 text-center">
-            <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl mb-4">
-              <Sparkles className="w-8 h-8 text-primary" />
-            </div>
+            
             <h1 className="text-3xl font-bold text-foreground">Profile Settings</h1>
             <p className="text-muted-foreground">Manage your account settings and personal information</p>
           </motion.div>
