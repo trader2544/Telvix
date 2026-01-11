@@ -1,11 +1,16 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap, ArrowRight, Lock } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Careers = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
   const gigs = [
     {
       title: "M-Pesa Integration Developer",
@@ -133,77 +138,105 @@ const Careers = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Available Gigs</h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Browse current opportunities and find your next project
+                {user ? 'Browse current opportunities and find your next project' : 'Sign in to view detailed job listings and apply'}
               </p>
             </motion.div>
 
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {gigs.map((gig, index) => {
-                const IconComponent = gig.icon;
-                return (
-                  <motion.div key={index} variants={itemVariants}>
-                    <Card className="group h-full bg-card hover:shadow-xl transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden">
-                      <CardContent className="p-6">
-                        <div className="flex items-center mb-4">
-                          <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                            <IconComponent className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                              {gig.title}
-                            </h3>
-                            <div className="flex items-center text-sm text-muted-foreground mt-1">
-                              <MapPin className="w-4 h-4 mr-1" />
-                              {gig.location}
+            {user ? (
+              <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {gigs.map((gig, index) => {
+                  const IconComponent = gig.icon;
+                  return (
+                    <motion.div key={index} variants={itemVariants}>
+                      <Card className="group h-full bg-card hover:shadow-xl transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden">
+                        <CardContent className="p-6">
+                          <div className="flex items-center mb-4">
+                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                              <IconComponent className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                                {gig.title}
+                              </h3>
+                              <div className="flex items-center text-sm text-muted-foreground mt-1">
+                                <MapPin className="w-4 h-4 mr-1" />
+                                {gig.location}
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                          {gig.description}
-                        </p>
+                          <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                            {gig.description}
+                          </p>
 
-                        <div className="space-y-3 mb-4">
-                          <div className="flex items-center text-sm">
-                            <Wallet className="w-4 h-4 text-primary mr-2" />
-                            <span className="font-semibold text-primary">{gig.budget}</span>
+                          <div className="space-y-3 mb-4">
+                            <div className="flex items-center text-sm">
+                              <Wallet className="w-4 h-4 text-primary mr-2" />
+                              <span className="font-semibold text-primary">{gig.budget}</span>
+                            </div>
+                            <div className="flex items-center text-sm">
+                              <Clock className="w-4 h-4 text-muted-foreground mr-2" />
+                              <span className="text-muted-foreground">{gig.duration}</span>
+                            </div>
                           </div>
-                          <div className="flex items-center text-sm">
-                            <Clock className="w-4 h-4 text-muted-foreground mr-2" />
-                            <span className="text-muted-foreground">{gig.duration}</span>
-                          </div>
-                        </div>
 
-                        <div className="mb-4">
-                          <p className="text-xs font-medium text-foreground mb-2">Required Skills:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {gig.skills.map((skill, skillIndex) => (
-                              <span key={skillIndex} className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">
-                                {skill}
-                              </span>
-                            ))}
+                          <div className="mb-4">
+                            <p className="text-xs font-medium text-foreground mb-2">Required Skills:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {gig.skills.map((skill, skillIndex) => (
+                                <span key={skillIndex} className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
                           </div>
-                        </div>
 
-                        <Button 
-                          className="w-full group/btn"
-                          onClick={() => window.open('https://wa.me/254741947599', '_blank')}
-                        >
-                          Apply Now
-                          <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                          <Button 
+                            className="w-full group/btn"
+                            onClick={() => window.open('https://wa.me/254741947599', '_blank')}
+                          >
+                            Apply Now
+                            <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            ) : (
+              /* Locked State for Non-Authenticated Users */
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-16"
+              >
+                <Card className="max-w-md mx-auto border-2 border-dashed border-primary/30 bg-gradient-to-br from-primary/5 to-accent/5">
+                  <CardContent className="p-8">
+                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Lock className="w-10 h-10 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">Sign In to View Jobs</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Create an account or sign in to browse available freelance opportunities and apply.
+                    </p>
+                    <Button 
+                      onClick={() => navigate('/auth')}
+                      className="gap-2"
+                    >
+                      Sign In / Register
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
           </section>
 
           {/* Benefits Section */}
