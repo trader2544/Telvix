@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   ExternalLink, 
-  Github, 
   Star, 
   Globe, 
   Smartphone, 
@@ -393,21 +392,7 @@ const Portfolio = () => {
                                         }}
                                       >
                                         <Globe className="w-4 h-4 mr-1" />
-                                        Live
-                                      </Button>
-                                    )}
-                                    {project.html_url !== '#' && (
-                                      <Button 
-                                        size="sm" 
-                                        variant="secondary"
-                                        className="rounded-full"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          window.open(project.html_url, '_blank');
-                                        }}
-                                      >
-                                        <Github className="w-4 h-4 mr-1" />
-                                        Code
+                                        Visit
                                       </Button>
                                     )}
                                   </div>
@@ -489,16 +474,6 @@ const Portfolio = () => {
                               >
                                 <ExternalLink className="w-4 h-4" />
                                 Visit Live Site
-                              </Button>
-                            )}
-                            {project.html_url !== '#' && (
-                              <Button 
-                                variant="outline"
-                                className="flex-1 gap-2 rounded-xl"
-                                onClick={() => window.open(project.html_url, '_blank')}
-                              >
-                                <Github className="w-4 h-4" />
-                                View Source
                               </Button>
                             )}
                           </div>

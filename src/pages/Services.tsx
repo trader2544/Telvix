@@ -174,8 +174,16 @@ const Services = () => {
                     <div className={`bg-card border border-border/50 rounded-2xl overflow-hidden transition-all duration-500 ${isExpanded ? 'shadow-xl shadow-primary/10' : 'shadow-sm hover:shadow-md'}`}>
                       {/* Service Header - Always Visible */}
                       <button onClick={() => toggleExpand(service.id)} className="w-full p-6 flex items-center gap-4 text-left hover:bg-muted/50 transition-colors">
-                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shrink-0 shadow-lg`}>
-                          <IconComponent className="w-7 h-7 text-white" />
+                        {/* Circular Image with Icon Overlay */}
+                        <div className="relative w-16 h-16 shrink-0">
+                          <img 
+                            src={service.image} 
+                            alt={service.title}
+                            className="w-full h-full rounded-full object-cover border-2 border-border shadow-lg"
+                          />
+                          <div className={`absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-md border-2 border-background`}>
+                            <IconComponent className="w-3.5 h-3.5 text-white" />
+                          </div>
                         </div>
                         
                         <div className="flex-1 min-w-0">
