@@ -54,13 +54,51 @@ const Hero = () => {
               duration: 0.8,
               ease: [0.22, 1, 0.36, 1]
             }}>
-                <motion.span className="absolute left-4 w-8 h-8 bg-primary-foreground/20 rounded-lg" animate={{
-                rotate: [0, 10, 0]
-              }} transition={{
-                duration: 4,
-                repeat: Infinity
-              }} />
-                <span className="relative z-10 ml-6">Solutions</span>
+                {/* Animated 3D Cube */}
+                <motion.div 
+                  className="absolute left-3 w-8 h-8"
+                  style={{ perspective: '100px' }}
+                >
+                  <motion.div
+                    className="w-full h-full relative"
+                    style={{ transformStyle: 'preserve-3d' }}
+                    animate={{
+                      rotateX: [0, 360],
+                      rotateY: [0, 360],
+                    }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    {/* Front face */}
+                    <div className="absolute inset-0 bg-primary-foreground/30 rounded-md border border-primary-foreground/40" 
+                      style={{ transform: 'translateZ(4px)' }} 
+                    />
+                    {/* Back face */}
+                    <div className="absolute inset-0 bg-primary-foreground/20 rounded-md border border-primary-foreground/30" 
+                      style={{ transform: 'translateZ(-4px)' }} 
+                    />
+                    {/* Right face */}
+                    <div className="absolute inset-0 bg-primary-foreground/25 rounded-md border border-primary-foreground/35"
+                      style={{ transform: 'rotateY(90deg) translateZ(4px)' }}
+                    />
+                    {/* Left face */}
+                    <div className="absolute inset-0 bg-primary-foreground/15 rounded-md border border-primary-foreground/25"
+                      style={{ transform: 'rotateY(-90deg) translateZ(4px)' }}
+                    />
+                    {/* Top face */}
+                    <div className="absolute inset-0 bg-primary-foreground/35 rounded-md border border-primary-foreground/45"
+                      style={{ transform: 'rotateX(90deg) translateZ(4px)' }}
+                    />
+                    {/* Bottom face */}
+                    <div className="absolute inset-0 bg-primary-foreground/10 rounded-md border border-primary-foreground/20"
+                      style={{ transform: 'rotateX(-90deg) translateZ(4px)' }}
+                    />
+                  </motion.div>
+                </motion.div>
+                <span className="relative z-10 ml-10">Solutions</span>
               </motion.span>
               for a
             </span>

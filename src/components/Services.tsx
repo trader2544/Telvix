@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import webDevelopmentImg from '@/assets/web-development.jpg';
-import aiAutomationImg from '@/assets/ai-automation.jpg';
-import saasDevelopmentImg from '@/assets/saas-development.jpg';
+import discoveryImg from '@/assets/discovery-service.jpg';
+import designImg from '@/assets/ui-ux-design.jpg';
+import developmentImg from '@/assets/development-service.jpg';
 
 const Services = () => {
   const navigate = useNavigate();
@@ -15,21 +15,21 @@ const Services = () => {
       title: "Discovery",
       description: "We conduct high-level research based on your requirements to develop the best digital solutions. We understand, devise, and strategize solutions that are centered around your idea.",
       features: ["User Research", "UX Audit", "Product and Business Strategy", "Conversion Rate Optimisation"],
-      image: webDevelopmentImg,
+      image: discoveryImg,
     },
     {
       number: "02 / 03",
       title: "Design",
       description: "Users first. We create for the end users. Those who are on your platform every day. Those who wish life was a little bit easier. We design products. We design brands. But most importantly, we design experiences.",
       features: ["UX Design", "UI Design", "Competitive Analysis", "Motion Design", "Branding"],
-      image: aiAutomationImg,
+      image: designImg,
     },
     {
       number: "03 / 03",
       title: "Development",
       description: "Every line of code is like a stroke of paint on your canvas. We build with the right frameworks and technologies, ensuring the final product is sturdy, clean, and responsive.",
       features: ["Webflow Development", "React & Next.js", "Mobile Development", "API Integration"],
-      image: saasDevelopmentImg,
+      image: developmentImg,
     }
   ];
 
