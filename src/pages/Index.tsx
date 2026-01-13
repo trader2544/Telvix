@@ -8,6 +8,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import PerformanceOptimizer from '@/components/PerformanceOptimizer';
+import FloatingContactButton from '@/components/FloatingContactButton';
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       </main>
       
       <Footer />
+      <FloatingContactButton />
     </div>
   );
 };
