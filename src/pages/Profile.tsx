@@ -110,9 +110,7 @@ const Profile = () => {
             <Card className="backdrop-blur-sm bg-card/80 border-border/50 overflow-hidden">
               {/* Avatar Section */}
               <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-8 flex flex-col items-center">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center text-primary-foreground text-3xl font-bold shadow-2xl shadow-primary/30 mb-4">
-                  {fullName ? fullName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
-                </div>
+                
                 
               </div>
 
