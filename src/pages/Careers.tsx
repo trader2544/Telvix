@@ -206,9 +206,7 @@ const Careers = () => {
           }} className="text-center py-16">
                 <Card className="max-w-md mx-auto border-2 border-dashed border-primary/30 bg-gradient-to-br from-primary/5 to-accent/5">
                   <CardContent className="p-8">
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Lock className="w-10 h-10 text-primary" />
-                    </div>
+                    
                     <h3 className="text-xl font-bold text-foreground mb-2">Sign In to View Jobs</h3>
                     <p className="text-muted-foreground mb-6">
                       Create an account or sign in to browse available freelance opportunities and apply.
