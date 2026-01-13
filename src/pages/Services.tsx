@@ -176,14 +176,8 @@ const Services = () => {
                       <button onClick={() => toggleExpand(service.id)} className="w-full p-6 flex items-center gap-4 text-left hover:bg-muted/50 transition-colors">
                         {/* Circular Image with Icon Overlay */}
                         <div className="relative w-16 h-16 shrink-0">
-                          <img 
-                            src={service.image} 
-                            alt={service.title}
-                            className="w-full h-full rounded-full object-cover border-2 border-border shadow-lg"
-                          />
-                          <div className={`absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-md border-2 border-background`}>
-                            <IconComponent className="w-3.5 h-3.5 text-white" />
-                          </div>
+                          <img src={service.image} alt={service.title} className="w-full h-full rounded-full object-cover border-2 border-border shadow-lg" />
+                          
                         </div>
                         
                         <div className="flex-1 min-w-0">
