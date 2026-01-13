@@ -340,9 +340,7 @@ const Portfolio = () => {
                       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
                           <div className="flex items-center gap-4 mb-4">
-                            <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center">
-                              <IconComponent className="w-7 h-7 text-primary" />
-                            </div>
+                            
                             <div>
                               <DialogTitle className="text-2xl">{project.name}</DialogTitle>
                               <p className="text-sm text-muted-foreground">{project.techStack}</p>
