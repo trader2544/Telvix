@@ -559,14 +559,19 @@ const AdminProjectPanel = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Progress (%)</Label>
-                <Input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={editProgress}
-                  onChange={(e) => setEditProgress(e.target.value)}
-                />
+                <Label>Progress ({editProgress}%)</Label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={editProgress}
+                    onChange={(e) => setEditProgress(e.target.value)}
+                    className="flex-1 h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                  />
+                  <span className="text-sm font-bold text-primary w-12 text-right">{editProgress}%</span>
+                </div>
+                <Progress value={parseInt(editProgress) || 0} className="h-2" />
               </div>
             </div>
             <div className="space-y-2">

@@ -5,6 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -25,7 +27,10 @@ import {
   Sparkles,
   TrendingUp,
   Users,
-  FolderOpen
+  FolderOpen,
+  Tag,
+  Plus,
+  Loader2
 } from 'lucide-react';
 
 interface BlogPost {
@@ -38,6 +43,14 @@ interface BlogPost {
   author_id: string;
   thumbnail_url: string | null;
   featured_image_url: string | null;
+  category_id: string | null;
+}
+
+interface BlogCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
 }
 
 interface Project {
@@ -51,10 +64,12 @@ interface Project {
 const Admin = () => {
   const { user, profile, loading } = useAuth();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [excerpt, setExcerpt] = useState('');
+  const [categoryId, setCategoryId] = useState<string>('');
   const [isPublished, setIsPublished] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -62,6 +77,13 @@ const Admin = () => {
   const [featuredImageFile, setFeaturedImageFile] = useState<File | null>(null);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  
+  // Category management
+  const [showCategoryDialog, setShowCategoryDialog] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [newCategoryDesc, setNewCategoryDesc] = useState('');
+  const [categorySubmitting, setCategorySubmitting] = useState(false);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,6 +95,7 @@ const Admin = () => {
   useEffect(() => {
     if (profile?.role === 'admin') {
       fetchBlogPosts();
+      fetchCategories();
       fetchProjects();
     }
   }, [profile]);
@@ -88,6 +111,20 @@ const Admin = () => {
       setBlogPosts(data || []);
     } catch (error) {
       toast.error('Error fetching blog posts');
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_categories')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      setCategories(data || []);
+    } catch (error) {
+      toast.error('Error fetching categories');
     }
   };
 
@@ -128,6 +165,55 @@ const Admin = () => {
     return publicUrl;
   };
 
+  const createCategory = async () => {
+    if (!newCategoryName.trim()) {
+      toast.error('Please enter a category name');
+      return;
+    }
+    
+    setCategorySubmitting(true);
+    try {
+      const slug = newCategoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      
+      const { error } = await supabase
+        .from('blog_categories')
+        .insert({
+          name: newCategoryName.trim(),
+          slug,
+          description: newCategoryDesc.trim() || null
+        });
+      
+      if (error) throw error;
+      
+      toast.success('Category created successfully!');
+      setNewCategoryName('');
+      setNewCategoryDesc('');
+      setShowCategoryDialog(false);
+      fetchCategories();
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setCategorySubmitting(false);
+    }
+  };
+
+  const deleteCategory = async (categoryId: string) => {
+    if (!confirm('Are you sure you want to delete this category?')) return;
+    
+    try {
+      const { error } = await supabase
+        .from('blog_categories')
+        .delete()
+        .eq('id', categoryId);
+      
+      if (error) throw error;
+      toast.success('Category deleted successfully!');
+      fetchCategories();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
@@ -155,6 +241,7 @@ const Admin = () => {
         author_id: user.id,
         thumbnail_url: thumbnailUrl,
         featured_image_url: featuredImageUrl,
+        category_id: categoryId || null,
       };
 
       let error;
@@ -186,6 +273,7 @@ const Admin = () => {
     setTitle('');
     setContent('');
     setExcerpt('');
+    setCategoryId('');
     setIsPublished(false);
     setEditingPost(null);
     setThumbnailFile(null);
@@ -197,6 +285,7 @@ const Admin = () => {
     setTitle(post.title);
     setContent(post.content);
     setExcerpt(post.excerpt || '');
+    setCategoryId(post.category_id || '');
     setIsPublished(post.published);
     setThumbnailFile(null);
     setFeaturedImageFile(null);
@@ -231,6 +320,12 @@ const Admin = () => {
     } catch (error: any) {
       toast.error(error.message);
     }
+  };
+
+  const getCategoryName = (categoryId: string | null) => {
+    if (!categoryId) return null;
+    const category = categories.find(c => c.id === categoryId);
+    return category?.name;
   };
 
   if (loading) {
@@ -284,7 +379,7 @@ const Admin = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+            className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"
           >
             <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
               <CardContent className="pt-6">
@@ -321,6 +416,19 @@ const Admin = () => {
                   </div>
                   <div className="p-3 bg-blue-500/20 rounded-xl">
                     <TrendingUp className="w-6 h-6 text-blue-500" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Categories</p>
+                    <p className="text-3xl font-bold text-foreground">{categories.length}</p>
+                  </div>
+                  <div className="p-3 bg-purple-500/20 rounded-xl">
+                    <Tag className="w-6 h-6 text-purple-500" />
                   </div>
                 </div>
               </CardContent>
@@ -371,7 +479,7 @@ const Admin = () => {
           )}
 
           <Tabs defaultValue="projects" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6 bg-muted/50 p-1 rounded-xl">
+            <TabsList className="grid w-full grid-cols-4 mb-6 bg-muted/50 p-1 rounded-xl">
               <TabsTrigger value="projects" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                 <FolderKanban className="w-4 h-4" />
                 Projects
@@ -382,6 +490,10 @@ const Admin = () => {
               </TabsTrigger>
               <TabsTrigger value="manage" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                 Manage Posts
+              </TabsTrigger>
+              <TabsTrigger value="categories" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <Tag className="w-4 h-4" />
+                Categories
               </TabsTrigger>
             </TabsList>
             
@@ -403,16 +515,34 @@ const Admin = () => {
                   </CardHeader>
                   <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="title">Title</Label>
-                        <Input
-                          id="title"
-                          placeholder="Enter post title"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                          required
-                          className="bg-background"
-                        />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="title">Title</Label>
+                          <Input
+                            id="title"
+                            placeholder="Enter post title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            className="bg-background"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="category">Category</Label>
+                          <Select value={categoryId} onValueChange={setCategoryId}>
+                            <SelectTrigger className="bg-background">
+                              <SelectValue placeholder="Select a category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="">No Category</SelectItem>
+                              {categories.map((cat) => (
+                                <SelectItem key={cat.id} value={cat.id}>
+                                  {cat.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                       
                       <div className="space-y-2">
@@ -534,6 +664,12 @@ const Admin = () => {
                                   <Badge variant={post.published ? 'default' : 'secondary'} className="rounded-full">
                                     {post.published ? 'Published' : 'Draft'}
                                   </Badge>
+                                  {getCategoryName(post.category_id) && (
+                                    <Badge variant="outline" className="rounded-full">
+                                      <Tag className="w-3 h-3 mr-1" />
+                                      {getCategoryName(post.category_id)}
+                                    </Badge>
+                                  )}
                                   <span className="text-xs text-muted-foreground">
                                     {new Date(post.created_at).toLocaleDateString()}
                                   </span>
@@ -574,6 +710,104 @@ const Admin = () => {
                           <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
                           <p className="font-medium">No blog posts yet</p>
                           <p className="text-sm">Create your first post!</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+
+            {/* Categories Tab */}
+            <TabsContent value="categories">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <Card className="backdrop-blur-sm bg-card/80">
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle>Blog Categories</CardTitle>
+                      <CardDescription>Manage categories for organizing your blog posts</CardDescription>
+                    </div>
+                    <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="gap-2">
+                          <Plus className="w-4 h-4" />
+                          Add Category
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Create New Category</DialogTitle>
+                          <DialogDescription>Add a new category to organize your blog posts</DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4 pt-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="categoryName">Category Name</Label>
+                            <Input
+                              id="categoryName"
+                              placeholder="e.g., Technology"
+                              value={newCategoryName}
+                              onChange={(e) => setNewCategoryName(e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="categoryDesc">Description (Optional)</Label>
+                            <Input
+                              id="categoryDesc"
+                              placeholder="Brief description of the category"
+                              value={newCategoryDesc}
+                              onChange={(e) => setNewCategoryDesc(e.target.value)}
+                            />
+                          </div>
+                          <Button onClick={createCategory} disabled={categorySubmitting} className="w-full">
+                            {categorySubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+                            Create Category
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {categories.map((category, index) => (
+                        <motion.div
+                          key={category.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          className="border rounded-xl p-4 hover:border-primary/50 transition-colors bg-background group"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Tag className="w-5 h-5 text-primary" />
+                              </div>
+                              <div>
+                                <h4 className="font-semibold">{category.name}</h4>
+                                <p className="text-xs text-muted-foreground font-mono">/{category.slug}</p>
+                              </div>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={() => deleteCategory(category.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
+                          {category.description && (
+                            <p className="text-sm text-muted-foreground mt-3">{category.description}</p>
+                          )}
+                        </motion.div>
+                      ))}
+                      {categories.length === 0 && (
+                        <div className="col-span-full text-center py-12 text-muted-foreground">
+                          <Tag className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                          <p className="font-medium">No categories yet</p>
+                          <p className="text-sm">Create your first category to organize posts</p>
                         </div>
                       )}
                     </div>
