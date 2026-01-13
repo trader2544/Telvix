@@ -189,8 +189,7 @@ const InteractiveCostCalculator = ({
   }
   return <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 shadow-xl">
       <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-lg">
-        <CardTitle className="flex items-center gap-2">KenyanProject Cost Calculator
-          Project Cost Calculator
+        <CardTitle className="flex items-center gap-2"> Project Cost Calculator
         </CardTitle>
         <p className="text-blue-100 text-sm">Get instant estimates    </p>
       </CardHeader>

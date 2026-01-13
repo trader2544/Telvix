@@ -54,7 +54,7 @@ const PremiumServices = () => {
                   </div>}
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-lg">
-                    <IconComponent className="w-5 h-5 text-primary" />
+                    
                     <span className="text-base md:text-lg">{service.title}</span>
                   </CardTitle>
                   <div className="text-xl md:text-2xl font-bold text-accent">{service.price}</div>
