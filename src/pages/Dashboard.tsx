@@ -411,9 +411,7 @@ const Dashboard = () => {
                     <CardHeader className="pb-4">
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                         <div className="flex items-start gap-4">
-                          <div className="p-3 bg-primary/10 rounded-2xl">
-                            {getStatusIcon(project.status)}
-                          </div>
+                          
                           <div>
                             <CardTitle className="text-2xl mb-1">{project.name}</CardTitle>
                             <div className="flex flex-wrap items-center gap-2">
@@ -476,11 +474,11 @@ const Dashboard = () => {
                 <Tabs defaultValue="chat" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50 p-1 rounded-xl">
                     <TabsTrigger value="chat" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      <MessageSquare className="w-4 h-4" />
+                      
                       Messages & Files
                     </TabsTrigger>
                     <TabsTrigger value="suggestions" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      <Lightbulb className="w-4 h-4" />
+                      
                       Suggestions
                     </TabsTrigger>
                   </TabsList>
@@ -490,9 +488,7 @@ const Dashboard = () => {
                     <Card className="backdrop-blur-sm bg-card/80 border-0 shadow-xl">
                       <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
-                            <MessageSquare className="w-5 h-5 text-primary-foreground" />
-                          </div>
+                          
                           <div>
                             <CardTitle className="text-lg">Project Conversation</CardTitle>
                             <CardDescription>Chat with our team and share files</CardDescription>
@@ -524,9 +520,7 @@ const Dashboard = () => {
                                   <div className={`max-w-[80%] ${msg.is_admin ? 'order-2' : 'order-1'}`}>
                                     {/* Avatar */}
                                     {msg.is_admin && <div className="flex items-center gap-2 mb-1">
-                                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
-                                          <span className="text-xs text-white font-bold">T</span>
-                                        </div>
+                                        
                                         <span className="text-xs text-muted-foreground">Telvix Team</span>
                                       </div>}
                                     <div className={`p-4 rounded-2xl ${msg.is_admin ? 'bg-muted/80 text-foreground rounded-tl-md' : 'bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-tr-md shadow-lg shadow-primary/20'}`}>
