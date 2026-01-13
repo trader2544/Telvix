@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock, Wallet, Code, Smartphone, Globe, Zap, ArrowRight, Lock } from 'lucide-react';
+import { Code, Smartphone, Globe, Zap, ArrowRight, Lock } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/hooks/useAuth';
@@ -150,15 +150,13 @@ const Careers = () => {
                       <Card className="group h-full bg-card hover:shadow-xl transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden">
                         <CardContent className="p-6">
                           <div className="flex items-center mb-4">
-                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                              <IconComponent className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                            </div>
+                            
                             <div className="flex-1">
                               <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                                 {gig.title}
                               </h3>
                               <div className="flex items-center text-sm text-muted-foreground mt-1">
-                                <MapPin className="w-4 h-4 mr-1" />
+                                
                                 {gig.location}
                               </div>
                             </div>
@@ -170,11 +168,11 @@ const Careers = () => {
 
                           <div className="space-y-3 mb-4">
                             <div className="flex items-center text-sm">
-                              <Wallet className="w-4 h-4 text-primary mr-2" />
+                              
                               <span className="font-semibold text-primary">{gig.budget}</span>
                             </div>
                             <div className="flex items-center text-sm">
-                              <Clock className="w-4 h-4 text-muted-foreground mr-2" />
+                              
                               <span className="text-muted-foreground">{gig.duration}</span>
                             </div>
                           </div>
@@ -245,7 +243,7 @@ const Careers = () => {
             }} transition={{
               delay: index * 0.1
             }} className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  
                   <span className="text-foreground">{benefit}</span>
                 </motion.div>)}
             </div>
