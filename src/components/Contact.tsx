@@ -1,20 +1,19 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { MapPin, Phone, Mail, Send, MessageSquare, PhoneCall } from 'lucide-react';
-
+import { Phone, Mail, Send, PhoneCall } from 'lucide-react';
 declare global {
   interface Window {
     emailjs: any;
   }
 }
-
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -23,18 +22,15 @@ const Contact = () => {
     subject: '',
     message: ''
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
     try {
       const templateParams = {
         from_name: formData.name,
@@ -43,18 +39,11 @@ const Contact = () => {
         subject: formData.subject,
         message: formData.message
       };
-
-      await window.emailjs.send(
-        'service_nzx6w0k',
-        'template_krkmosf',
-        templateParams
-      );
-
+      await window.emailjs.send('service_nzx6w0k', 'template_krkmosf', templateParams);
       toast({
         title: "Message Sent!",
-        description: "Thank you for your message. We'll get back to you soon.",
+        description: "Thank you for your message. We'll get back to you soon."
       });
-
       setFormData({
         name: '',
         email: '',
@@ -73,17 +62,13 @@ const Contact = () => {
       setIsLoading(false);
     }
   };
-
   const handleWhatsApp = () => {
     window.open('https://wa.me/254741947599', '_blank');
   };
-
   const handlePhoneCall = () => {
     window.open('tel:+254741947599', '_self');
   };
-
-  return (
-    <section id="contact" className="mobile-spacing bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
+  return <section id="contact" className="mobile-spacing bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
@@ -100,9 +85,7 @@ const Contact = () => {
               <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3">Get In Touch</h3>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <Phone className="w-4 h-4 text-white" />
-                  </div>
+                  
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Phone</p>
                     <p className="text-xs text-gray-600">+254 741 947 599</p>
@@ -110,9 +93,7 @@ const Contact = () => {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <Mail className="w-4 h-4 text-white" />
-                  </div>
+                  
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Email</p>
                     <p className="text-xs text-gray-600">telvixhr@outlook.com</p>
@@ -120,9 +101,7 @@ const Contact = () => {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-white" />
-                  </div>
+                  
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Location</p>
                     <p className="text-xs text-gray-600">Nairobi, Kenya</p>
@@ -131,23 +110,8 @@ const Contact = () => {
               </div>
 
               <div className="mt-4 flex space-x-2">
-                <Button
-                  onClick={handleWhatsApp}
-                  size="sm"
-                  className="bg-green-500 hover:bg-green-600 text-white flex items-center space-x-1 text-xs px-3 py-2"
-                >
-                  <MessageSquare className="w-3 h-3" />
-                  <span>WhatsApp</span>
-                </Button>
-                <Button
-                  onClick={handlePhoneCall}
-                  size="sm"
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-white flex items-center space-x-1 text-xs px-3 py-2"
-                >
-                  <PhoneCall className="w-3 h-3" />
-                  <span>Call Now</span>
-                </Button>
+                
+                
               </div>
             </div>
           </div>
@@ -160,82 +124,34 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div className="grid md:grid-cols-2 gap-2">
                     <div>
-                      <Input
-                        type="text"
-                        name="name"
-                        placeholder="Your Name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
-                      />
+                      <Input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm" />
                     </div>
                     <div>
-                      <Input
-                        type="email"
-                        name="email"
-                        placeholder="Your Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
-                      />
+                      <Input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm" />
                     </div>
                   </div>
                   
                   <div className="grid md:grid-cols-2 gap-2">
                     <div>
-                      <Input
-                        type="tel"
-                        name="phone"
-                        placeholder="Your Phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
-                      />
+                      <Input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm" />
                     </div>
                     <div>
-                      <Input
-                        type="text"
-                        name="subject"
-                        placeholder="Subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm"
-                      />
+                      <Input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required className="h-9 border-2 border-gray-200 focus:border-primary rounded-lg text-sm" />
                     </div>
                   </div>
                   
                   <div>
-                    <Textarea
-                      name="message"
-                      placeholder="Tell us about your project..."
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={3}
-                      className="border-2 border-gray-200 focus:border-primary rounded-lg resize-none text-sm"
-                    />
+                    <Textarea name="message" placeholder="Tell us about your project..." value={formData.message} onChange={handleChange} required rows={3} className="border-2 border-gray-200 focus:border-primary rounded-lg resize-none text-sm" />
                   </div>
                   
-                  <Button 
-                    type="submit" 
-                    size="sm" 
-                    className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-2 text-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center">
+                  <Button type="submit" size="sm" className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-2 text-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300" disabled={isLoading}>
+                    {isLoading ? <div className="flex items-center">
                         <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-2"></div>
                         Sending...
-                      </div>
-                    ) : (
-                      <div className="flex items-center">
+                      </div> : <div className="flex items-center">
                         <Send className="w-3 h-3 mr-2" />
                         Send Message
-                      </div>
-                    )}
+                      </div>}
                   </Button>
                 </form>
               </CardContent>
@@ -243,8 +159,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Contact;
