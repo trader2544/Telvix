@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ExternalLink, Star, Globe, Smartphone, ShoppingBag, Bot, Zap, Car, TrendingUp, Leaf, Building2, Dumbbell, Pill, User, ArrowRight, Filter, X } from 'lucide-react';
+import { ExternalLink, Globe, Smartphone, ShoppingBag, Bot, Zap, Car, TrendingUp, Leaf, Building2, Dumbbell, Pill, User, ArrowRight, Filter, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 interface ProjectDetails {
   id: number;
@@ -253,7 +253,7 @@ const Portfolio = () => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
             return <Button key={category.id} variant={isActive ? "default" : "outline"} onClick={() => setSelectedCategory(category.id)} className={`rounded-full gap-2 transition-all duration-300 ${isActive ? 'shadow-lg shadow-primary/25' : 'hover:bg-muted'}`}>
-                  <Icon className="w-4 h-4" />
+                  
                   {category.label}
                 </Button>;
           })}
@@ -317,7 +317,7 @@ const Portfolio = () => {
                                     {project.name}
                                   </h3>
                                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                    <Star className="w-3 h-3" />
+                                    
                                     
                                     <span className="w-1 h-1 bg-muted-foreground rounded-full" />
                                     <span>{project.language}</span>
