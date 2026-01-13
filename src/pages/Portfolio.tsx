@@ -311,16 +311,14 @@ const Portfolio = () => {
                             {/* Content */}
                             <div className="p-5">
                               <div className="flex items-center gap-3 mb-3">
-                                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center transition-colors duration-300 group-hover:bg-primary">
-                                  <IconComponent className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                                </div>
+                                
                                 <div>
                                   <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
                                     {project.name}
                                   </h3>
                                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                     <Star className="w-3 h-3" />
-                                    <span>{project.stargazers_count}</span>
+                                    
                                     <span className="w-1 h-1 bg-muted-foreground rounded-full" />
                                     <span>{project.language}</span>
                                   </div>
