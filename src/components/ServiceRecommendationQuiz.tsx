@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { HelpCircle, CheckCircle, ArrowRight, Target } from 'lucide-react';
+import { HelpCircle, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 const ServiceRecommendationQuiz = ({
   onServiceSelect
@@ -145,19 +145,19 @@ const ServiceRecommendationQuiz = ({
     return <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-xl">
         <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-t-lg">
           <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5" />
-            Perfect Match Found! 🎉
+            
+            Perfect Match Found! 
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 md:p-6 text-center">
           <div className="bg-white rounded-xl p-6 shadow-inner">
             <div className="mb-4">
-              <Target className="w-16 h-16 mx-auto text-green-600 mb-3" />
+              
               <h3 className="text-xl md:text-2xl font-bold text-green-800 mb-2">
                 {recommendation}
               </h3>
               <p className="text-green-600 text-sm mb-4">
-                Based on your answers, this service perfectly aligns with your needs and budget in Kenya! 🇰🇪
+                Based on your answers, this service perfectly aligns with your needs and budget.   
               </p>
             </div>
             
