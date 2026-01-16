@@ -217,7 +217,7 @@ const Portfolio = () => {
   return <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="pt-24 pb-20">
+      <main className="pt-20 sm:pt-24 pb-12 sm:pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
           <motion.div initial={{
@@ -228,14 +228,14 @@ const Portfolio = () => {
           y: 0
         }} transition={{
           duration: 0.6
-        }} className="text-center mb-16">
+        }} className="text-center mb-8 sm:mb-12 md:mb-16">
             
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-foreground mb-3 sm:mb-6 tracking-tight">
               Crafted with{' '}
               <span className="text-primary">Passion</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Explore our collection of successful digital solutions. Each project represents our commitment to excellence.
+            <p className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
+              Explore our collection of successful digital solutions.
             </p>
           </motion.div>
 
@@ -248,19 +248,18 @@ const Portfolio = () => {
           y: 0
         }} transition={{
           delay: 0.2
-        }} className="flex flex-wrap justify-center gap-3 mb-12">
+        }} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 md:mb-12 px-2">
             {categories.map(category => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
-            return <Button key={category.id} variant={isActive ? "default" : "outline"} onClick={() => setSelectedCategory(category.id)} className={`rounded-full gap-2 transition-all duration-300 ${isActive ? 'shadow-lg shadow-primary/25' : 'hover:bg-muted'}`}>
-                  
+            return <Button key={category.id} variant={isActive ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(category.id)} className={`rounded-full gap-1 sm:gap-2 text-xs sm:text-sm transition-all duration-300 ${isActive ? 'shadow-lg shadow-primary/25' : 'hover:bg-muted'}`}>
                   {category.label}
                 </Button>;
           })}
           </motion.div>
 
-          {/* Projects Grid */}
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Projects Grid - 2 columns on mobile */}
+          <motion.div layout className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => {
               const IconComponent = project.icon;
@@ -281,12 +280,12 @@ const Portfolio = () => {
                     <Dialog>
                       <DialogTrigger asChild>
                         <div className="group cursor-pointer h-full">
-                          <div className="relative bg-card rounded-2xl overflow-hidden border border-border/50 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10">
+                          <div className="relative bg-card rounded-xl sm:rounded-2xl overflow-hidden border border-border/50 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10">
                             {/* Image Container */}
                             <div className="relative aspect-[4/3] overflow-hidden">
                               <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                              {/* Overlay on hover */}
-                              <motion.div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent flex items-end justify-center p-6" initial={{
+                              {/* Overlay on hover - hidden on mobile */}
+                              <motion.div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent items-end justify-center p-4 md:p-6" initial={{
                             opacity: 0
                           }} animate={{
                             opacity: isHovered ? 1 : 0
@@ -294,13 +293,13 @@ const Portfolio = () => {
                             duration: 0.3
                           }}>
                                 <div className="text-center">
-                                  <p className="text-background/80 text-sm mb-3">Click to view details</p>
-                                  <div className="flex gap-3 justify-center">
-                                    {project.homepage && <Button size="sm" variant="secondary" className="rounded-full" onClick={e => {
+                                  <p className="text-background/80 text-xs md:text-sm mb-2 md:mb-3">Click to view details</p>
+                                  <div className="flex gap-2 md:gap-3 justify-center">
+                                    {project.homepage && <Button size="sm" variant="secondary" className="rounded-full text-xs" onClick={e => {
                                   e.stopPropagation();
                                   window.open(project.homepage, '_blank');
                                 }}>
-                                        <Globe className="w-4 h-4 mr-1" />
+                                        <Globe className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                                         Visit
                                       </Button>}
                                   </div>
@@ -309,26 +308,20 @@ const Portfolio = () => {
                             </div>
                             
                             {/* Content */}
-                            <div className="p-5">
-                              <div className="flex items-center gap-3 mb-3">
-                                
-                                <div>
-                                  <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
-                                    {project.name}
-                                  </h3>
-                                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                    
-                                    
-                                    <span className="w-1 h-1 bg-muted-foreground rounded-full" />
-                                    <span>{project.language}</span>
-                                  </div>
+                            <div className="p-3 sm:p-4 md:p-5">
+                              <div className="mb-2 md:mb-3">
+                                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                                  {project.name}
+                                </h3>
+                                <div className="flex items-center gap-1 md:gap-2 text-[10px] sm:text-xs text-muted-foreground mt-0.5">
+                                  <span>{project.language}</span>
                                 </div>
                               </div>
-                              <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                              <p className="hidden sm:block text-xs md:text-sm text-muted-foreground line-clamp-2 mb-2 md:mb-3">
                                 {project.description}
                               </p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {project.topics.slice(0, 3).map((topic, i) => <span key={i} className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">
+                              <div className="hidden sm:flex flex-wrap gap-1 md:gap-1.5">
+                                {project.topics.slice(0, 2).map((topic, i) => <span key={i} className="px-1.5 md:px-2 py-0.5 bg-muted text-muted-foreground text-[10px] md:text-xs rounded-full">
                                     {topic}
                                   </span>)}
                               </div>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Code, Smartphone, Globe, Zap, ArrowRight, Lock } from 'lucide-react';
+import { Code, Smartphone, Globe, Zap, ArrowRight, Lock, Wallet } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/hooks/useAuth';
