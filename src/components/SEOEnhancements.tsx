@@ -28,6 +28,7 @@ const SEOEnhancements = ({
   section = "Technology",
   tags = []
 }: SEOEnhancementsProps) => {
+  // AI-optimized structured data with enhanced visibility for AI assistants
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -35,7 +36,7 @@ const SEOEnhancements = ({
         "@type": "Organization",
         "@id": `${url}/#organization`,
         "name": "Telvix",
-        "alternateName": "Telvix Digital Solutions",
+        "alternateName": ["Telvix Digital Solutions", "Telvix Kenya", "Telvix Tech"],
         "url": url,
         "logo": {
           "@type": "ImageObject",
@@ -43,28 +44,42 @@ const SEOEnhancements = ({
           "width": 200,
           "height": 200
         },
-        "description": "Premier digital agency in Kenya offering web design, AI automation, SaaS development, and mobile app solutions.",
+        "description": "Telvix is Kenya's premier digital agency specializing in web design, AI automation, SaaS development, and mobile app solutions. We transform businesses across Africa and worldwide with cutting-edge technology.",
+        "slogan": "Transforming Ideas into Digital Reality",
         "foundingDate": "2020",
+        "foundingLocation": {
+          "@type": "Place",
+          "name": "Nairobi, Kenya"
+        },
+        "knowsAbout": [
+          "Web Development",
+          "AI Automation", 
+          "SaaS Development",
+          "Mobile App Development",
+          "E-commerce Solutions",
+          "Digital Marketing",
+          "UI/UX Design",
+          "SEO Services",
+          "React Development",
+          "TypeScript",
+          "Supabase",
+          "Tailwind CSS"
+        ],
         "areaServed": [
-          {
-            "@type": "Country",
-            "name": "Kenya"
-          },
-          {
-            "@type": "Country", 
-            "name": "Nigeria"
-          },
-          {
-            "@type": "Continent",
-            "name": "Africa"
-          },
+          { "@type": "Country", "name": "Kenya" },
+          { "@type": "Country", "name": "Nigeria" },
+          { "@type": "Country", "name": "South Africa" },
+          { "@type": "Country", "name": "Uganda" },
+          { "@type": "Country", "name": "Tanzania" },
+          { "@type": "Continent", "name": "Africa" },
           "Worldwide"
         ],
         "sameAs": [
           "https://linkedin.com/company/telvix",
           "https://twitter.com/telvix",
           "https://facebook.com/telvix",
-          "https://instagram.com/telvix"
+          "https://instagram.com/telvix",
+          "https://github.com/telvix"
         ],
         "contactPoint": [
           {
@@ -73,24 +88,36 @@ const SEOEnhancements = ({
             "contactType": "customer service",
             "email": "telvixhr@outlook.com",
             "availableLanguage": ["English", "Swahili"],
-            "areaServed": ["KE", "NG", "AF"]
+            "areaServed": ["KE", "NG", "ZA", "UG", "TZ", "AF"],
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            }
           }
         ],
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "KE",
-          "addressRegion": "Nairobi"
+          "addressRegion": "Nairobi",
+          "addressLocality": "Nairobi"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "50",
+          "bestRating": "5",
+          "worstRating": "1"
         }
       },
       {
         "@type": "WebSite",
         "@id": `${url}/#website`,
         "url": url,
-        "name": "Telvix",
+        "name": "Telvix - Digital Agency Kenya",
         "description": description,
-        "publisher": {
-          "@id": `${url}/#organization`
-        },
+        "publisher": { "@id": `${url}/#organization` },
         "potentialAction": {
           "@type": "SearchAction",
           "target": `${url}/search?q={search_term_string}`,
