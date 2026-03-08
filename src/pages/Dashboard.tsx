@@ -762,8 +762,8 @@ const Dashboard = () => {
                       </CardContent>
                     </Card>
                   </TabsContent>
-                    </Card>
-                  </TabsContent>
+
+
 
                   {/* Suggestions Tab */}
                   <TabsContent value="suggestions">
