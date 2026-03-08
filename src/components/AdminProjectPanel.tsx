@@ -756,6 +756,7 @@ const AdminProjectPanel = () => {
                       <Button variant="outline" size="sm" className="gap-1.5 flex-1 lg:flex-none" onClick={() => openIssues(project)}>
                         <AlertTriangle className="w-4 h-4" />
                         <span className="hidden sm:inline">Issues</span>
+                      </Button>
                       <Button variant="outline" size="sm" className="gap-1.5 flex-1 lg:flex-none" onClick={() => openEditProject(project)}>
                         <Edit className="w-4 h-4" />
                         <span className="hidden sm:inline">Edit</span>
