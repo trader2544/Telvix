@@ -343,7 +343,7 @@ const AdminProjectPanel = () => {
           status: autoStatus,
           progress: editProgress,
           admin_notes: editNotes || null,
-          user_id: editUserId || null,
+          user_id: editUserId && editUserId !== 'unassigned' ? editUserId : null,
           website_url: editWebsiteUrl || null
         })
         .eq('id', projectId);
