@@ -477,6 +477,27 @@ const AdminProjectPanel = () => {
     setEditNotes(project.admin_notes || '');
     setEditUserId(project.user_id || '');
     setEditWebsiteUrl(project.website_url || '');
+    setShowEditDialog(true);
+    fetchIssues(project.id);
+  };
+
+  const quickUpdateStatus = async (project: Project, newStatus: string) => {
+    let newProgress = project.progress;
+    if (newStatus === 'in_progress' && project.progress < 10) newProgress = 10;
+    if (newStatus === 'review' && project.progress < 80) newProgress = 80;
+    if (newStatus === 'completed') newProgress = 100;
+
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .update({ status: newStatus, progress: newProgress })
+        .eq('id', project.id);
+      if (error) throw error;
+      toast.success(`Status updated to ${getStatusLabel(newStatus)}`);
+      fetchProjects();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   const openChat = (project: Project) => {
