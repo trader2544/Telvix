@@ -205,6 +205,20 @@ const Dashboard = () => {
       console.error('Error fetching suggestions:', error);
     }
   };
+  const fetchIssues = async () => {
+    if (!project) return;
+    try {
+      const { data, error } = await supabase
+        .from('project_issues')
+        .select('*')
+        .eq('project_id', project.id)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      setIssues(data || []);
+    } catch (error: any) {
+      console.error('Error fetching issues:', error);
+    }
+  };
   const sendMessage = async () => {
     if (!newMessage.trim() && !attachmentFile || !project || !user) return;
     setSubmitting(true);
