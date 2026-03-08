@@ -330,7 +330,12 @@ const AdminProjectPanel = () => {
       let autoStatus = editStatus;
       if (editProgress === 100) autoStatus = 'completed';
       else if (editProgress >= 80) autoStatus = 'review';
-      else if (editProgress > 0) autoStatus = 'in_progress';
+      else if (editProgress > 0 && autoStatus === 'pending') autoStatus = 'in_progress';
+
+      // If user is being linked and status is still pending, move to in_progress
+      if (editUserId && autoStatus === 'pending') {
+        autoStatus = 'in_progress';
+      }
 
       const { error } = await supabase
         .from('projects')
@@ -346,6 +351,7 @@ const AdminProjectPanel = () => {
       if (error) throw error;
       
       toast.success('Project updated successfully!');
+      setShowEditDialog(false);
       setSelectedProject(null);
       fetchProjects();
     } catch (error: any) {
