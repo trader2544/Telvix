@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCurrency } from '@/hooks/useCurrency';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,7 +28,7 @@ const Quote = () => {
   } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userCurrency, setUserCurrency] = useState('KSh');
+  const { currencySymbol } = useCurrency();
   const [formData, setFormData] = useState({
     service: '',
     priceRange: '',
@@ -35,9 +36,6 @@ const Quote = () => {
     phone: '',
     projectDetails: ''
   });
-  useEffect(() => {
-    setUserCurrency('KSh');
-  }, []);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const service = params.get('service');
@@ -70,7 +68,7 @@ const Quote = () => {
         email: formData.email,
         phone: formData.phone,
         project_details: formData.projectDetails,
-        currency: userCurrency
+        currency: currencySymbol
       };
       await window.emailjs.send('service_nzx6w0k', 'template_krkmosf', templateParams);
       setIsSubmitted(true);
@@ -241,9 +239,9 @@ const Quote = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-foreground mb-2">
-                            Budget Range (KSh) *
+                            Budget Range ({currencySymbol}) *
                           </label>
-                          <Input type="text" name="priceRange" placeholder="Enter your budget in KSh" value={formData.priceRange} onChange={handleChange} required className="h-12 rounded-xl" />
+                          <Input type="text" name="priceRange" placeholder={`Enter your budget in ${currencySymbol}`} value={formData.priceRange} onChange={handleChange} required className="h-12 rounded-xl" />
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-6">
@@ -291,7 +289,7 @@ const Quote = () => {
                 </TabsContent>
 
                 <TabsContent value="calculator">
-                  <InteractiveCostCalculator userCurrency="KSh" />
+                  <InteractiveCostCalculator />
                 </TabsContent>
 
                 <TabsContent value="timeline">
