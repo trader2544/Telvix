@@ -481,7 +481,7 @@ const AdminProjectPanel = () => {
     setEditStatus(project.status);
     setEditProgress(project.progress);
     setEditNotes(project.admin_notes || '');
-    setEditUserId(project.user_id || '');
+    setEditUserId(project.user_id || 'unassigned');
     setEditWebsiteUrl(project.website_url || '');
     setShowEditDialog(true);
     fetchIssues(project.id);
