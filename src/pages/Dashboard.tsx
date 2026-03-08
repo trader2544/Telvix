@@ -73,6 +73,7 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<ProjectMessage[]>([]);
   const [resources, setResources] = useState<ProjectResource[]>([]);
   const [suggestions, setSuggestions] = useState<ProjectSuggestion[]>([]);
+  const [issues, setIssues] = useState<ProjectIssue[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [newSuggestionTitle, setNewSuggestionTitle] = useState('');
   const [newSuggestionDesc, setNewSuggestionDesc] = useState('');
