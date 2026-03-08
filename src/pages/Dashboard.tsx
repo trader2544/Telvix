@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FolderOpen, MessageSquare, Upload, Lightbulb, Send, File, Clock, CheckCircle2, AlertCircle, Loader2, ExternalLink, Globe, ArrowRight, Sparkles, Link2, Image, FileText, Paperclip, X } from 'lucide-react';
+import { FolderOpen, MessageSquare, Upload, Lightbulb, Send, File, Clock, CheckCircle2, AlertCircle, Loader2, ExternalLink, Globe, ArrowRight, Sparkles, Link2, Image, FileText, Paperclip, X, AlertTriangle } from 'lucide-react';
 interface Project {
   id: string;
   project_code: string;
@@ -54,6 +54,14 @@ interface ProjectSuggestion {
   admin_response: string | null;
   created_at: string;
 }
+interface ProjectIssue {
+  id: string;
+  title: string;
+  description: string;
+  severity: string;
+  status: string;
+  created_at: string;
+}
 const Dashboard = () => {
   const {
     user,
@@ -65,6 +73,7 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<ProjectMessage[]>([]);
   const [resources, setResources] = useState<ProjectResource[]>([]);
   const [suggestions, setSuggestions] = useState<ProjectSuggestion[]>([]);
+  const [issues, setIssues] = useState<ProjectIssue[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [newSuggestionTitle, setNewSuggestionTitle] = useState('');
   const [newSuggestionDesc, setNewSuggestionDesc] = useState('');
@@ -88,6 +97,7 @@ const Dashboard = () => {
       fetchMessages();
       fetchResources();
       fetchSuggestions();
+      fetchIssues();
     }
   }, [project]);
   useEffect(() => {
@@ -193,6 +203,20 @@ const Dashboard = () => {
       setSuggestions(data || []);
     } catch (error: any) {
       console.error('Error fetching suggestions:', error);
+    }
+  };
+  const fetchIssues = async () => {
+    if (!project) return;
+    try {
+      const { data, error } = await supabase
+        .from('project_issues')
+        .select('*')
+        .eq('project_id', project.id)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      setIssues(data || []);
+    } catch (error: any) {
+      console.error('Error fetching issues:', error);
     }
   };
   const sendMessage = async () => {
@@ -472,13 +496,15 @@ const Dashboard = () => {
 
                 {/* Tabs */}
                 <Tabs defaultValue="chat" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50 p-1 rounded-xl">
+                  <TabsList className="grid w-full grid-cols-3 mb-6 bg-muted/50 p-1 rounded-xl">
                     <TabsTrigger value="chat" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      
-                      Messages & Files
+                      Messages
+                    </TabsTrigger>
+                    <TabsTrigger value="issues" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                      <AlertTriangle className="w-3.5 h-3.5" />
+                      Issues {issues.filter(i => i.status === 'open').length > 0 && <Badge variant="destructive" className="ml-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">{issues.filter(i => i.status === 'open').length}</Badge>}
                     </TabsTrigger>
                     <TabsTrigger value="suggestions" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      
                       Suggestions
                     </TabsTrigger>
                   </TabsList>
@@ -587,6 +613,80 @@ const Dashboard = () => {
                             💡 Attach images, PDFs, and documents directly in chat
                           </p>
                         </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* Issues Tab */}
+                  <TabsContent value="issues">
+                    <Card className="backdrop-blur-sm bg-card/80">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                          Project Issues
+                        </CardTitle>
+                        <CardDescription>Known issues and updates from our team</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        {issues.length === 0 ? (
+                          <div className="text-center py-12 text-muted-foreground">
+                            <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-green-500 opacity-50" />
+                            <p className="font-medium">No issues reported</p>
+                            <p className="text-sm mt-1">Everything looks good! 🎉</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            {issues.map((issue, index) => (
+                              <motion.div
+                                key={issue.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className={`border rounded-2xl p-4 space-y-2 ${
+                                  issue.status === 'resolved' 
+                                    ? 'bg-green-500/5 border-green-500/20' 
+                                    : issue.severity === 'critical' 
+                                      ? 'bg-red-500/5 border-red-500/20' 
+                                      : issue.severity === 'high'
+                                        ? 'bg-orange-500/5 border-orange-500/20'
+                                        : 'bg-background border-border'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-2">
+                                  <div className="flex items-center gap-2">
+                                    {issue.status === 'resolved' ? (
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                                    ) : (
+                                      <AlertTriangle className={`w-4 h-4 shrink-0 ${
+                                        issue.severity === 'critical' ? 'text-red-500' :
+                                        issue.severity === 'high' ? 'text-orange-500' :
+                                        'text-yellow-500'
+                                      }`} />
+                                    )}
+                                    <h5 className="font-medium text-sm">{issue.title}</h5>
+                                  </div>
+                                  <div className="flex items-center gap-2 shrink-0">
+                                    <Badge className={
+                                      issue.severity === 'critical' ? 'bg-red-600 text-white' :
+                                      issue.severity === 'high' ? 'bg-orange-500 text-white' :
+                                      issue.severity === 'medium' ? 'bg-yellow-500 text-white' :
+                                      'bg-muted text-muted-foreground'
+                                    }>
+                                      {issue.severity}
+                                    </Badge>
+                                    <Badge variant={issue.status === 'resolved' ? 'default' : 'secondary'}>
+                                      {issue.status === 'resolved' ? '✅ Resolved' : '🔴 Open'}
+                                    </Badge>
+                                  </div>
+                                </div>
+                                <p className="text-sm text-muted-foreground pl-6">{issue.description}</p>
+                                <p className="text-xs text-muted-foreground pl-6">
+                                  Reported on {new Date(issue.created_at).toLocaleDateString()}
+                                </p>
+                              </motion.div>
+                            ))}
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   </TabsContent>
