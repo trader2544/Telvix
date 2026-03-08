@@ -39,7 +39,8 @@ import {
   Linkedin,
   Twitter,
   Facebook,
-  Activity
+  Activity,
+  AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
