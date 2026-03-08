@@ -490,6 +490,12 @@ const AdminProjectPanel = () => {
     fetchSuggestions(project.id);
   };
 
+  const openIssues = (project: Project) => {
+    setSelectedProject(project);
+    setShowIssuesDialog(true);
+    fetchIssues(project.id);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-green-500';
