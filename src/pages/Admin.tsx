@@ -534,7 +534,7 @@ const Admin = () => {
                               <SelectValue placeholder="Select a category" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="">No Category</SelectItem>
+                              <SelectItem value="none">No Category</SelectItem>
                               {categories.map((cat) => (
                                 <SelectItem key={cat.id} value={cat.id}>
                                   {cat.name}
