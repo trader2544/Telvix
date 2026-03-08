@@ -116,6 +116,7 @@ const AdminProjectPanel = () => {
   const [showChatDialog, setShowChatDialog] = useState(false);
   const [showSuggestionsDialog, setShowSuggestionsDialog] = useState(false);
   const [showIssuesDialog, setShowIssuesDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [issues, setIssues] = useState<ProjectIssue[]>([]);
   const [newIssueTitle, setNewIssueTitle] = useState('');
   const [newIssueDesc, setNewIssueDesc] = useState('');
