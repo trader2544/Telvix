@@ -239,9 +239,9 @@ const Quote = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-foreground mb-2">
-                            Budget Range (KSh) *
+                            Budget Range ({currencySymbol}) *
                           </label>
-                          <Input type="text" name="priceRange" placeholder="Enter your budget in KSh" value={formData.priceRange} onChange={handleChange} required className="h-12 rounded-xl" />
+                          <Input type="text" name="priceRange" placeholder={`Enter your budget in ${currencySymbol}`} value={formData.priceRange} onChange={handleChange} required className="h-12 rounded-xl" />
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-6">
