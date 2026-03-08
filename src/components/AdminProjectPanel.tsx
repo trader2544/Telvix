@@ -333,7 +333,7 @@ const AdminProjectPanel = () => {
       else if (editProgress > 0 && autoStatus === 'pending') autoStatus = 'in_progress';
 
       // If user is being linked and status is still pending, move to in_progress
-      if (editUserId && autoStatus === 'pending') {
+      if (editUserId && editUserId !== 'unassigned' && autoStatus === 'pending') {
         autoStatus = 'in_progress';
       }
 
