@@ -241,7 +241,7 @@ const Admin = () => {
         author_id: user.id,
         thumbnail_url: thumbnailUrl,
         featured_image_url: featuredImageUrl,
-        category_id: categoryId || null,
+        category_id: categoryId && categoryId !== 'none' ? categoryId : null,
       };
 
       let error;
