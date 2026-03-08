@@ -28,7 +28,7 @@ const Quote = () => {
   } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userCurrency, setUserCurrency] = useState('KSh');
+  const { currencySymbol } = useCurrency();
   const [formData, setFormData] = useState({
     service: '',
     priceRange: '',
@@ -36,9 +36,6 @@ const Quote = () => {
     phone: '',
     projectDetails: ''
   });
-  useEffect(() => {
-    setUserCurrency('KSh');
-  }, []);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const service = params.get('service');
