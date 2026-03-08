@@ -223,6 +223,30 @@ const Dashboard = () => {
       console.error('Error fetching issues:', error);
     }
   };
+  const reportIssue = async () => {
+    if (!newIssueTitle.trim() || !newIssueDesc.trim() || !project) return;
+    setSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('project_issues')
+        .insert({
+          project_id: project.id,
+          title: newIssueTitle.trim(),
+          description: newIssueDesc.trim(),
+          severity: newIssueSeverity
+        });
+      if (error) throw error;
+      toast.success('Issue reported successfully!');
+      setNewIssueTitle('');
+      setNewIssueDesc('');
+      setNewIssueSeverity('medium');
+      fetchIssues();
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
   const sendMessage = async () => {
     if (!newMessage.trim() && !attachmentFile || !project || !user) return;
     setSubmitting(true);
