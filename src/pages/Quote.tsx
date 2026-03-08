@@ -289,7 +289,7 @@ const Quote = () => {
                 </TabsContent>
 
                 <TabsContent value="calculator">
-                  <InteractiveCostCalculator userCurrency="KSh" />
+                  <InteractiveCostCalculator />
                 </TabsContent>
 
                 <TabsContent value="timeline">
