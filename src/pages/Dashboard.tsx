@@ -80,6 +80,9 @@ const Dashboard = () => {
   const [attachmentFile, setAttachmentFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [linking, setLinking] = useState(false);
+  const [newIssueTitle, setNewIssueTitle] = useState('');
+  const [newIssueDesc, setNewIssueDesc] = useState('');
+  const [newIssueSeverity, setNewIssueSeverity] = useState('medium');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
