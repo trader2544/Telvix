@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -80,6 +81,9 @@ const Dashboard = () => {
   const [attachmentFile, setAttachmentFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [linking, setLinking] = useState(false);
+  const [newIssueTitle, setNewIssueTitle] = useState('');
+  const [newIssueDesc, setNewIssueDesc] = useState('');
+  const [newIssueSeverity, setNewIssueSeverity] = useState('medium');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -217,6 +221,30 @@ const Dashboard = () => {
       setIssues(data || []);
     } catch (error: any) {
       console.error('Error fetching issues:', error);
+    }
+  };
+  const reportIssue = async () => {
+    if (!newIssueTitle.trim() || !newIssueDesc.trim() || !project) return;
+    setSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('project_issues')
+        .insert({
+          project_id: project.id,
+          title: newIssueTitle.trim(),
+          description: newIssueDesc.trim(),
+          severity: newIssueSeverity
+        });
+      if (error) throw error;
+      toast.success('Issue reported successfully!');
+      setNewIssueTitle('');
+      setNewIssueDesc('');
+      setNewIssueSeverity('medium');
+      fetchIssues();
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
   const sendMessage = async () => {
@@ -623,13 +651,57 @@ const Dashboard = () => {
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                           <AlertTriangle className="w-5 h-5 text-yellow-500" />
-                          Project Issues
+                          Report an Issue
                         </CardTitle>
-                        <CardDescription>Known issues and updates from our team</CardDescription>
+                        <CardDescription>Report bugs, problems, or concerns about your project</CardDescription>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className="space-y-6">
+                        {/* Report Issue Form */}
+                        <div className="border-2 border-dashed border-primary/30 rounded-xl p-4 space-y-3 bg-primary/5">
+                          <div className="space-y-2">
+                            <Label>Issue Title</Label>
+                            <Input
+                              placeholder="Brief description of the issue..."
+                              value={newIssueTitle}
+                              onChange={(e) => setNewIssueTitle(e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Textarea
+                              placeholder="Describe the issue in detail..."
+                              value={newIssueDesc}
+                              onChange={(e) => setNewIssueDesc(e.target.value)}
+                              rows={3}
+                            />
+                          </div>
+                          <div className="flex gap-3">
+                            <div className="flex-1 space-y-2">
+                              <Label>Severity</Label>
+                              <Select value={newIssueSeverity} onValueChange={setNewIssueSeverity}>
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="low">Low</SelectItem>
+                                  <SelectItem value="medium">Medium</SelectItem>
+                                  <SelectItem value="high">High</SelectItem>
+                                  <SelectItem value="critical">Critical</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="flex items-end">
+                              <Button onClick={reportIssue} disabled={submitting || !newIssueTitle.trim() || !newIssueDesc.trim()} className="gap-2">
+                                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                                Report
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Issues List */}
                         {issues.length === 0 ? (
-                          <div className="text-center py-12 text-muted-foreground">
+                          <div className="text-center py-8 text-muted-foreground">
                             <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-green-500 opacity-50" />
                             <p className="font-medium">No issues reported</p>
                             <p className="text-sm mt-1">Everything looks good! 🎉</p>
@@ -690,6 +762,8 @@ const Dashboard = () => {
                       </CardContent>
                     </Card>
                   </TabsContent>
+
+
 
                   {/* Suggestions Tab */}
                   <TabsContent value="suggestions">
