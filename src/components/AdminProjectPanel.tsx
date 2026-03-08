@@ -763,6 +763,22 @@ const AdminProjectPanel = () => {
                           </Button>
                         )}
                       </div>
+
+                      {/* Quick Status Buttons */}
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {['pending', 'in_progress', 'review', 'completed'].map((s) => (
+                          <Button
+                            key={s}
+                            variant={project.status === s ? 'default' : 'outline'}
+                            size="sm"
+                            className="text-xs h-7 px-2.5"
+                            onClick={() => quickUpdateStatus(project, s)}
+                            disabled={project.status === s}
+                          >
+                            {getStatusLabel(s)}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                     
                     {/* Action buttons */}
