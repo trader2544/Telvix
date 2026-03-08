@@ -68,7 +68,7 @@ const Quote = () => {
         email: formData.email,
         phone: formData.phone,
         project_details: formData.projectDetails,
-        currency: userCurrency
+        currency: currencySymbol
       };
       await window.emailjs.send('service_nzx6w0k', 'template_krkmosf', templateParams);
       setIsSubmitted(true);
