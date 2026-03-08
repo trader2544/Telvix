@@ -241,7 +241,7 @@ const Admin = () => {
         author_id: user.id,
         thumbnail_url: thumbnailUrl,
         featured_image_url: featuredImageUrl,
-        category_id: categoryId || null,
+        category_id: categoryId && categoryId !== 'none' ? categoryId : null,
       };
 
       let error;
@@ -534,7 +534,7 @@ const Admin = () => {
                               <SelectValue placeholder="Select a category" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="">No Category</SelectItem>
+                              <SelectItem value="none">No Category</SelectItem>
                               {categories.map((cat) => (
                                 <SelectItem key={cat.id} value={cat.id}>
                                   {cat.name}

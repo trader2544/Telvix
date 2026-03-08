@@ -333,7 +333,7 @@ const AdminProjectPanel = () => {
       else if (editProgress > 0 && autoStatus === 'pending') autoStatus = 'in_progress';
 
       // If user is being linked and status is still pending, move to in_progress
-      if (editUserId && autoStatus === 'pending') {
+      if (editUserId && editUserId !== 'unassigned' && autoStatus === 'pending') {
         autoStatus = 'in_progress';
       }
 
@@ -343,7 +343,7 @@ const AdminProjectPanel = () => {
           status: autoStatus,
           progress: editProgress,
           admin_notes: editNotes || null,
-          user_id: editUserId || null,
+          user_id: editUserId && editUserId !== 'unassigned' ? editUserId : null,
           website_url: editWebsiteUrl || null
         })
         .eq('id', projectId);
@@ -481,7 +481,7 @@ const AdminProjectPanel = () => {
     setEditStatus(project.status);
     setEditProgress(project.progress);
     setEditNotes(project.admin_notes || '');
-    setEditUserId(project.user_id || '');
+    setEditUserId(project.user_id || 'unassigned');
     setEditWebsiteUrl(project.website_url || '');
     setShowEditDialog(true);
     fetchIssues(project.id);
@@ -891,7 +891,7 @@ const AdminProjectPanel = () => {
                     <SelectValue placeholder="Select a user" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Unassigned</SelectItem>
+                    <SelectItem value="unassigned">Unassigned</SelectItem>
                     {users.map((u) => (
                       <SelectItem key={u.user_id} value={u.user_id}>
                         {u.full_name || u.user_id}
