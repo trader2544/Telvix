@@ -220,6 +220,74 @@ const AdminProjectPanel = () => {
     }
   };
 
+  const fetchIssues = async (projectId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('project_issues')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setIssues(data || []);
+    } catch (error: any) {
+      console.error('Error fetching issues:', error);
+    }
+  };
+
+  const createIssue = async () => {
+    if (!newIssueTitle.trim() || !newIssueDesc.trim() || !selectedProject) return;
+    setSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('project_issues')
+        .insert({
+          project_id: selectedProject.id,
+          title: newIssueTitle.trim(),
+          description: newIssueDesc.trim(),
+          severity: newIssueSeverity
+        });
+      if (error) throw error;
+      toast.success('Issue added successfully!');
+      setNewIssueTitle('');
+      setNewIssueDesc('');
+      setNewIssueSeverity('medium');
+      fetchIssues(selectedProject.id);
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const updateIssueStatus = async (issueId: string, status: string) => {
+    try {
+      const { error } = await supabase
+        .from('project_issues')
+        .update({ status })
+        .eq('id', issueId);
+      if (error) throw error;
+      toast.success('Issue updated!');
+      if (selectedProject) fetchIssues(selectedProject.id);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  const deleteIssue = async (issueId: string) => {
+    try {
+      const { error } = await supabase
+        .from('project_issues')
+        .delete()
+        .eq('id', issueId);
+      if (error) throw error;
+      toast.success('Issue removed!');
+      if (selectedProject) fetchIssues(selectedProject.id);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   const createProject = async () => {
     if (!newProjectCode.trim() || !newProjectName.trim()) {
       toast.error('Please fill in required fields');
