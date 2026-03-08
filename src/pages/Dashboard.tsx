@@ -54,6 +54,14 @@ interface ProjectSuggestion {
   admin_response: string | null;
   created_at: string;
 }
+interface ProjectIssue {
+  id: string;
+  title: string;
+  description: string;
+  severity: string;
+  status: string;
+  created_at: string;
+}
 const Dashboard = () => {
   const {
     user,
