@@ -114,6 +114,11 @@ const AdminProjectPanel = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showChatDialog, setShowChatDialog] = useState(false);
   const [showSuggestionsDialog, setShowSuggestionsDialog] = useState(false);
+  const [showIssuesDialog, setShowIssuesDialog] = useState(false);
+  const [issues, setIssues] = useState<ProjectIssue[]>([]);
+  const [newIssueTitle, setNewIssueTitle] = useState('');
+  const [newIssueDesc, setNewIssueDesc] = useState('');
+  const [newIssueSeverity, setNewIssueSeverity] = useState('medium');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
