@@ -496,13 +496,15 @@ const Dashboard = () => {
 
                 {/* Tabs */}
                 <Tabs defaultValue="chat" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50 p-1 rounded-xl">
+                  <TabsList className="grid w-full grid-cols-3 mb-6 bg-muted/50 p-1 rounded-xl">
                     <TabsTrigger value="chat" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      
-                      Messages & Files
+                      Messages
+                    </TabsTrigger>
+                    <TabsTrigger value="issues" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                      <AlertTriangle className="w-3.5 h-3.5" />
+                      Issues {issues.filter(i => i.status === 'open').length > 0 && <Badge variant="destructive" className="ml-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">{issues.filter(i => i.status === 'open').length}</Badge>}
                     </TabsTrigger>
                     <TabsTrigger value="suggestions" className="flex items-center gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                      
                       Suggestions
                     </TabsTrigger>
                   </TabsList>
