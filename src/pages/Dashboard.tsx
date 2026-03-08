@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FolderOpen, MessageSquare, Upload, Lightbulb, Send, File, Clock, CheckCircle2, AlertCircle, Loader2, ExternalLink, Globe, ArrowRight, Sparkles, Link2, Image, FileText, Paperclip, X } from 'lucide-react';
+import { FolderOpen, MessageSquare, Upload, Lightbulb, Send, File, Clock, CheckCircle2, AlertCircle, Loader2, ExternalLink, Globe, ArrowRight, Sparkles, Link2, Image, FileText, Paperclip, X, AlertTriangle } from 'lucide-react';
 interface Project {
   id: string;
   project_code: string;
