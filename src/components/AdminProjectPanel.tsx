@@ -1174,6 +1174,117 @@ const AdminProjectPanel = () => {
           </ScrollArea>
         </DialogContent>
       </Dialog>
+
+      {/* Issues Dialog */}
+      <Dialog open={showIssuesDialog} onOpenChange={(open) => { setShowIssuesDialog(open); if (!open) setSelectedProject(null); }}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-yellow-500" />
+              Issues - {selectedProject?.name}
+            </DialogTitle>
+            <DialogDescription>Add and manage project issues visible to the client</DialogDescription>
+          </DialogHeader>
+          
+          {/* Add Issue Form */}
+          <div className="border-2 border-dashed border-primary/30 rounded-xl p-4 space-y-3 bg-primary/5">
+            <div className="space-y-2">
+              <Label>Issue Title</Label>
+              <Input
+                placeholder="Brief issue title..."
+                value={newIssueTitle}
+                onChange={(e) => setNewIssueTitle(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <Textarea
+                placeholder="Describe the issue..."
+                value={newIssueDesc}
+                onChange={(e) => setNewIssueDesc(e.target.value)}
+                rows={2}
+              />
+            </div>
+            <div className="flex gap-3">
+              <div className="flex-1 space-y-2">
+                <Label>Severity</Label>
+                <Select value={newIssueSeverity} onValueChange={setNewIssueSeverity}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-end">
+                <Button onClick={createIssue} disabled={submitting || !newIssueTitle.trim() || !newIssueDesc.trim()} className="gap-2">
+                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                  Add Issue
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <ScrollArea className="flex-1 pr-4">
+            <div className="space-y-3 py-4">
+              {issues.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <AlertTriangle className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No issues added yet</p>
+                </div>
+              ) : (
+                issues.map((issue) => (
+                  <Card key={issue.id} className="overflow-hidden">
+                    <CardContent className="pt-4 space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="font-medium text-sm">{issue.title}</h4>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Badge className={
+                            issue.severity === 'critical' ? 'bg-red-600 text-white' :
+                            issue.severity === 'high' ? 'bg-orange-500 text-white' :
+                            issue.severity === 'medium' ? 'bg-yellow-500 text-white' :
+                            'bg-muted text-muted-foreground'
+                          }>
+                            {issue.severity}
+                          </Badge>
+                          <Badge variant={issue.status === 'resolved' ? 'default' : 'secondary'}>
+                            {issue.status}
+                          </Badge>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{issue.description}</p>
+                      <div className="flex items-center justify-between pt-2 border-t">
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(issue.created_at).toLocaleDateString()}
+                        </span>
+                        <div className="flex gap-2">
+                          {issue.status === 'open' ? (
+                            <Button size="sm" variant="outline" onClick={() => updateIssueStatus(issue.id, 'resolved')} className="gap-1 text-xs">
+                              <CheckCircle2 className="w-3 h-3" />
+                              Resolve
+                            </Button>
+                          ) : (
+                            <Button size="sm" variant="outline" onClick={() => updateIssueStatus(issue.id, 'open')} className="gap-1 text-xs">
+                              Reopen
+                            </Button>
+                          )}
+                          <Button size="sm" variant="destructive" onClick={() => deleteIssue(issue.id)} className="gap-1 text-xs">
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
