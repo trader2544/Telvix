@@ -116,6 +116,7 @@ const AdminProjectPanel = () => {
   const [showChatDialog, setShowChatDialog] = useState(false);
   const [showSuggestionsDialog, setShowSuggestionsDialog] = useState(false);
   const [showIssuesDialog, setShowIssuesDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [issues, setIssues] = useState<ProjectIssue[]>([]);
   const [newIssueTitle, setNewIssueTitle] = useState('');
   const [newIssueDesc, setNewIssueDesc] = useState('');
@@ -329,7 +330,12 @@ const AdminProjectPanel = () => {
       let autoStatus = editStatus;
       if (editProgress === 100) autoStatus = 'completed';
       else if (editProgress >= 80) autoStatus = 'review';
-      else if (editProgress > 0) autoStatus = 'in_progress';
+      else if (editProgress > 0 && autoStatus === 'pending') autoStatus = 'in_progress';
+
+      // If user is being linked and status is still pending, move to in_progress
+      if (editUserId && autoStatus === 'pending') {
+        autoStatus = 'in_progress';
+      }
 
       const { error } = await supabase
         .from('projects')
@@ -345,6 +351,7 @@ const AdminProjectPanel = () => {
       if (error) throw error;
       
       toast.success('Project updated successfully!');
+      setShowEditDialog(false);
       setSelectedProject(null);
       fetchProjects();
     } catch (error: any) {
@@ -476,6 +483,27 @@ const AdminProjectPanel = () => {
     setEditNotes(project.admin_notes || '');
     setEditUserId(project.user_id || '');
     setEditWebsiteUrl(project.website_url || '');
+    setShowEditDialog(true);
+    fetchIssues(project.id);
+  };
+
+  const quickUpdateStatus = async (project: Project, newStatus: string) => {
+    let newProgress = project.progress;
+    if (newStatus === 'in_progress' && project.progress < 10) newProgress = 10;
+    if (newStatus === 'review' && project.progress < 80) newProgress = 80;
+    if (newStatus === 'completed') newProgress = 100;
+
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .update({ status: newStatus, progress: newProgress })
+        .eq('id', project.id);
+      if (error) throw error;
+      toast.success(`Status updated to ${getStatusLabel(newStatus)}`);
+      fetchProjects();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   const openChat = (project: Project) => {
@@ -741,6 +769,22 @@ const AdminProjectPanel = () => {
                           </Button>
                         )}
                       </div>
+
+                      {/* Quick Status Buttons */}
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {['pending', 'in_progress', 'review', 'completed'].map((s) => (
+                          <Button
+                            key={s}
+                            variant={project.status === s ? 'default' : 'outline'}
+                            size="sm"
+                            className="text-xs h-7 px-2.5"
+                            onClick={() => quickUpdateStatus(project, s)}
+                            disabled={project.status === s}
+                          >
+                            {getStatusLabel(s)}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                     
                     {/* Action buttons */}
@@ -775,20 +819,28 @@ const AdminProjectPanel = () => {
       </div>
 
       {/* Edit Project Dialog */}
-      <Dialog open={!!selectedProject && !showChatDialog && !showSuggestionsDialog} onOpenChange={(open) => !open && setSelectedProject(null)}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <Dialog open={showEditDialog} onOpenChange={(open) => { setShowEditDialog(open); if (!open) setSelectedProject(null); }}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Edit className="w-5 h-5 text-primary" />
               Edit: {selectedProject?.name}
             </DialogTitle>
-            <DialogDescription>Update project details, progress, and website URL</DialogDescription>
+            <DialogDescription>Manage project details, progress, issues, and more</DialogDescription>
           </DialogHeader>
           
           <Tabs defaultValue="details" className="mt-4">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="details">Details</TabsTrigger>
               <TabsTrigger value="progress">Progress</TabsTrigger>
+              <TabsTrigger value="issues" className="gap-1">
+                Issues
+                {issues.filter(i => i.status === 'open').length > 0 && (
+                  <Badge variant="destructive" className="h-5 w-5 p-0 flex items-center justify-center text-[10px]">
+                    {issues.filter(i => i.status === 'open').length}
+                  </Badge>
+                )}
+              </TabsTrigger>
               <TabsTrigger value="community">Social</TabsTrigger>
             </TabsList>
             
@@ -884,7 +936,7 @@ const AdminProjectPanel = () => {
                   className="py-4"
                 />
                 
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-5 gap-2">
                   {[0, 25, 50, 75, 100].map((val) => (
                     <Button
                       key={val}
@@ -921,6 +973,105 @@ const AdminProjectPanel = () => {
                 </div>
               </div>
             </TabsContent>
+
+            <TabsContent value="issues" className="space-y-4 pt-4">
+              {/* Add Issue Form */}
+              <div className="border-2 border-dashed border-primary/30 rounded-xl p-4 space-y-3 bg-primary/5">
+                <div className="space-y-2">
+                  <Label>Issue Title</Label>
+                  <Input
+                    placeholder="Brief issue title..."
+                    value={newIssueTitle}
+                    onChange={(e) => setNewIssueTitle(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Description</Label>
+                  <Textarea
+                    placeholder="Describe the issue..."
+                    value={newIssueDesc}
+                    onChange={(e) => setNewIssueDesc(e.target.value)}
+                    rows={2}
+                  />
+                </div>
+                <div className="flex gap-3">
+                  <div className="flex-1 space-y-2">
+                    <Label>Severity</Label>
+                    <Select value={newIssueSeverity} onValueChange={setNewIssueSeverity}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="critical">Critical</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-end">
+                    <Button onClick={createIssue} disabled={submitting || !newIssueTitle.trim() || !newIssueDesc.trim()} className="gap-2">
+                      {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                      Add
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Issues List */}
+              <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                {issues.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <AlertTriangle className="w-10 h-10 mx-auto mb-3 opacity-50" />
+                    <p className="text-sm">No issues yet</p>
+                  </div>
+                ) : (
+                  issues.map((issue) => (
+                    <Card key={issue.id} className="overflow-hidden">
+                      <CardContent className="pt-4 space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <h4 className="font-medium text-sm">{issue.title}</h4>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <Badge className={
+                              issue.severity === 'critical' ? 'bg-red-600 text-white' :
+                              issue.severity === 'high' ? 'bg-orange-500 text-white' :
+                              issue.severity === 'medium' ? 'bg-yellow-500 text-white' :
+                              'bg-muted text-muted-foreground'
+                            }>
+                              {issue.severity}
+                            </Badge>
+                            <Badge variant={issue.status === 'resolved' ? 'default' : 'secondary'}>
+                              {issue.status}
+                            </Badge>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{issue.description}</p>
+                        <div className="flex items-center justify-between pt-2 border-t">
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(issue.created_at).toLocaleDateString()}
+                          </span>
+                          <div className="flex gap-1.5">
+                            {issue.status === 'open' ? (
+                              <Button size="sm" variant="outline" onClick={() => updateIssueStatus(issue.id, 'resolved')} className="gap-1 text-xs h-7">
+                                <CheckCircle2 className="w-3 h-3" />
+                                Resolve
+                              </Button>
+                            ) : (
+                              <Button size="sm" variant="outline" onClick={() => updateIssueStatus(issue.id, 'open')} className="text-xs h-7">
+                                Reopen
+                              </Button>
+                            )}
+                            <Button size="sm" variant="destructive" onClick={() => deleteIssue(issue.id)} className="h-7 w-7 p-0">
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            </TabsContent>
             
             <TabsContent value="community" className="space-y-4 pt-4">
               <div className="text-center py-6">
@@ -950,7 +1101,7 @@ const AdminProjectPanel = () => {
                 </div>
                 
                 <p className="text-xs text-muted-foreground mt-4">
-                  Social integrations coming soon! Add your handles to enable automatic project updates.
+                  Social integrations coming soon!
                 </p>
               </div>
             </TabsContent>
