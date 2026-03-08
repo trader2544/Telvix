@@ -83,6 +83,16 @@ interface ProjectSuggestion {
   created_at: string;
 }
 
+interface ProjectIssue {
+  id: string;
+  title: string;
+  description: string;
+  severity: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface UserProfile {
   id: string;
   user_id: string;
