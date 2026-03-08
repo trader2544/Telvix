@@ -97,6 +97,7 @@ const Dashboard = () => {
       fetchMessages();
       fetchResources();
       fetchSuggestions();
+      fetchIssues();
     }
   }, [project]);
   useEffect(() => {
